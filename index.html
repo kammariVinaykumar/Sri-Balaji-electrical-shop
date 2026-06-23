@@ -420,7 +420,7 @@
                     </div>
                     <div class="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 text-center">
                         <!-- Direct Google Maps app deep redirection hyperlink requested -->
-                        <a href="https://maps.app.goo.gl/u4Wc1rkHotCQpjRz6?g_st=aw" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl shadow-md transform hover:scale-102 transition-all text-sm">
+                        <a href="https://maps.app.goo.gl/tYKh4TAWhDSzsGdF7" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl shadow-md transform hover:scale-102 transition-all text-sm">
                             <span data-t="contact_map_btn">📍 Open in Google Maps</span>
                         </a>
                     </div>
@@ -1828,6 +1828,12 @@
                 // Show operation items
                 document.getElementById('admin-add-product-btn').classList.remove('hidden');
                 document.getElementById('admin-add-gallery-btn').classList.remove('hidden');
+                document.getElementById('nav-admin-text').innerText = "Dashboard";
+                document.getElementById('nav-mobile-admin').innerText = "🔒 Admin Dashboard";
+                
+                // Force re-render of catalog & gallery to instantly show admin UI actions
+                renderProductsCatalog();
+                renderGalleryGrid();
                 
                 renderAdminDashboard();
             } else {
@@ -1843,6 +1849,12 @@
             // Hide admin operations triggers
             document.getElementById('admin-add-product-btn').classList.add('hidden');
             document.getElementById('admin-add-gallery-btn').classList.add('hidden');
+            document.getElementById('nav-admin-text').innerText = "Admin";
+            document.getElementById('nav-mobile-admin').innerText = "🔑 Admin Login";
+            
+            // Force re-render of catalog & gallery to instantly hide admin UI actions
+            renderProductsCatalog();
+            renderGalleryGrid();
             
             navigateTo('home');
         }
