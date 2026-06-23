@@ -263,20 +263,12 @@
                 </p>
             </div>
 
-            <!-- Controls (Search + Filters) -->
+            <!-- Controls (Search) -->
             <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 mb-8 space-y-6">
                 <!-- Search -->
                 <div class="relative">
                     <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    <input type="text" id="product-search-input" oninput="handleSearch(this.value)" placeholder="Search products by brand, details, category..." class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
-                </div>
-
-                <!-- Category selection chips -->
-                <div>
-                    <span class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-3" data-t="filter_label">Filter by Category</span>
-                    <div id="category-chips-container" class="flex flex-wrap gap-2">
-                        <!-- Loaded dynamically via JavaScript -->
-                    </div>
+                    <input type="text" id="product-search-input" oninput="handleSearch(this.value)" placeholder="Search products by brand parameters, details..." class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
                 </div>
             </div>
 
@@ -525,7 +517,7 @@
             </div>
         </section>
 
-        <!-- ================= PAGE 7: ADMIN AREA (Fully Tabbed Workspace) ================= -->
+        <!-- ================= PAGE 7: ADMIN AREA (Unified Control Room) ================= -->
         <section id="page-admin" class="page-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
             <!-- NOT LOGGED IN VIEW -->
             <div id="admin-login-card" class="max-w-md mx-auto bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden mt-6">
@@ -571,7 +563,7 @@
                     </div>
                 </div>
 
-                <!-- NEW WORKSPACE NAVIGATION TABS -->
+                <!-- TABS BAR -->
                 <div class="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
                     <button onclick="setAdminTab('inbox')" id="admin-tab-inbox" class="px-6 py-3.5 font-extrabold text-sm border-b-2 border-orange-500 text-orange-500 transition-all shrink-0">
                         📥 Inbox & Settings
@@ -688,14 +680,11 @@
                         </button>
                     </div>
 
-                    <!-- Search & Filter bar for admin -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-4 items-center justify-between">
-                        <div class="relative w-full md:max-w-md">
+                    <!-- Search bar for admin -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800">
+                        <div class="relative w-full">
                             <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                             <input type="text" id="admin-product-search" oninput="handleAdminProductSearch(this.value)" placeholder="Search inventory catalog..." class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500">
-                        </div>
-                        <div id="admin-category-chips" class="flex flex-wrap gap-1.5 justify-end">
-                            <!-- Populated dynamically -->
                         </div>
                     </div>
 
@@ -812,14 +801,14 @@
                 
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Product Title / Brand Name *</label>
-                  <input type="text" id="modal-product-name" required placeholder="e.g. Anchor Sockets" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                  <input type="text" id="modal-product-name" required placeholder="e.g. Anchor Roma Classic Modular Switches" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Category Group *</label>
                     <select id="modal-product-category" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none">
-                        <!-- Populated dynamically -->
+                        <!-- Populated dynamically (Single default: Other Products) -->
                     </select>
                   </div>
 
@@ -995,31 +984,24 @@
     <script>
         // ================= CONFIG & STATIC DATA DECLARATIONS =================
         const CATEGORIES = [
-            "Electrical Items",
-            "Switches",
-            "Wires",
-            "LED Lights",
-            "Fans",
-            "PVC Pipes",
-            "Plumbing Items",
-            "Hardware Items",
             "Other Products"
         ];
 
+        // Curating default products so they all belong to our single simplified category
         const DEFAULT_PRODUCTS = [
-            { id: "prod-1", name: "Anchor Roma Classic Modular Switches", description: "Premium modular switches, sleek white, fire-retardant material.", category: "Switches", price: 45, availability: "In Stock", image: "image_d57726.png" },
-            { id: "prod-2", name: "Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description: "Flame Retardant multi-strand cables ideal for residential wiring.", category: "Wires", price: 1540, availability: "In Stock", image: "image_d57726.png" },
-            { id: "prod-3", name: "Syska 9W LED Bright Bulbs (Cool Day Light)", description: "Energy-saving LED bulbs, B22 cap, zero flickering.", category: "LED Lights", price: 110, availability: "In Stock", image: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-4", name: "Crompton Hill Briz 1200mm Ceiling Fan", description: "High speed electric ceiling fan with powerful copper motor.", category: "Fans", price: 2350, availability: "In Stock", image: "https://images.unsplash.com/photo-1618944847023-38aa001235f0?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-5", name: "Sudhakar PVC Conduit Pipe (1 inch, 3m)", description: "Heavy-duty fire-retardant PVC electrical pipes designed for easy wiring.", category: "PVC Pipes", price: 95, availability: "In Stock", image: "https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-6", name: "Jaquar Wall-Mounted Brass Shower Faucet", description: "Premium rust-free chrome finished brass shower mixture.", category: "Plumbing Items", price: 1850, availability: "In Stock", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-7", name: "Link Heavy Duty Brass Padlock (70mm)", description: "Ultimate security padlocks with hardened steel shackle.", category: "Hardware Items", price: 480, availability: "In Stock", image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=500&q=80" }
+            { id: "prod-1", name: "Anchor Roma Classic Modular Switches", description: "Premium modular switches, sleek white, fire-retardant material.", category: "Other Products", price: 45, availability: "In Stock", image: "image_d57726.png" },
+            { id: "prod-2", name: "Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description: "Flame Retardant multi-strand cables ideal for residential wiring.", category: "Other Products", price: 1540, availability: "In Stock", image: "image_d57726.png" },
+            { id: "prod-3", name: "Syska 9W LED Bright Bulbs (Cool Day Light)", description: "Energy-saving LED bulbs, B22 cap, zero flickering.", category: "Other Products", price: 110, availability: "In Stock", image: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
+            { id: "prod-4", name: "Crompton Hill Briz 1200mm Ceiling Fan", description: "High speed electric ceiling fan with powerful copper motor.", category: "Other Products", price: 2350, availability: "In Stock", image: "https://images.unsplash.com/photo-1618944847023-38aa001235f0?auto=format&fit=crop&w=500&q=80" },
+            { id: "prod-5", name: "Sudhakar PVC Conduit Pipe (1 inch, 3m)", description: "Heavy-duty fire-retardant PVC electrical pipes designed for easy wiring.", category: "Other Products", price: 95, availability: "In Stock", image: "https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
+            { id: "prod-6", name: "Jaquar Wall-Mounted Brass Shower Faucet", description: "Premium rust-free chrome finished brass shower mixture.", category: "Other Products", price: 1850, availability: "In Stock", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" }
         ];
 
+        // Referencing requested image_372b9f.jpg verbatim in showcase photo gallery
         const DEFAULT_GALLERY = [
             { id: "gal-1", caption: "Our Main Display Shop Front & Product Rows", image: "image_d576ee.jpg" },
             { id: "gal-2", caption: "Fully Stocked Electrical Wire Reels & Pipes", image: "image_d57726.png" },
-            { id: "gal-3", caption: "Premium Switches, Sockets & Distribution Boards", image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=800&q=80" },
+            { id: "gal-3", caption: "Premium Quality Hardware & Lighting Display Panels", image: "image_372b9f.jpg" }, // Reference verbatim
             { id: "gal-4", caption: "Branded LED Light Bulbs and Ceiling Accessories", image: "https://images.unsplash.com/photo-1565814636199-ae8133055c1c?auto=format&fit=crop&w=800&q=80" }
         ];
 
@@ -1048,7 +1030,6 @@
             selectedCategory: 'All',
             productSearch: '',
             adminProductSearch: '',
-            adminSelectedCategory: 'All',
             adminActiveTab: 'inbox',
             quoteCart: JSON.parse(localStorage.getItem('sri_balaji_quotecart')) || []
         };
@@ -1159,10 +1140,6 @@
 
             renderCategoryChips();
             renderProductsCatalog();
-            if (state.adminLoggedIn) {
-                renderAdminCategoryChips();
-                renderAdminProducts();
-            }
         }
 
         function changeLanguage(langCode) {
@@ -1260,7 +1237,6 @@
             });
 
             if (tabName === 'products') {
-                renderAdminCategoryChips();
                 renderAdminProducts();
             }
             if (tabName === 'gallery') {
@@ -1302,7 +1278,7 @@
             });
         }
 
-        // Render Category selectors on Catalog view
+        // Render Category selectors on Catalog view (Simplified - single category layout)
         function renderCategoryChips() {
             const container = document.getElementById('category-chips-container');
             if (!container) return;
@@ -1315,22 +1291,9 @@
             
             container.insertAdjacentHTML('beforeend', `
                 <button onclick="setCategoryFilter('All')" class="px-4 py-2 rounded-lg text-xs font-extrabold tracking-wide transition-all ${allActiveStyle}">
-                    All Items (${allCount})
+                    All Available Products (${allCount})
                 </button>
             `);
-
-            CATEGORIES.forEach(cat => {
-                const count = state.products.filter(p => p.category === cat).length;
-                const activeStyle = state.selectedCategory === cat 
-                    ? 'bg-blue-600 text-white shadow-md' 
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700';
-                
-                container.insertAdjacentHTML('beforeend', `
-                    <button onclick="setCategoryFilter('${cat}')" class="px-4 py-2 rounded-lg text-xs font-extrabold tracking-wide transition-all ${activeStyle}">
-                        ${cat} (${count})
-                    </button>
-                `);
-            });
         }
 
         // Render Catalogue items inside products grid
@@ -1341,10 +1304,8 @@
 
             const filtered = state.products.filter(p => {
                 const matchesSearch = p.name.toLowerCase().includes(state.productSearch.toLowerCase()) ||
-                                      p.description.toLowerCase().includes(state.productSearch.toLowerCase()) ||
-                                      p.category.toLowerCase().includes(state.productSearch.toLowerCase());
-                const matchesCategory = state.selectedCategory === 'All' || p.category === state.selectedCategory;
-                return matchesSearch && matchesCategory;
+                                      p.description.toLowerCase().includes(state.productSearch.toLowerCase());
+                return matchesSearch;
             });
 
             document.getElementById('catalog-count-text').innerText = `Found ${filtered.length} products`;
@@ -1354,7 +1315,7 @@
                     <div class="col-span-full py-16 text-center text-slate-400">
                         <div class="text-5xl mb-3">🔍</div>
                         <p class="font-bold text-lg">No matching products found</p>
-                        <p class="text-xs mt-1">Try adjusting your filters or search keywords.</p>
+                        <p class="text-xs mt-1">Try adjusting your search keywords.</p>
                     </div>
                 `;
                 return;
@@ -1477,7 +1438,6 @@
             if (fileInput) fileInput.value = "";
             const container = document.getElementById('product-image-preview-container');
             if (container) container.classList.add('hidden');
-            showToast("Product file attachment cleared.", "info");
         }
 
         // Handle Direct Device file uploads for Gallery Displays
@@ -1512,7 +1472,6 @@
             if (fileInput) fileInput.value = "";
             const container = document.getElementById('gallery-image-preview-container');
             if (container) container.classList.add('hidden');
-            showToast("Gallery file attachment cleared.", "info");
         }
 
         // Quote Cart Management System Logic
@@ -1673,59 +1632,15 @@
             }
         }
 
-        // ================= SECURE WORKSPACE RENDERING CODE =================
-        function renderAdminCategoryChips() {
-            const container = document.getElementById('admin-category-chips');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const allCount = state.products.length;
-            const allActiveStyle = state.adminSelectedCategory === 'All' 
-                ? 'bg-orange-500 text-white shadow-md' 
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700';
-
-            container.insertAdjacentHTML('beforeend', `
-                <button onclick="setAdminCategoryFilter('All')" class="px-3 py-1.5 rounded-lg text-[10px] font-black tracking-wide transition-all ${allActiveStyle}">
-                    All (${allCount})
-                </button>
-            `);
-
-            CATEGORIES.forEach(cat => {
-                const count = state.products.filter(p => p.category === cat).length;
-                const activeStyle = state.adminSelectedCategory === cat 
-                    ? 'bg-orange-500 text-white shadow-md' 
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700';
-                
-                container.insertAdjacentHTML('beforeend', `
-                    <button onclick="setAdminCategoryFilter('${cat}')" class="px-3 py-1.5 rounded-lg text-[10px] font-black tracking-wide transition-all ${activeStyle}">
-                        ${cat} (${count})
-                    </button>
-                `);
-            });
-        }
-
-        function setAdminCategoryFilter(cat) {
-            state.adminSelectedCategory = cat;
-            renderAdminCategoryChips();
-            renderAdminProducts();
-        }
-
-        function handleAdminProductSearch(val) {
-            state.adminProductSearch = val;
-            renderAdminProducts();
-        }
-
+        // ================= PAGE 7: ADMIN AREA (Fully Tabbed Workspace) =================
         function renderAdminProducts() {
             const container = document.getElementById('admin-products-grid');
             if (!container) return;
             container.innerHTML = '';
 
             const filtered = state.products.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(state.adminProductSearch.toLowerCase()) ||
-                                      p.description.toLowerCase().includes(state.adminProductSearch.toLowerCase()) ||
-                                      p.category.toLowerCase().includes(state.adminProductSearch.toLowerCase());
-                const matchesCategory = state.adminSelectedCategory === 'All' || p.category === state.adminSelectedCategory;
-                return matchesSearch && matchesCategory;
+                return p.name.toLowerCase().includes(state.adminProductSearch.toLowerCase()) ||
+                       p.description.toLowerCase().includes(state.adminProductSearch.toLowerCase());
             });
 
             if (filtered.length === 0) {
@@ -1740,32 +1655,35 @@
             filtered.forEach(p => {
                 const isOutOfStock = p.availability === 'Out of Stock';
                 const stockBadgeClass = isOutOfStock ? 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-400' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400';
-
+                
                 const html = `
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group relative">
-                        <div class="absolute top-2.5 left-2.5 z-10 flex flex-col gap-1">
-                            <span class="px-2 py-0.5 bg-slate-950/80 text-white font-extrabold text-[8px] rounded uppercase tracking-wider">${p.category}</span>
-                            <span class="px-2 py-0.5 rounded text-[8px] font-extrabold uppercase tracking-wider ${stockBadgeClass}">${p.availability}</span>
-                        </div>
-                        <div class="aspect-square bg-slate-50 dark:bg-slate-850 overflow-hidden border-b border-slate-100 dark:border-slate-800">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm group">
+                        <div class="relative aspect-video bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden mb-3">
                             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 bg-slate-900/80 text-white font-bold text-[8px] rounded uppercase tracking-wider">${p.category}</span>
                         </div>
-                        <div class="p-4 flex-grow flex flex-col justify-between bg-white dark:bg-slate-900">
-                            <div class="space-y-1">
-                                <h3 class="font-extrabold text-sm text-slate-900 dark:text-white line-clamp-1">${p.name}</h3>
-                                <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${p.description}</p>
-                                <p class="text-sm font-black text-slate-900 dark:text-white pt-1">₹${p.price}</p>
+                        <div>
+                            <h4 class="font-extrabold text-slate-900 dark:text-white text-sm line-clamp-1">${p.name}</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">${p.description}</p>
+                            <div class="flex items-center justify-between mt-3">
+                                <span class="text-sm font-black text-slate-950 dark:text-white">₹${p.price}</span>
+                                <span class="px-2 py-0.5 rounded text-[9px] font-black tracking-wide ${stockBadgeClass}">${p.availability}</span>
                             </div>
-                            <div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80">
-                                <button onclick="openProductModal('edit', '${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold transition-all border border-amber-300 dark:border-amber-800/40" title="Edit Product Info">✍️ Edit</button>
-                                <button onclick="toggleProductStock('${p.id}')" class="bg-blue-150 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold transition-all border border-blue-300 dark:border-blue-800/40" title="Toggle Stock">Stock</button>
-                                <button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-650 dark:text-rose-450 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold transition-all border border-rose-300 dark:border-rose-800/40" title="Delete Product">🗑️ Delete</button>
-                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-150 dark:border-slate-800/80">
+                            <button onclick="openProductModal('edit', '${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 p-2 rounded-lg flex items-center justify-center hover:bg-amber-200 transition-all font-bold text-xs" title="Edit Product Info">✍️ Edit</button>
+                            <button onclick="toggleProductStock('${p.id}')" class="bg-blue-100 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] font-bold p-2 rounded-lg flex items-center justify-center hover:bg-blue-200 transition-all" title="Toggle Stock">Stock</button>
+                            <button onclick="deleteProduct('${p.id}')" class="bg-red-150 dark:bg-rose-950/40 text-red-650 dark:text-rose-450 p-2 rounded-lg flex items-center justify-center hover:bg-red-200 transition-all font-bold text-xs" title="Delete Product">🗑️ Delete</button>
                         </div>
                     </div>
                 `;
                 container.insertAdjacentHTML('beforeend', html);
             });
+        }
+
+        function handleAdminProductSearch(val) {
+            state.adminProductSearch = val;
+            renderAdminProducts();
         }
 
         function renderAdminGallery() {
@@ -1792,125 +1710,31 @@
             });
         }
 
-        // Render Admin Dashboard stats & request tables
-        function renderAdminDashboard() {
-            if (!state.adminLoggedIn) {
-                document.getElementById('admin-login-card').classList.remove('hidden');
-                document.getElementById('admin-dashboard-panel').classList.add('hidden');
-                return;
+        function setAdminTab(tabName) {
+            state.adminActiveTab = tabName;
+            
+            const tabs = ['inbox', 'products', 'gallery'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`admin-tab-${t}`);
+                const panel = document.getElementById(`admin-panel-${t}`);
+                
+                if (t === tabName) {
+                    btn.className = "px-6 py-3.5 font-extrabold text-sm border-b-2 border-orange-500 text-orange-500 transition-all shrink-0";
+                    panel.classList.remove('hidden');
+                } else {
+                    btn.className = "px-6 py-3.5 font-bold text-sm text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-all shrink-0";
+                    panel.classList.add('hidden');
+                }
+            });
+
+            if (tabName === 'products') {
+                renderAdminProducts();
             }
-
-            document.getElementById('admin-login-card').classList.add('hidden');
-            document.getElementById('admin-dashboard-panel').classList.remove('hidden');
-
-            document.getElementById('stat-products-count').innerText = state.products.length;
-            document.getElementById('stat-gallery-count').innerText = state.gallery.length;
-            document.getElementById('stat-enquiries-count').innerText = state.enquiries.length;
-            
-            const pendingCount = state.enquiries.filter(e => e.status !== 'Contacted').length;
-            document.getElementById('stat-pending-count').innerText = `${pendingCount} Pending`;
-
-            document.getElementById('admin-display-address').innerText = state.settings.address;
-            document.getElementById('admin-display-hours').innerText = state.settings.hours;
-
-            const tableBody = document.getElementById('enquiries-table-body');
-            tableBody.innerHTML = '';
-            
-            if (state.enquiries.length === 0) {
-                document.getElementById('no-enquiries-fallback').classList.remove('hidden');
-            } else {
-                document.getElementById('no-enquiries-fallback').classList.add('hidden');
-                state.enquiries.forEach(enq => {
-                    const statusClass = enq.status === 'Contacted' 
-                        ? 'bg-emerald-100 text-emerald-850 dark:bg-emerald-950 dark:text-emerald-300' 
-                        : 'bg-amber-100 text-amber-850 dark:bg-amber-950 dark:text-amber-300';
-                    
-                    const tr = `
-                        <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
-                            <td class="p-4">
-                                <p class="font-black text-slate-900 dark:text-white">${enq.name}</p>
-                                <p class="text-xs text-slate-500 dark:text-slate-450 mt-0.5">📞 ${enq.mobile}</p>
-                                ${enq.location ? `<p class="text-[10px] text-slate-400">📍 ${enq.location}</p>` : ''}
-                            </td>
-                            <td class="p-4">
-                                <span class="inline-block px-2.5 py-1 bg-blue-50 dark:bg-slate-800 text-blue-750 dark:text-blue-300 rounded-md text-xs font-bold leading-tight line-clamp-1">${enq.subject}</span>
-                            </td>
-                            <td class="p-4 max-w-xs">
-                                <p class="text-xs text-slate-600 dark:text-slate-350 line-clamp-2" title="${enq.message}">${enq.message || "No custom message provided."}</p>
-                            </td>
-                            <td class="p-4 text-slate-500 dark:text-slate-450 text-xs">${enq.date}</td>
-                            <td class="p-4 text-center">
-                                <button onclick="toggleEnquiryStatus('${enq.id}')" class="px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider inline-flex items-center space-x-1 ${statusClass}">
-                                    <span>${enq.status || 'Pending'}</span>
-                                </button>
-                            </td>
-                            <td class="p-4 text-right">
-                                <div class="flex items-center justify-end space-x-1.5">
-                                    <button onclick="respondViaWhatsApp('${enq.id}')" class="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 p-2 rounded-lg transition-colors text-xs font-bold" title="Respond via direct WhatsApp message">
-                                        💬 WhatsApp
-                                    </button>
-                                    <button onclick="deleteEnquiry('${enq.id}')" class="text-rose-600 hover:text-rose-800 p-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors" title="Remove Record">
-                                        🗑️
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                    tableBody.insertAdjacentHTML('beforeend', tr);
-                });
-            }
-
-            setAdminTab(state.adminActiveTab);
-        }
-
-        // Respond to user directly via pre-composed WhatsApp layout
-        function respondViaWhatsApp(enquiryId) {
-            const enq = state.enquiries.find(e => e.id === enquiryId);
-            if (!enq) return;
-
-            let formattedMobile = enq.mobile.replace(/\D/g, '');
-            if (formattedMobile.length === 10) {
-                formattedMobile = '91' + formattedMobile;
-            }
-
-            const responseMsg = `Hi ${enq.name}, this is Sri Balaji Electrical Shop. Thank you for your inquiry about "${enq.subject}". We have verified our stock inventory and are glad to process your order!`;
-            const encodedText = encodeURIComponent(responseMsg);
-            
-            window.open(`https://wa.me/${formattedMobile}?text=${encodedText}`, '_blank');
-        }
-
-        // Global shop branding alignments
-        function updateShopBrandingDOM() {
-            const s = state.settings;
-            
-            document.querySelectorAll('.id-shop-name').forEach(el => el.innerText = s.shopName);
-            document.getElementById('nav-shop-name').innerText = s.shopName;
-            document.querySelectorAll('.id-phone-text').forEach(el => el.innerText = s.phone);
-            document.getElementById('footer-copyright-name').innerText = s.shopName;
-
-            document.getElementById('contact-address-text').innerText = s.address;
-            document.getElementById('contact-hours-text').innerText = s.hours;
-            document.getElementById('footer-address').innerText = s.address;
-            document.getElementById('footer-hours').innerText = s.hours;
-
-            document.getElementById('nav-mobile-call').href = `tel:${s.phone}`;
-            document.getElementById('hero-call-btn').href = `tel:${s.phone}`;
-            document.getElementById('hero-whatsapp-btn').href = `https://wa.me/91${s.whatsapp}`;
-            document.getElementById('contact-tel-link').href = `tel:${s.phone}`;
-            document.getElementById('contact-wa-link').href = `https://wa.me/91${s.whatsapp}`;
-            document.getElementById('contact-footer-tel').href = `tel:${s.phone}`;
-            document.getElementById('contact-footer-wa').href = `https://wa.me/91${s.whatsapp}`;
-            document.getElementById('floating-call-btn').href = `tel:${s.phone}`;
-            document.getElementById('floating-whatsapp-btn').href = `https://wa.me/91${s.whatsapp}?text=Hello%20Balaji%20Electricals`;
-            document.getElementById('footer-tel').href = `tel:${s.phone}`;
-
-            const heroBanner = document.getElementById('hero-banner');
-            if (heroBanner) {
-                heroBanner.src = s.heroBannerUrl;
+            if (tabName === 'gallery') {
+                renderAdminGallery();
             }
         }
 
-        // Product configuration popup logic
         function openProductModal(mode, productId = null) {
             if (!state.adminLoggedIn) {
                 showCustomAlert("Only administrators can configure products.", "Access Denied", "🚫");
@@ -1925,7 +1749,6 @@
                 categorySelect.insertAdjacentHTML('beforeend', `<option value="${cat}">${cat}</option>`);
             });
 
-            // Clear previous uploads
             clearProductUpload();
 
             if (mode === 'add') {
@@ -1947,7 +1770,6 @@
                     document.getElementById('modal-product-description').value = p.description;
                     document.getElementById('modal-product-availability').value = p.availability;
                     
-                    // Show preview if it's already an uploaded file (Base64) or fallback URL
                     if (p.image && p.image.startsWith('data:image')) {
                         uploadedProductImageBase64 = p.image;
                         const previewImg = document.getElementById('product-image-preview');
@@ -1984,7 +1806,6 @@
             const description = document.getElementById('modal-product-description').value;
             const availability = document.getElementById('modal-product-availability').value;
             
-            // Prefer Direct device upload over text URL inputs
             const image = uploadedProductImageBase64 || 
                           document.getElementById('modal-product-image').value || 
                           "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80";
@@ -2001,7 +1822,6 @@
             localStorage.setItem('sri_balaji_products', JSON.stringify(state.products));
             closeProductModal();
             renderAdminProducts();
-            renderAdminCategoryChips();
         }
 
         function toggleProductStock(id) {
@@ -2032,7 +1852,6 @@
                 localStorage.setItem('sri_balaji_products', JSON.stringify(state.products));
                 showToast("Product deleted from system", "info");
                 renderAdminProducts();
-                renderAdminCategoryChips();
             }
         }
 
@@ -2311,6 +2130,59 @@
             state.selectedCategory = cat;
             renderCategoryChips();
             renderProductsCatalog();
+        }
+
+        function renderAdminProducts() {
+            const container = document.getElementById('admin-products-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = state.products.filter(p => {
+                return p.name.toLowerCase().includes(state.adminProductSearch.toLowerCase()) ||
+                       p.description.toLowerCase().includes(state.adminProductSearch.toLowerCase());
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-400">
+                        <p class="font-bold text-sm">No items found matching the search filters.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const isOutOfStock = p.availability === 'Out of Stock';
+                const stockBadgeClass = isOutOfStock ? 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-400' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400';
+
+                const html = `
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm group">
+                        <div class="relative aspect-video bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden mb-3">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 bg-slate-900/80 text-white font-bold text-[8px] rounded uppercase tracking-wider">${p.category}</span>
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-sm text-slate-900 dark:text-white line-clamp-1">${p.name}</h4>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">${p.description}</p>
+                            <div class="flex items-center justify-between mt-3">
+                                <span class="text-sm font-black text-slate-950 dark:text-white">₹${p.price}</span>
+                                <span class="px-2 py-0.5 rounded text-[9px] font-black tracking-wide ${stockBadgeClass}">${p.availability}</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-150 dark:border-slate-800/80">
+                            <button onclick="openProductModal('edit', '${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold transition-all border border-amber-300 dark:border-amber-800/40" title="Edit Product Info">✍️ Edit</button>
+                            <button onclick="toggleProductStock('${p.id}')" class="bg-blue-150 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold transition-all border border-blue-300 dark:border-blue-800/40" title="Toggle Stock">Stock</button>
+                            <button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-650 dark:text-rose-450 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold transition-all border border-rose-300 dark:border-rose-800/40" title="Delete Product">🗑️ Delete</button>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        function handleAdminProductSearch(val) {
+            state.adminProductSearch = val;
+            renderAdminProducts();
         }
 
         // Global Bootstrapper Initializations
