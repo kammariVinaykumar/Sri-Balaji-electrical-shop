@@ -110,7 +110,7 @@
                         <select onchange="changeLanguage(this.value)" id="language-switcher" class="bg-slate-850 text-slate-200 text-xs font-bold rounded-lg px-2.5 py-1.5 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer">
                             <option value="en">🇺🇸 EN</option>
                             <option value="te">🇮🇳 తె</option>
-                            <option value="hi">🇮🇳 हि</option>
+                            <option value="hi">🇮🇳 హి</option>
                         </select>
                     </div>
 
@@ -254,7 +254,7 @@
             </section>
         </section>
 
-        <!-- ================= PAGE 2: PRODUCTS CATALOG ================= -->
+        <!-- ================= PAGE 2: PRODUCTS CATALOG (User Read-Only) ================= -->
         <section id="page-products" class="page-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
             <div class="text-center mb-10">
                 <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight" data-t="catalog_title">Products Catalogue</h2>
@@ -280,12 +280,9 @@
                 </div>
             </div>
 
-            <!-- Inventory state count and add item trigger -->
+            <!-- Inventory state count (Add buttons removed here completely for users) -->
             <div class="flex justify-between items-center mb-6">
                 <p class="text-slate-500 dark:text-slate-400 text-sm" id="catalog-count-text">Found 0 products</p>
-                <button id="admin-add-product-btn" onclick="openProductModal('add')" class="hidden bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center space-x-1.5 shadow-md transition-transform hover:scale-102">
-                    <span>➕ Add New Product</span>
-                </button>
             </div>
 
             <!-- Main Dynamic Grid -->
@@ -294,19 +291,13 @@
             </div>
         </section>
 
-        <!-- ================= PAGE 3: GALLERY ================= -->
+        <!-- ================= PAGE 3: GALLERY (User Read-Only) ================= -->
         <section id="page-gallery" class="page-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
             <div class="text-center mb-10">
                 <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight" data-t="gallery_title">Shop Showcase & Gallery</h2>
                 <p class="text-slate-500 dark:text-slate-400 mt-2 max-w-2xl mx-auto" data-t="gallery_desc">
                     Have a visual tour inside our local showroom. We stock certified wiring supplies, conduit piping layout tools, and light fittings.
                 </p>
-            </div>
-
-            <div class="flex justify-end mb-6">
-                <button id="admin-add-gallery-btn" onclick="openGalleryModal('add')" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center space-x-1.5 shadow-md">
-                    <span>➕ Add Gallery Image</span>
-                </button>
             </div>
 
             <!-- Grid container -->
@@ -431,14 +422,13 @@
                     </div>
                 </div>
 
-                <!-- Google Maps Interactive Redirection & Iframe Card -->
+                <!-- Google Maps Interactive Card -->
                 <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col min-h-[380px]">
                     <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white border-b border-slate-800">
                         <span class="text-xs font-bold uppercase tracking-wider text-orange-400" data-t="contact_map_title">Navigation Map Locator</span>
                         <span class="text-xs font-semibold text-slate-300" data-t="contact_map_desc">Hyderabad (TS), India</span>
                     </div>
                     <div class="flex-grow relative">
-                        <!-- Direct Google Map embedded framework safely -->
                         <iframe title="Shop Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15228.40822694119!2d78.474668!3d17.385044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb978a6e1a939f%3A0xbc1d6c82439c29d0!2sHyderabad%2C%20Telangana%2C%20India!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" class="absolute inset-0 w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 text-center">
@@ -535,7 +525,7 @@
             </div>
         </section>
 
-        <!-- ================= PAGE 7: ADMIN AREA ================= -->
+        <!-- ================= PAGE 7: ADMIN AREA (Fully Tabbed Workspace) ================= -->
         <section id="page-admin" class="page-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
             <!-- NOT LOGGED IN VIEW -->
             <div id="admin-login-card" class="max-w-md mx-auto bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden mt-6">
@@ -572,9 +562,6 @@
                         <h2 class="text-3xl font-black mt-1">Admin Dashboard</h2>
                     </div>
                     <div class="mt-4 sm:mt-0 flex flex-wrap gap-2">
-                        <button onclick="openSettingsModal()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5">
-                            ⚙️ <span data-t="admin_settings">Shop Settings</span>
-                        </button>
                         <button onclick="resetToFactoryDefaults()" class="bg-amber-950/40 hover:bg-amber-900 text-amber-200 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 border border-amber-800/40" title="Reset default database">
                             🔄 <span>Reset Demo Data</span>
                         </button>
@@ -584,77 +571,156 @@
                     </div>
                 </div>
 
-                <!-- Live stats grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
-                        <div>
-                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_products">Products Catalog</span>
-                            <span id="stat-products-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span>
-                            <button onclick="navigateTo('products')" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold mt-2 block">Manage Catalog Items →</button>
+                <!-- NEW WORKSPACE NAVIGATION TABS -->
+                <div class="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
+                    <button onclick="setAdminTab('inbox')" id="admin-tab-inbox" class="px-6 py-3.5 font-extrabold text-sm border-b-2 border-orange-500 text-orange-500 transition-all shrink-0">
+                        📥 Inbox & Settings
+                    </button>
+                    <button onclick="setAdminTab('products')" id="admin-tab-products" class="px-6 py-3.5 font-bold text-sm text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-all shrink-0">
+                        📦 Manage Products
+                    </button>
+                    <button onclick="setAdminTab('gallery')" id="admin-tab-gallery" class="px-6 py-3.5 font-bold text-sm text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-all shrink-0">
+                        🖼️ Manage Gallery
+                    </button>
+                </div>
+
+                <!-- SUB-PANEL 1: INBOX & SETTINGS -->
+                <div id="admin-panel-inbox" class="space-y-8">
+                    <!-- Live stats grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
+                            <div>
+                                <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_products">Products Catalog</span>
+                                <span id="stat-products-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span>
+                                <button onclick="setAdminTab('products')" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold mt-2 block">Go to Catalog →</button>
+                            </div>
+                            <div class="p-4 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-2xl text-xl font-bold">📦</div>
                         </div>
-                        <div class="p-4 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-2xl text-xl font-bold">📦</div>
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
+                            <div>
+                                <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_gallery">Gallery Pictures</span>
+                                <span id="stat-gallery-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span>
+                                <button onclick="setAdminTab('gallery')" class="text-xs text-orange-600 dark:text-orange-400 hover:underline font-bold mt-2 block">Go to Photos →</button>
+                            </div>
+                            <div class="p-4 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 rounded-2xl text-xl font-bold">🖼️</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
+                            <div>
+                                <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_enquiries">Guest Enquiries</span>
+                                <span id="stat-enquiries-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span>
+                                <span id="stat-pending-count" class="text-xs text-amber-600 font-bold block mt-1">0 Pending</span>
+                            </div>
+                            <div class="p-4 bg-purple-50 dark:bg-slate-800 text-purple-600 dark:text-purple-400 rounded-2xl text-xl font-bold">📥</div>
+                        </div>
                     </div>
-                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
-                        <div>
-                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_gallery">Gallery Pictures</span>
-                            <span id="stat-gallery-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span>
-                            <button onclick="navigateTo('gallery')" class="text-xs text-orange-600 dark:text-orange-400 hover:underline font-bold mt-2 block">Manage Photo Grid →</button>
+
+                    <!-- Inbox management table -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+                        <div class="bg-slate-100 dark:bg-slate-800 px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-lg">📥</span>
+                                <h3 class="font-extrabold text-slate-900 dark:text-white text-lg">Inbox Enquiries Management</h3>
+                            </div>
                         </div>
-                        <div class="p-4 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 rounded-2xl text-xl font-bold">🖼️</div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-sm">
+                                <thead>
+                                    <tr class="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-400 font-bold text-xs uppercase tracking-wider">
+                                        <th class="p-4" data-t="admin_table_cust">Customer Details</th>
+                                        <th class="p-4" data-t="admin_table_subj">Context Subject</th>
+                                        <th class="p-4" data-t="admin_table_msg">Message Details</th>
+                                        <th class="p-4" data-t="admin_table_date">Submitted Date</th>
+                                        <th class="p-4 text-center" data-t="admin_table_status">Operational Status</th>
+                                        <th class="p-4 text-right" data-t="admin_table_action">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="enquiries-table-body" class="divide-y divide-slate-150 dark:divide-slate-800 font-medium">
+                                    <!-- Loaded dynamically via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="no-enquiries-fallback" class="p-12 text-center text-slate-400 hidden animate-fadeIn">
+                            <p class="font-bold" data-t="admin_no_enq">No enquiries registered yet</p>
+                            <p class="text-xs mt-1" data-t="admin_no_enq_sub">Client submissions will instantly populate here in real-time mode.</p>
+                        </div>
                     </div>
-                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
-                        <div>
-                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_enquiries">Guest Enquiries</span>
-                            <span id="stat-enquiries-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span>
-                            <span id="stat-pending-count" class="text-xs text-amber-600 font-bold block mt-1">0 Pending</span>
+
+                    <!-- Global Config Settings Inside Dashboard Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-extrabold text-slate-900 dark:text-white text-lg" data-t="admin_settings">Shop Configuration Settings</h3>
+                            <button onclick="openSettingsModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2 rounded-lg flex items-center space-x-1 shadow-sm">
+                                <span>⚙️ Edit Settings</span>
+                            </button>
                         </div>
-                        <div class="p-4 bg-purple-50 dark:bg-slate-800 text-purple-600 dark:text-purple-400 rounded-2xl text-xl font-bold">📥</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-600 dark:text-slate-350">
+                            <div><strong class="text-slate-950 dark:text-white">Shop Name:</strong> <span class="id-shop-name">Sri Balaji Electrical Shop</span></div>
+                            <div><strong class="text-slate-950 dark:text-white">Phone Support:</strong> <span class="id-phone-text">9515168300</span></div>
+                            <div class="sm:col-span-2"><strong class="text-slate-950 dark:text-white">Physical Address:</strong> <span id="admin-display-address">D.No: 4-12, Hyderabad, India</span></div>
+                            <div class="sm:col-span-2"><strong class="text-slate-950 dark:text-white">Hours:</strong> <span id="admin-display-hours">Monday - Saturday: 9am - 9pm</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Security Access Password changer -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-2" data-t="admin_change_pass">Change Administrative Password</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4" data-t="admin_change_pass_sub">Modify the system login key passcode used to access this secure admin console.</p>
+                        
+                        <form onsubmit="handlePasswordChange(event)" class="flex flex-col sm:flex-row gap-3 max-w-md">
+                            <input type="text" id="new-admin-password-field" placeholder="Enter safe new password (min 4 characters)" required class="px-4 py-2.5 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg text-xs flex-grow">
+                            <button type="submit" class="bg-slate-900 dark:bg-orange-500 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-lg shrink-0" data-t="admin_update_btn">
+                                Update Password
+                            </button>
+                        </form>
                     </div>
                 </div>
 
-                <!-- Inbox management table -->
-                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
-                    <div class="bg-slate-100 dark:bg-slate-800 px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-lg">📥</span>
-                            <h3 class="font-extrabold text-slate-900 dark:text-white text-lg">Inbox Enquiries Management</h3>
+                <!-- SUB-PANEL 2: PRODUCTS INVENTORY MANAGEMENT -->
+                <div id="admin-panel-products" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div>
+                            <h3 class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Inventory Catalogue Manager</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Configure catalog entries, standard pricing structures and stock metrics.</p>
                         </div>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-sm">
-                            <thead>
-                                <tr class="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-400 font-bold text-xs uppercase tracking-wider">
-                                    <th class="p-4" data-t="admin_table_cust">Customer Details</th>
-                                    <th class="p-4" data-t="admin_table_subj">Context Subject</th>
-                                    <th class="p-4" data-t="admin_table_msg">Message Details</th>
-                                    <th class="p-4" data-t="admin_table_date">Submitted Date</th>
-                                    <th class="p-4 text-center" data-t="admin_table_status">Operational Status</th>
-                                    <th class="p-4 text-right" data-t="admin_table_action">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="enquiries-table-body" class="divide-y divide-slate-150 dark:divide-slate-800 font-medium">
-                                <!-- Loaded dynamically via JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="no-enquiries-fallback" class="p-12 text-center text-slate-400 hidden animate-fadeIn">
-                        <p class="font-bold" data-t="admin_no_enq">No enquiries registered yet</p>
-                        <p class="text-xs mt-1" data-t="admin_no_enq_sub">Client submissions will instantly populate here in real-time mode.</p>
-                    </div>
-                </div>
-
-                <!-- Security Access Password changer -->
-                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                    <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-2" data-t="admin_change_pass">Change Administrative Password</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-4" data-t="admin_change_pass_sub">Modify the system login key passcode used to access this secure admin console.</p>
-                    
-                    <form onsubmit="handlePasswordChange(event)" class="flex flex-col sm:flex-row gap-3 max-w-md">
-                        <input type="text" id="new-admin-password-field" placeholder="Enter safe new password (min 4 characters)" required class="px-4 py-2.5 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg text-xs flex-grow">
-                        <button type="submit" class="bg-slate-900 dark:bg-orange-500 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-lg shrink-0" data-t="admin_update_btn">
-                            Update Password
+                        <button onclick="openProductModal('add')" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-3 rounded-xl flex items-center justify-center space-x-1.5 shadow-lg shadow-blue-500/10 self-start sm:self-auto transition-all">
+                            <span>➕ Add New Product</span>
                         </button>
-                    </form>
+                    </div>
+
+                    <!-- Search & Filter bar for admin -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-4 items-center justify-between">
+                        <div class="relative w-full md:max-w-md">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                            <input type="text" id="admin-product-search" oninput="handleAdminProductSearch(this.value)" placeholder="Search inventory catalog..." class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500">
+                        </div>
+                        <div id="admin-category-chips" class="flex flex-wrap gap-1.5 justify-end">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Admin Products Grid Layout -->
+                    <div id="admin-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+
+                <!-- SUB-PANEL 3: GALLERY SHOWCASE MANAGEMENT -->
+                <div id="admin-panel-gallery" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div>
+                            <h3 class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Gallery Showcase Manager</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Configure visual displays, upload showroom files and edit captions.</p>
+                        </div>
+                        <button onclick="openGalleryModal('add')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-3 rounded-xl flex items-center justify-center space-x-1.5 shadow-lg shadow-emerald-500/10 self-start sm:self-auto transition-all">
+                            <span>➕ Add Gallery Image</span>
+                        </button>
+                    </div>
+
+                    <!-- Admin Gallery Grid -->
+                    <div id="admin-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fadeIn">
+                        <!-- Loaded dynamically -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -1160,7 +1226,7 @@
                 pillar4_title: "ग्राहक सहायता",
                 pillar4_desc: "कॉल, व्हाट्सएप या ऑनलाइन पूछताछ द्वारा व्यक्तिगत और त्वरित सहायता प्राप्त करें।",
                 contact_title: "बालाजी शॉप से संपर्क करें",
-                contact_desc: "हैदराबाद में स्थानीय स्तर पर हमसे मिलें या उत्पाद ऑर्डर के लिए फोन/व्हाट्सएप के माध्यम से जुड़ें।",
+                contact_desc: "हैदाबाद में स्थानीय स्तर पर हमसे मिलें या उत्पाद ऑर्डर के लिए फोन/व्हाट्सएप के माध्यम से जुड़ें।",
                 contact_card_title: "स्टोर का स्थान और विवरण",
                 contact_phone: "फ़ोन नंबर",
                 contact_wa: "व्हाट्सएप सपोर्ट",
@@ -1224,6 +1290,9 @@
             adminLoggedIn: localStorage.getItem('sri_balaji_admin_auth') === 'true',
             selectedCategory: 'All',
             productSearch: '',
+            adminProductSearch: '',
+            adminSelectedCategory: 'All',
+            adminActiveTab: 'inbox',
             quoteCart: JSON.parse(localStorage.getItem('sri_balaji_quotecart')) || []
         };
 
@@ -1297,6 +1366,10 @@
             // Re-render categories layout safely
             renderCategoryChips();
             renderProductsCatalog();
+            if (state.adminLoggedIn) {
+                renderAdminCategoryChips();
+                renderAdminProducts();
+            }
         }
 
         function changeLanguage(langCode) {
@@ -1382,17 +1455,33 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function toggleMobileMenu() {
-            state.mobileMenuOpen = !state.mobileMenuOpen;
-            const menu = document.getElementById('mobile-menu');
-            if (state.mobileMenuOpen) {
-                menu.classList.remove('hidden');
-            } else {
-                menu.classList.add('hidden');
+        function setAdminTab(tabName) {
+            state.adminActiveTab = tabName;
+            
+            const tabs = ['inbox', 'products', 'gallery'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`admin-tab-${t}`);
+                const panel = document.getElementById(`admin-panel-${t}`);
+                
+                if (t === tabName) {
+                    btn.className = "px-6 py-3.5 font-extrabold text-sm border-b-2 border-orange-500 text-orange-500 transition-all shrink-0";
+                    panel.classList.remove('hidden');
+                } else {
+                    btn.className = "px-6 py-3.5 font-bold text-sm text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-all shrink-0";
+                    panel.classList.add('hidden');
+                }
+            });
+
+            if (tabName === 'products') {
+                renderAdminCategoryChips();
+                renderAdminProducts();
+            }
+            if (tabName === 'gallery') {
+                renderAdminGallery();
             }
         }
 
-        // Interactive Toast Alert Elements Injector
+        // Toast Messages Generator
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toastId = 'toast-' + Date.now();
@@ -1465,7 +1554,6 @@
             if (!container) return;
             container.innerHTML = '';
             
-            // "All" button element
             const allCount = state.products.length;
             const allActiveStyle = state.selectedCategory === 'All' 
                 ? 'bg-blue-600 text-white shadow-md' 
@@ -1477,7 +1565,6 @@
                 </button>
             `);
 
-            // Category item elements
             CATEGORIES.forEach(cat => {
                 const count = state.products.filter(p => p.category === cat).length;
                 const activeStyle = state.selectedCategory === cat 
@@ -1523,43 +1610,32 @@
                 const isOutOfStock = p.availability === 'Out of Stock';
                 const stockBadgeClass = isOutOfStock ? 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300';
                 
-                // Quote Cart control triggers
                 let actionArea = '';
-                if (state.adminLoggedIn) {
+                if (isOutOfStock) {
                     actionArea = `
-                        <div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800/60">
-                          <button onclick="openProductModal('edit', '${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 p-2.5 rounded-lg flex items-center justify-center hover:bg-amber-200 transition-all font-bold" title="Edit Product Info">✍️ Edit</button>
-                          <button onclick="toggleProductStock('${p.id}')" class="bg-blue-100 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] font-bold p-2.5 rounded-lg flex items-center justify-center hover:bg-blue-200 transition-all" title="Toggle Stock">Stock</button>
-                          <button onclick="deleteProduct('${p.id}')" class="bg-red-150 dark:bg-rose-950/40 text-red-650 dark:text-rose-400 p-2.5 rounded-lg flex items-center justify-center hover:bg-red-200 transition-all" title="Delete Product">🗑️ Delete</button>
-                        </div>
+                        <button disabled class="w-full py-2 px-3 rounded-lg font-bold text-xs bg-slate-100 text-slate-400 cursor-not-allowed dark:bg-slate-800/80 dark:text-slate-500">
+                            Out of Stock
+                        </button>
                     `;
                 } else {
-                    if (isOutOfStock) {
+                    const inCart = state.quoteCart.find(item => item.id === p.id);
+                    if (inCart) {
                         actionArea = `
-                            <button disabled class="w-full py-2 px-3 rounded-lg font-bold text-xs bg-slate-100 text-slate-400 cursor-not-allowed dark:bg-slate-800/80 dark:text-slate-500">
-                                Out of Stock
-                            </button>
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 rounded-lg px-2 py-1">
+                                    <button onclick="adjustCartQty('${p.id}', -1)" class="text-xs font-bold px-1.5 py-0.5 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">-</button>
+                                    <span class="text-xs font-black text-slate-950 dark:text-white">${inCart.qty}</span>
+                                    <button onclick="adjustCartQty('${p.id}', 1)" class="text-xs font-bold px-1.5 py-0.5 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">+</button>
+                                </div>
+                                <button onclick="removeFromQuoteCart('${p.id}')" class="text-xs text-rose-500 hover:underline font-bold">Remove</button>
+                            </div>
                         `;
                     } else {
-                        const inCart = state.quoteCart.find(item => item.id === p.id);
-                        if (inCart) {
-                            actionArea = `
-                                <div class="flex items-center justify-between gap-2">
-                                    <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 rounded-lg px-2 py-1">
-                                        <button onclick="adjustCartQty('${p.id}', -1)" class="text-xs font-bold px-1.5 py-0.5 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">-</button>
-                                        <span class="text-xs font-black text-slate-950 dark:text-white">${inCart.qty}</span>
-                                        <button onclick="adjustCartQty('${p.id}', 1)" class="text-xs font-bold px-1.5 py-0.5 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">+</button>
-                                    </div>
-                                    <button onclick="removeFromQuoteCart('${p.id}')" class="text-xs text-rose-500 hover:underline font-bold">Remove</button>
-                                </div>
-                            `;
-                        } else {
-                            actionArea = `
-                                <button onclick="addToQuoteCart('${p.id}')" class="w-full py-2.5 px-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-bold text-xs flex items-center justify-center space-x-2 transition-transform active:scale-95 shadow-sm">
-                                    <span>➕ Add to Quote Cart</span>
-                                </button>
-                            `;
-                        }
+                        actionArea = `
+                            <button onclick="addToQuoteCart('${p.id}')" class="w-full py-2.5 px-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-bold text-xs flex items-center justify-center space-x-2 transition-transform active:scale-95 shadow-sm">
+                                <span>➕ Add to Quote Cart</span>
+                            </button>
+                        `;
                     }
                 }
 
@@ -1598,16 +1674,6 @@
             container.innerHTML = '';
 
             state.gallery.forEach(g => {
-                let adminControls = '';
-                if (state.adminLoggedIn) {
-                    adminControls = `
-                        <div class="flex space-x-1">
-                            <button onclick="openGalleryModal('edit', '${g.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 p-2 rounded-md hover:bg-amber-200">✍️</button>
-                            <button onclick="deleteGalleryItem('${g.id}')" class="bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-450 p-2 rounded-md hover:bg-rose-100">🗑️</button>
-                        </div>
-                    `;
-                }
-
                 const html = `
                     <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300">
                         <div class="relative aspect-square overflow-hidden bg-slate-900">
@@ -1615,7 +1681,6 @@
                         </div>
                         <div class="p-4 flex-grow flex items-center justify-between bg-white dark:bg-slate-900">
                             <p class="text-xs text-slate-600 dark:text-slate-300 font-medium italic leading-relaxed pr-4">${g.caption || "Balaji Electrical Area"}</p>
-                            ${adminControls}
                         </div>
                     </div>
                 `;
@@ -1768,7 +1833,6 @@
             document.getElementById('quote-cart-count').innerText = `${totalItems} items`;
             document.getElementById('quote-cart-total').innerText = `₹${grandTotal.toLocaleString('en-IN')}`;
 
-            // Sync with actual direct form inputs automatically to make it incredibly easy for customers
             const enqSubj = document.getElementById('enq-subject');
             const enqMsg = document.getElementById('enq-message');
 
@@ -1776,7 +1840,6 @@
                 enqSubj.value = `Bulk Quote Request for ${totalItems} Electrical/Plumbing items`;
             }
 
-            // Append cart layout details into detailed message box
             if (enqMsg && (!enqMsg.value || enqMsg.value.includes("Selected Items for Quote Request:"))) {
                 let formattedList = "Selected Items for Quote Request:\n";
                 state.quoteCart.forEach(item => {
@@ -1787,7 +1850,130 @@
             }
         }
 
-        // Admin dashboard control operations
+        // ================= NEW SECURE WORKSPACE RENDERING CODE =================
+        // Render secure Admin products inside Dashboard Tab 2
+        function renderAdminCategoryChips() {
+            const container = document.getElementById('admin-category-chips');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const allCount = state.products.length;
+            const allActiveStyle = state.adminSelectedCategory === 'All' 
+                ? 'bg-orange-500 text-white shadow-md' 
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700';
+
+            container.insertAdjacentHTML('beforeend', `
+                <button onclick="setAdminCategoryFilter('All')" class="px-3 py-1.5 rounded-lg text-[10px] font-black tracking-wide transition-all ${allActiveStyle}">
+                    All (${allCount})
+                </button>
+            `);
+
+            CATEGORIES.forEach(cat => {
+                const count = state.products.filter(p => p.category === cat).length;
+                const activeStyle = state.adminSelectedCategory === cat 
+                    ? 'bg-orange-500 text-white shadow-md' 
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700';
+                
+                container.insertAdjacentHTML('beforeend', `
+                    <button onclick="setAdminCategoryFilter('${cat}')" class="px-3 py-1.5 rounded-lg text-[10px] font-black tracking-wide transition-all ${activeStyle}">
+                        ${cat} (${count})
+                    </button>
+                `);
+            });
+        }
+
+        function setAdminCategoryFilter(cat) {
+            state.adminSelectedCategory = cat;
+            renderAdminCategoryChips();
+            renderAdminProducts();
+        }
+
+        function handleAdminProductSearch(val) {
+            state.adminProductSearch = val;
+            renderAdminProducts();
+        }
+
+        function renderAdminProducts() {
+            const container = document.getElementById('admin-products-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = state.products.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(state.adminProductSearch.toLowerCase()) ||
+                                      p.description.toLowerCase().includes(state.adminProductSearch.toLowerCase()) ||
+                                      p.category.toLowerCase().includes(state.adminProductSearch.toLowerCase());
+                const matchesCategory = state.adminSelectedCategory === 'All' || p.category === state.adminSelectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-400">
+                        <p class="font-bold text-sm">No items found matching the search filters.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const isOutOfStock = p.availability === 'Out of Stock';
+                const stockBadgeClass = isOutOfStock ? 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-400' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400';
+
+                const html = `
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group relative">
+                        <div class="absolute top-2.5 left-2.5 z-10 flex flex-col gap-1">
+                            <span class="px-2 py-0.5 bg-slate-950/80 text-white font-extrabold text-[8px] rounded uppercase tracking-wider">${p.category}</span>
+                            <span class="px-2 py-0.5 rounded text-[8px] font-extrabold uppercase tracking-wider ${stockBadgeClass}">${p.availability}</span>
+                        </div>
+                        <div class="aspect-square bg-slate-50 dark:bg-slate-850 overflow-hidden border-b border-slate-100 dark:border-slate-800">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'">
+                        </div>
+                        <div class="p-4 flex-grow flex flex-col justify-between bg-white dark:bg-slate-900">
+                            <div class="space-y-1">
+                                <h3 class="font-extrabold text-sm text-slate-900 dark:text-white line-clamp-1">${p.name}</h3>
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${p.description}</p>
+                                <p class="text-sm font-black text-slate-900 dark:text-white pt-1">₹${p.price}</p>
+                            </div>
+                            <div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80">
+                                <button onclick="openProductModal('edit', '${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold transition-all" title="Edit Product Info">✍️ Edit</button>
+                                <button onclick="toggleProductStock('${p.id}')" class="bg-blue-150 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold transition-all" title="Toggle Stock">Stock</button>
+                                <button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-650 dark:text-rose-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold transition-all" title="Delete Product">🗑️ Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // Render secure Admin gallery inside Dashboard Tab 3
+        function renderAdminGallery() {
+            const container = document.getElementById('admin-gallery-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            state.gallery.forEach(g => {
+                const html = `
+                    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group relative">
+                        <div class="relative aspect-square overflow-hidden bg-slate-900">
+                            <img src="${g.image}" alt="${g.caption}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'">
+                        </div>
+                        <div class="p-3 flex-grow flex items-center justify-between bg-white dark:bg-slate-900 gap-2">
+                            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium italic leading-relaxed line-clamp-2">${g.caption || "Showroom Display View"}</p>
+                            <div class="flex space-x-1 shrink-0">
+                                <button onclick="openGalleryModal('edit', '${g.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 p-2 rounded-lg hover:bg-amber-200 text-xs transition-all">✍️</button>
+                                <button onclick="deleteGalleryItem('${g.id}')" class="bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-450 p-2 rounded-lg hover:bg-rose-100 text-xs transition-all">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // ================= END SECURE WORKSPACE TAB INTEGRATIONS =================
+
+        // Render Admin Dashboard stats & request tables
         function renderAdminDashboard() {
             if (!state.adminLoggedIn) {
                 document.getElementById('admin-login-card').classList.remove('hidden');
@@ -1805,6 +1991,10 @@
             
             const pendingCount = state.enquiries.filter(e => e.status !== 'Contacted').length;
             document.getElementById('stat-pending-count').innerText = `${pendingCount} Pending`;
+
+            // Display global settings values instantly inside admin display dashboard card
+            document.getElementById('admin-display-address').innerText = state.settings.address;
+            document.getElementById('admin-display-hours').innerText = state.settings.hours;
 
             // Setup inbox table lists
             const tableBody = document.getElementById('enquiries-table-body');
@@ -1840,7 +2030,7 @@
                             </td>
                             <td class="p-4 text-right">
                                 <div class="flex items-center justify-end space-x-1.5">
-                                    <button onclick="respondViaWhatsApp('${enq.id}')" class="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 p-2 rounded-lg transition-colors" title="Respond via direct WhatsApp message">
+                                    <button onclick="respondViaWhatsApp('${enq.id}')" class="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 p-2 rounded-lg transition-colors text-xs font-bold" title="Respond via direct WhatsApp message">
                                         💬 WhatsApp
                                     </button>
                                     <button onclick="deleteEnquiry('${enq.id}')" class="text-rose-600 hover:text-rose-800 p-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors" title="Remove Record">
@@ -1853,6 +2043,9 @@
                     tableBody.insertAdjacentHTML('beforeend', tr);
                 });
             }
+
+            // Sync Tab views correctly
+            setAdminTab(state.adminActiveTab);
         }
 
         // Respond to user directly via pre-composed WhatsApp layout
@@ -1861,7 +2054,6 @@
             if (!enq) return;
 
             let formattedMobile = enq.mobile.replace(/\D/g, '');
-            // Append India country code prefix safely if missing
             if (formattedMobile.length === 10) {
                 formattedMobile = '91' + formattedMobile;
             }
@@ -1978,7 +2170,8 @@
 
             localStorage.setItem('sri_balaji_products', JSON.stringify(state.products));
             closeProductModal();
-            renderProductsCatalog();
+            renderAdminProducts();
+            renderAdminCategoryChips();
         }
 
         function toggleProductStock(id) {
@@ -1995,7 +2188,7 @@
                 return p;
             });
             localStorage.setItem('sri_balaji_products', JSON.stringify(state.products));
-            renderProductsCatalog();
+            renderAdminProducts();
         }
 
         async function deleteProduct(id) {
@@ -2008,7 +2201,8 @@
                 state.products = state.products.filter(p => p.id !== id);
                 localStorage.setItem('sri_balaji_products', JSON.stringify(state.products));
                 showToast("Product deleted from system", "info");
-                renderProductsCatalog();
+                renderAdminProducts();
+                renderAdminCategoryChips();
             }
         }
 
@@ -2068,7 +2262,7 @@
 
             localStorage.setItem('sri_balaji_gallery', JSON.stringify(state.gallery));
             closeGalleryModal();
-            renderGalleryGrid();
+            renderAdminGallery();
         }
 
         async function deleteGalleryItem(id) {
@@ -2081,11 +2275,11 @@
                 state.gallery = state.gallery.filter(g => g.id !== id);
                 localStorage.setItem('sri_balaji_gallery', JSON.stringify(state.gallery));
                 showToast("Image removed from gallery", "info");
-                renderGalleryGrid();
+                renderAdminGallery();
             }
         }
 
-        // Global configuration systems saving
+        // Global configuration settings saving
         function openSettingsModal() {
             const modal = document.getElementById('settings-modal');
             const s = state.settings;
@@ -2223,9 +2417,6 @@
                 showToast("Administrative access validated successfully!", "success");
                 document.getElementById('admin-password-input').value = '';
                 
-                // Show admin operational items
-                document.getElementById('admin-add-product-btn').classList.remove('hidden');
-                document.getElementById('admin-add-gallery-btn').classList.remove('hidden');
                 document.getElementById('nav-admin-text').innerText = "Dashboard";
                 document.getElementById('nav-mobile-admin').innerText = "🔒 Admin Dashboard";
                 
@@ -2246,9 +2437,6 @@
             localStorage.removeItem('sri_balaji_admin_auth');
             showToast("Dashboard secure session finished.", "info");
             
-            // Hide operational configurations
-            document.getElementById('admin-add-product-btn').classList.add('hidden');
-            document.getElementById('admin-add-gallery-btn').classList.add('hidden');
             document.getElementById('nav-admin-text').innerText = "Admin";
             document.getElementById('nav-mobile-admin').innerText = "🔑 Admin Login";
             
@@ -2287,38 +2475,21 @@
 
         // Global Bootstrapper Initializations
         window.onload = function() {
-            // Apply current dark/light system theme
             applyThemeDOM();
-
-            // Set dynamic cart state indicators
             updateCartBadges();
 
-            // Setup correct initial navigational layouts matching admin authorization gates
             if (state.adminLoggedIn) {
-                document.getElementById('admin-add-product-btn').classList.remove('hidden');
-                document.getElementById('admin-add-gallery-btn').classList.remove('hidden');
                 document.getElementById('nav-admin-text').innerText = "Dashboard";
                 document.getElementById('nav-mobile-admin').innerText = "🔒 Admin Dashboard";
-                
-                // STRICT RULE: Force to admin page on load if already logged in
                 navigateTo('admin');
             } else {
-                document.getElementById('admin-add-product-btn').classList.add('hidden');
-                document.getElementById('admin-add-gallery-btn').classList.add('hidden');
                 document.getElementById('nav-admin-text').innerText = "Admin";
                 document.getElementById('nav-mobile-admin').innerText = "🔑 Admin Login";
-                
-                // Normal route
                 navigateTo('home');
             }
 
-            // Sync global branding layouts matching user preferences
             updateShopBrandingDOM();
-
-            // Sync language catalog dictionary maps
             updateLanguageDOM();
-
-            // STRICT RULE: Evaluate navigation menus upon initial boot load
             syncNavVisibility();
         };
     </script>
