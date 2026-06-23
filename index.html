@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +9,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        brandBlue: '#1e40af',
+                        brandBlue: {
+                            50: '#f0f3ff',
+                            600: '#1e40af',
+                            900: '#1e3a8a'
+                        },
                         brandOrange: '#f97316'
                     }
                 }
@@ -20,7 +25,7 @@
         }
     </script>
     
-    <!-- Inline CSS for custom scrollbars and smooth page transitions -->
+    <!-- Custom Scrollbar and Transition Animates -->
     <style>
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
@@ -28,13 +33,20 @@
         }
         .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
         
+        /* Smooth transitions for theme toggle changes */
+        * {
+            transition: background-color 0.3s ease, border-color 0.3s ease, text-decoration 0.2s ease;
+        }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased flex flex-col min-h-screen">
 
     <!-- NAVIGATION HEADER -->
     <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-xl border-b border-orange-500/20">
@@ -49,7 +61,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-orange-400 via-amber-200 to-white bg-clip-text text-transparent" id="nav-shop-name">
+                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-orange-400 via-amber-200 to-white bg-clip-text text-transparent" id="nav-shop-name" data-t="hero_title">
                             Sri Balaji Electrical Shop
                         </h1>
                         <p class="text-[10px] sm:text-xs text-orange-400 font-medium tracking-widest uppercase">
@@ -59,29 +71,55 @@
                 </div>
 
                 <!-- Desktop Navigation Links -->
-                <nav class="hidden md:flex items-center space-x-1">
-                    <button onclick="navigateTo('home')" class="nav-btn px-4 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="home">Home</button>
-                    <button onclick="navigateTo('products')" class="nav-btn px-4 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="products">Products</button>
-                    <button onclick="navigateTo('gallery')" class="nav-btn px-4 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="gallery">Gallery</button>
-                    <button onclick="navigateTo('about')" class="nav-btn px-4 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="about">About Us</button>
-                    <button onclick="navigateTo('contact')" class="nav-btn px-4 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="contact">Contact</button>
-                    <button onclick="navigateTo('enquiry')" class="nav-btn px-4 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="enquiry">Send Enquiry</button>
+                <nav class="hidden xl:flex items-center space-x-1">
+                    <button onclick="navigateTo('home')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="home" data-t="nav_home">Home</button>
+                    <button onclick="navigateTo('products')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="products" data-t="nav_products">Products</button>
+                    <button onclick="navigateTo('gallery')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="gallery" data-t="nav_gallery">Gallery</button>
+                    <button onclick="navigateTo('about')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="about" data-t="nav_about">About Us</button>
+                    <button onclick="navigateTo('contact')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="contact" data-t="nav_contact">Contact</button>
+                    <button onclick="navigateTo('enquiry')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="enquiry" data-t="nav_enquiry">Send Enquiry</button>
                     
-                    <span class="h-6 w-px bg-slate-700 mx-2"></span>
+                    <span class="h-6 w-px bg-slate-700 mx-1"></span>
 
                     <!-- Admin Access Button -->
-                    <button onclick="navigateTo('admin')" class="nav-btn flex items-center space-x-1.5 px-4 py-2 rounded-lg font-semibold text-sm border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" data-page="admin" id="nav-admin-btn">
+                    <button onclick="navigateTo('admin')" class="nav-btn flex items-center space-x-1 px-3 py-2 rounded-lg font-semibold text-sm border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" data-page="admin" id="nav-admin-btn">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
-                        <span id="nav-admin-text">Admin</span>
+                        <span id="nav-admin-text" data-t="nav_admin">Admin</span>
+                    </button>
+
+                    <span class="h-6 w-px bg-slate-700 mx-1"></span>
+
+                    <!-- Multi-language selection dropdown -->
+                    <div class="relative inline-block text-left ml-2">
+                        <select onchange="changeLanguage(this.value)" id="language-switcher" class="bg-slate-800 text-slate-200 text-xs font-bold rounded-lg px-2.5 py-1.5 border border-slate-700 focus:outline-none focus:ring-1 focus:ring-orange-500 cursor-pointer">
+                            <option value="en">🇺🇸 EN</option>
+                            <option value="te">🇮🇳 తె</option>
+                            <option value="hi">🇮🇳 हि</option>
+                        </select>
+                    </div>
+
+                    <!-- Dark / Light theme toggle switch -->
+                    <button onclick="toggleTheme()" class="ml-2 p-2 rounded-lg bg-slate-800 text-amber-400 hover:text-white hover:bg-slate-700 focus:outline-none" title="Toggle Theme mode">
+                        <span id="theme-icon-desktop">🌙</span>
                     </button>
                 </nav>
 
                 <!-- Mobile Action Toggle Buttons -->
-                <div class="md:hidden flex items-center space-x-2">
-                    <a href="tel:9515168300" class="p-2.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-white" id="nav-mobile-call">
+                <div class="xl:hidden flex items-center space-x-1.5">
+                    <select onchange="changeLanguage(this.value)" id="language-switcher-mobile" class="bg-slate-800 text-slate-200 text-xs font-bold rounded-lg px-2 py-1.5 border border-slate-700 focus:outline-none cursor-pointer">
+                        <option value="en">EN</option>
+                        <option value="te">తె</option>
+                        <option value="hi">हि</option>
+                    </select>
+
+                    <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-800 text-amber-400 hover:text-white" title="Theme switch">
+                        <span id="theme-icon-mobile">🌙</span>
+                    </button>
+
+                    <a href="tel:9515168300" class="p-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white" id="nav-mobile-call">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.387a12.035 12.035 0 01-7.108-7.108c-.145-.44.02-1.071.387-1.34l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
                     </a>
-                    <button onclick="toggleMobileMenu()" class="p-2.5 bg-slate-800 text-slate-200 hover:text-white rounded-lg">
+                    <button onclick="toggleMobileMenu()" class="p-2 bg-slate-800 text-slate-200 hover:text-white rounded-lg">
                         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
                     </button>
                 </div>
@@ -90,15 +128,15 @@
         </div>
 
         <!-- Mobile Navigation Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-slate-800 shadow-2xl">
+        <div id="mobile-menu" class="hidden xl:hidden bg-slate-900 border-t border-slate-800 shadow-2xl">
             <div class="px-2 pt-2 pb-4 space-y-1">
-                <button onclick="navigateTo('home'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800">Home Page</button>
-                <button onclick="navigateTo('products'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800">Products Catalog</button>
-                <button onclick="navigateTo('gallery'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800">Shop Gallery</button>
-                <button onclick="navigateTo('about'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800">About Us</button>
-                <button onclick="navigateTo('contact'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800">Contact Shop</button>
-                <button onclick="navigateTo('enquiry'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800">Submit Enquiry</button>
-                <button onclick="navigateTo('admin'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-orange-400 hover:bg-slate-800" id="nav-mobile-admin">🔑 Admin Login</button>
+                <button onclick="navigateTo('home'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_home">Home Page</button>
+                <button onclick="navigateTo('products'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_products">Products Catalogue</button>
+                <button onclick="navigateTo('gallery'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_gallery">Shop Gallery</button>
+                <button onclick="navigateTo('about'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_about">About Us</button>
+                <button onclick="navigateTo('contact'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_contact">Contact Shop</button>
+                <button onclick="navigateTo('enquiry'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_enquiry">Submit Enquiry</button>
+                <button onclick="navigateTo('admin'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-orange-400 hover:bg-slate-800" id="nav-mobile-admin" data-t="footer_secure">🔑 Secure Admin Area</button>
             </div>
         </div>
     </header>
@@ -109,36 +147,36 @@
         <!-- ================= PAGE 1: HOME ================= -->
         <section id="page-home" class="page-section animate-fadeIn">
             <!-- Hero banner utilizing "image_d576ee.jpg" verbatim -->
-            <div class="relative bg-slate-950 text-white overflow-hidden min-h-[500px] flex items-center">
+            <div class="relative bg-slate-950 text-white overflow-hidden min-h-[520px] flex items-center">
                 <div class="absolute inset-0 z-0">
-                    <img id="hero-banner" src="image_d576ee.jpg" alt="Shop Banner" class="w-full h-full object-cover object-center opacity-30 transform scale-105" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&h=500&q=80'">
-                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent"></div>
+                    <img id="hero-banner" src="image_d576ee.jpg" alt="Shop Banner" class="w-full h-full object-cover object-center opacity-35 transform scale-100" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&h=500&q=80'">
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent"></div>
                 </div>
 
                 <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
                     <div class="max-w-2xl">
-                        <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30 text-xs font-semibold tracking-wider uppercase mb-6">
+                        <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30 text-xs font-semibold tracking-wider uppercase mb-6" data-t="hero_badge">
                             ⚡ Quality Assured Electrical Solutions
                         </span>
-                        <h2 class="text-4xl sm:text-6xl font-black tracking-tight leading-none text-white id-shop-name">
+                        <h2 class="text-4xl sm:text-6xl font-black tracking-tight leading-none text-white id-shop-name" data-t="hero_title">
                             Sri Balaji Electrical Shop
                         </h2>
-                        <p class="mt-4 text-lg sm:text-xl text-slate-300 font-medium">
+                        <p class="mt-4 text-lg sm:text-xl text-slate-300 font-medium" data-t="hero_desc">
                             All Electrical, Plumbing, Hardware & Home Utility Products are Available Under One Roof with Premium Brand Assurance.
                         </p>
 
                         <div class="mt-8 flex flex-col sm:flex-row gap-4">
                             <a id="hero-call-btn" href="tel:9515168300" class="inline-flex items-center justify-center space-x-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-blue-600/30 hover:scale-105 transition-transform text-center">
-                                📞 Call Now: <span class="id-phone-text">9515168300</span>
+                                📞 <span data-t="call_now" class="mr-1">Call Now</span>: <span class="id-phone-text">9515168300</span>
                             </a>
-                            <a id="hero-whatsapp-btn" href="https://wa.me/919515168300" target="_blank" class="inline-flex items-center justify-center space-x-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-600/30 hover:scale-105 transition-transform text-center">
+                            <a id="hero-whatsapp-btn" href="https://wa.me/919515168300" target="_blank" class="inline-flex items-center justify-center space-x-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-600/30 hover:scale-105 transition-transform text-center" data-t="hero_whatsapp">
                                 💬 WhatsApp Us
                             </a>
                         </div>
 
                         <div class="mt-6">
                             <button onclick="navigateTo('enquiry')" class="inline-flex items-center space-x-2 text-orange-400 hover:text-orange-300 font-semibold text-sm group">
-                                <span>Send Direct Online Enquiry</span>
+                                <span data-t="hero_direct_enq">Send Direct Online Enquiry</span>
                                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
                             </button>
                         </div>
@@ -147,28 +185,28 @@
             </div>
 
             <!-- Value Highlights row -->
-            <div class="py-12 bg-white border-y border-slate-200">
+            <div class="py-12 bg-white dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        <div class="flex flex-col items-center text-center p-4 rounded-xl hover:shadow-md transition-shadow">
-                            <div class="p-3 rounded-xl mb-3 bg-blue-50 text-blue-600">⚡</div>
-                            <h4 class="font-bold text-slate-900">Quality Brands</h4>
-                            <p class="text-xs text-slate-500 mt-1">Premium electrical products</p>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="flex flex-col items-center text-center p-4 rounded-xl hover:shadow-md transition-all">
+                            <div class="p-3 rounded-xl mb-3 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 font-bold text-xl">⚡</div>
+                            <h4 class="font-bold text-slate-900 dark:text-white" data-t="highlight_brands">Quality Brands</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1" data-t="highlight_brands_sub">Premium electrical products</p>
                         </div>
-                        <div class="flex flex-col items-center text-center p-4 rounded-xl hover:shadow-md transition-shadow">
-                            <div class="p-3 rounded-xl mb-3 bg-orange-50 text-orange-600">🏷️</div>
-                            <h4 class="font-bold text-slate-900">Best Pricing</h4>
-                            <p class="text-xs text-slate-500 mt-1">Wholesale & retail rates</p>
+                        <div class="flex flex-col items-center text-center p-4 rounded-xl hover:shadow-md transition-all">
+                            <div class="p-3 rounded-xl mb-3 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 font-bold text-xl">🏷️</div>
+                            <h4 class="font-bold text-slate-900 dark:text-white" data-t="highlight_pricing">Best Pricing</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1" data-t="highlight_pricing_sub">Wholesale & retail rates</p>
                         </div>
-                        <div class="flex flex-col items-center text-center p-4 rounded-xl hover:shadow-md transition-shadow">
-                            <div class="p-3 rounded-xl mb-3 bg-emerald-50 text-emerald-600">🤝</div>
-                            <h4 class="font-bold text-slate-900">Friendly Service</h4>
-                            <p class="text-xs text-slate-500 mt-1">Guidance for home setups</p>
+                        <div class="flex flex-col items-center text-center p-4 rounded-xl hover:shadow-md transition-all">
+                            <div class="p-3 rounded-xl mb-3 bg-emerald-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 font-bold text-xl">🤝</div>
+                            <h4 class="font-bold text-slate-900 dark:text-white" data-t="highlight_service">Friendly Service</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1" data-t="highlight_service_sub">Guidance for home setups</p>
                         </div>
-                        <div class="flex flex-col items-center text-center p-4 rounded-xl hover:shadow-md transition-shadow">
-                            <div class="p-3 rounded-xl mb-3 bg-purple-50 text-purple-600">🛠️</div>
-                            <h4 class="font-bold text-slate-900">Customer Support</h4>
-                            <p class="text-xs text-slate-500 mt-1">Speedy WhatsApp response</p>
+                        <div class="flex flex-col items-center text-center p-4 rounded-xl hover:shadow-md transition-all">
+                            <div class="p-3 rounded-xl mb-3 bg-purple-50 dark:bg-slate-800 text-purple-600 dark:text-purple-400 font-bold text-xl">🛠️</div>
+                            <h4 class="font-bold text-slate-900 dark:text-white" data-t="highlight_support">Customer Support</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1" data-t="highlight_support_sub">Speedy WhatsApp response</p>
                         </div>
                     </div>
                 </div>
@@ -178,11 +216,11 @@
             <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-end mb-10">
                     <div>
-                        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest block mb-1">Our Showcase</span>
-                        <h3 class="text-3xl font-extrabold text-slate-900 tracking-tight">Featured Products</h3>
+                        <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest block mb-1" data-t="featured_sub">Our Showcase</span>
+                        <h3 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight" data-t="featured_title">Featured Products</h3>
                     </div>
-                    <button onclick="navigateTo('products')" class="text-blue-600 hover:text-blue-500 font-bold flex items-center space-x-1">
-                        <span>All Products</span>
+                    <button onclick="navigateTo('products')" class="text-blue-600 dark:text-blue-400 hover:underline font-bold flex items-center space-x-1">
+                        <span data-t="featured_view_all">All Products</span>
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
                     </button>
                 </div>
@@ -196,23 +234,23 @@
         <!-- ================= PAGE 2: PRODUCTS CATALOG ================= -->
         <section id="page-products" class="page-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
             <div class="text-center mb-10">
-                <h2 class="text-4xl font-black text-slate-900 tracking-tight">Products Catalogue</h2>
-                <p class="text-slate-500 mt-2 max-w-2xl mx-auto">
+                <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight" data-t="catalog_title">Products Catalogue</h2>
+                <p class="text-slate-500 dark:text-slate-400 mt-2 max-w-2xl mx-auto" data-t="catalog_desc">
                     Sort through our comprehensive list of safety items, plumbing pipes, wires, and household equipment.
                 </p>
             </div>
 
             <!-- Controls (Search + Filters) -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-8 space-y-6">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 mb-8 space-y-6">
                 <!-- Search -->
                 <div class="relative">
                     <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    <input type="text" id="product-search-input" oninput="handleSearch(this.value)" placeholder="Search products by title, category, description..." class="w-full pl-12 pr-4 py-3.5 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
+                    <input type="text" id="product-search-input" oninput="handleSearch(this.value)" placeholder="Search products..." class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
                 </div>
 
                 <!-- Category selection chips -->
                 <div>
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-3">Filter by Category</span>
+                    <span class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-3" data-t="filter_label">Filter by Category</span>
                     <div id="category-chips-container" class="flex flex-wrap gap-2">
                         <!-- Loaded dynamically via JavaScript -->
                     </div>
@@ -221,7 +259,7 @@
 
             <!-- Inventory state count and add item trigger -->
             <div class="flex justify-between items-center mb-6">
-                <p class="text-slate-500 text-sm" id="catalog-count-text">Found 0 products</p>
+                <p class="text-slate-500 dark:text-slate-400 text-sm" id="catalog-count-text">Found 0 products</p>
                 <button id="admin-add-product-btn" onclick="openProductModal('add')" class="hidden bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center space-x-1.5 shadow-md">
                     <span>➕ Add New Product</span>
                 </button>
@@ -236,8 +274,8 @@
         <!-- ================= PAGE 3: GALLERY ================= -->
         <section id="page-gallery" class="page-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
             <div class="text-center mb-10">
-                <h2 class="text-4xl font-black text-slate-900 tracking-tight">Shop Showcase & Gallery</h2>
-                <p class="text-slate-500 mt-2 max-w-2xl mx-auto">
+                <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight" data-t="gallery_title">Shop Showcase & Gallery</h2>
+                <p class="text-slate-500 dark:text-slate-400 mt-2 max-w-2xl mx-auto" data-t="gallery_desc">
                     Have a visual tour inside our local showroom. We stock certified wiring supplies, conduit piping layout tools, and light fittings.
                 </p>
             </div>
@@ -255,54 +293,54 @@
         </section>
 
         <!-- ================= PAGE 4: ABOUT US ================= -->
-        <section id="page-about" class="page-section hidden py-16 bg-slate-50 animate-fadeIn">
+        <section id="page-about" class="page-section hidden py-16 animate-fadeIn">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <span class="text-xs font-bold text-orange-500 uppercase tracking-widest">About Our Business</span>
-                    <h2 class="text-4xl sm:text-5xl font-black text-slate-900 mt-1">Sri Balaji Electricals</h2>
-                    <p class="text-slate-500 mt-4 max-w-2xl mx-auto text-base">
+                    <span class="text-xs font-bold text-orange-500 uppercase tracking-widest" data-t="about_badge">About Our Business</span>
+                    <h2 class="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white mt-1" data-t="about_title">Sri Balaji Electricals</h2>
+                    <p class="text-slate-500 dark:text-slate-400 mt-4 max-w-2xl mx-auto text-base" data-t="about_desc">
                         Your trusted neighborhood location supplying top-quality electrical, plumbing pipelines, and home maintenance devices.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
                     <div>
-                        <h3 class="text-2xl font-bold text-slate-900">One-Stop Electrical & Plumbing Solutions</h3>
-                        <p class="text-slate-600 mt-4 leading-relaxed">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white" data-t="about_pillars_title">One-Stop Electrical & Plumbing Solutions</h3>
+                        <p class="text-slate-600 dark:text-slate-350 mt-4 leading-relaxed" data-t="about_p1">
                             At Sri Balaji Electrical Shop, we pride ourselves on holding a comprehensive inventory of heavy-duty materials required for building development, household repair setups, wiring improvements, and fixture fittings.
                         </p>
-                        <p class="text-slate-600 mt-4 leading-relaxed">
+                        <p class="text-slate-600 dark:text-slate-350 mt-4 leading-relaxed" data-t="about_p2">
                             Our focus is safety first. Every switch, wire loop, or PVC conduit pipe we sell conforms to official safety indices. We guide household users to get correct current metrics and premium quality plumbing parts.
                         </p>
                     </div>
                     <div>
-                        <img src="image_d576ee.jpg" alt="About Shop Display" class="rounded-2xl shadow-xl border border-slate-200 w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'">
+                        <img src="image_d576ee.jpg" alt="About Shop Display" class="rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'">
                     </div>
                 </div>
 
                 <!-- 4 Pillars Section -->
-                <div class="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white">
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-center tracking-tight mb-10">Four Pillars of Our Commitment</h3>
+                <div class="bg-slate-900 dark:bg-slate-900 border border-slate-800 rounded-3xl p-8 sm:p-12 text-white">
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-center tracking-tight mb-10" data-t="about_pillars_title">Four Pillars of Our Commitment</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div>
                             <span class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center font-bold text-slate-950 text-sm mb-3">1</span>
-                            <h4 class="font-extrabold text-white text-lg">Quality Products</h4>
-                            <p class="text-slate-400 text-xs mt-1">Authorized stock from top-tier brands like Havells, Finolex, and Syska to guarantee safety.</p>
+                            <h4 class="font-extrabold text-white text-lg" data-t="pillar1_title">Quality Products</h4>
+                            <p class="text-slate-400 text-xs mt-1" data-t="pillar1_desc">Authorized stock from top-tier brands like Havells, Finolex, and Syska to guarantee safety.</p>
                         </div>
                         <div>
                             <span class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center font-bold text-slate-950 text-sm mb-3">2</span>
-                            <h4 class="font-extrabold text-white text-lg">Best Prices</h4>
-                            <p class="text-slate-400 text-xs mt-1">Honest margins on single utility pieces as well as batch construction blueprints.</p>
+                            <h4 class="font-extrabold text-white text-lg" data-t="pillar2_title">Best Prices</h4>
+                            <p class="text-slate-400 text-xs mt-1" data-t="pillar2_desc">Honest margins on single utility pieces as well as batch construction blueprints.</p>
                         </div>
                         <div>
                             <span class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center font-bold text-slate-950 text-sm mb-3">3</span>
-                            <h4 class="font-extrabold text-white text-lg">Friendly Service</h4>
-                            <p class="text-slate-400 text-xs mt-1">Need help deciding on conduit sizing or lighting thresholds? Our team is glad to guide.</p>
+                            <h4 class="font-extrabold text-white text-lg" data-t="pillar3_title">Friendly Service</h4>
+                            <p class="text-slate-400 text-xs mt-1" data-t="pillar3_desc">Need help deciding on conduit sizing or lighting thresholds? Our team is glad to guide.</p>
                         </div>
                         <div>
                             <span class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center font-bold text-slate-950 text-sm mb-3">4</span>
-                            <h4 class="font-extrabold text-white text-lg">Customer Support</h4>
-                            <p class="text-slate-400 text-xs mt-1">Call, message, or drop an offline query and get rapid, personalized support sessions.</p>
+                            <h4 class="font-extrabold text-white text-lg" data-t="pillar4_title">Customer Support</h4>
+                            <p class="text-slate-400 text-xs mt-1" data-t="pillar4_desc">Call, message, or drop an offline query and get rapid, personalized support sessions.</p>
                         </div>
                     </div>
                 </div>
@@ -312,47 +350,47 @@
         <!-- ================= PAGE 5: CONTACT US ================= -->
         <section id="page-contact" class="page-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
             <div class="text-center mb-12">
-                <h2 class="text-4xl font-black text-slate-900 tracking-tight">Contact Sri Balaji Shop</h2>
-                <p class="text-slate-500 mt-2 max-w-2xl mx-auto">
+                <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight" data-t="contact_title">Contact Sri Balaji Shop</h2>
+                <p class="text-slate-500 dark:text-slate-400 mt-2 max-w-2xl mx-auto" data-t="contact_desc">
                     Visit us locally in Hyderabad or connect via phone/WhatsApp for product orders.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                 <!-- Textual Info Card -->
-                <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-8 flex flex-col justify-between shadow-sm">
+                <div class="lg:col-span-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 flex flex-col justify-between shadow-sm">
                     <div class="space-y-6">
-                        <h3 class="text-2xl font-black text-slate-900 tracking-tight">Store Location & Details</h3>
+                        <h3 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight" data-t="contact_card_title">Store Location & Details</h3>
 
                         <div class="space-y-6">
                             <div class="flex items-start space-x-4">
-                                <div class="p-3 bg-blue-50 text-blue-600 rounded-xl">📞</div>
+                                <div class="p-3 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-xl">📞</div>
                                 <div>
-                                    <span class="text-xs font-bold text-slate-400 uppercase block">Phone Number</span>
-                                    <a id="contact-tel-link" href="tel:9515168300" class="text-lg font-black text-slate-900 hover:text-blue-600 id-phone-text">9515168300</a>
+                                    <span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_phone">Phone Number</span>
+                                    <a id="contact-tel-link" href="tel:9515168300" class="text-lg font-black text-slate-900 dark:text-orange-400 hover:text-blue-600 id-phone-text">9515168300</a>
                                 </div>
                             </div>
                             <div class="flex items-start space-x-4">
-                                <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">💬</div>
+                                <div class="p-3 bg-emerald-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-xl">💬</div>
                                 <div>
-                                    <span class="text-xs font-bold text-slate-400 uppercase block">WhatsApp Support</span>
-                                    <a id="contact-wa-link" href="https://wa.me/919515168300" target="_blank" class="text-lg font-black text-emerald-600 hover:underline">9515168300</a>
+                                    <span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_wa">WhatsApp Support</span>
+                                    <a id="contact-wa-link" href="https://wa.me/919515168300" target="_blank" class="text-lg font-black text-emerald-600 dark:text-emerald-400 hover:underline">9515168300</a>
                                 </div>
                             </div>
                             <div class="flex items-start space-x-4">
-                                <div class="p-3 bg-orange-50 text-orange-600 rounded-xl">📍</div>
+                                <div class="p-3 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 rounded-xl">📍</div>
                                 <div>
-                                    <span class="text-xs font-bold text-slate-400 uppercase block">Store Physical Address</span>
-                                    <p id="contact-address-text" class="text-slate-700 text-sm font-semibold leading-relaxed">
+                                    <span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_address">Store Physical Address</span>
+                                    <p id="contact-address-text" class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-relaxed">
                                         D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India
                                     </p>
                                 </div>
                             </div>
                             <div class="flex items-start space-x-4">
-                                <div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl">⏰</div>
+                                <div class="p-3 bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 rounded-xl">⏰</div>
                                 <div>
-                                    <span class="text-xs font-bold text-slate-400 uppercase block">Operational Timing Schedules</span>
-                                    <p id="contact-hours-text" class="text-slate-700 text-sm font-semibold">
+                                    <span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_hours">Operational Timing Schedules</span>
+                                    <p id="contact-hours-text" class="text-slate-700 dark:text-slate-300 text-sm font-semibold" data-t="contact_hours_val">
                                         Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed
                                     </p>
                                 </div>
@@ -360,24 +398,31 @@
                         </div>
                     </div>
 
-                    <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+                    <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row gap-3">
                         <a id="contact-footer-tel" href="tel:9515168300" class="flex-grow inline-flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-colors text-sm">
-                            <span>Call Store Now</span>
+                            <span data-t="hero_call">Call Store Now</span>
                         </a>
                         <a id="contact-footer-wa" href="https://wa.me/919515168300" target="_blank" class="flex-grow inline-flex items-center justify-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-colors text-sm">
-                            <span>WhatsApp Chat</span>
+                            <span data-t="hero_whatsapp">WhatsApp Chat</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Google Maps Iframe Card -->
-                <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col min-h-[350px]">
-                    <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white">
-                        <span class="text-xs font-bold uppercase tracking-wider text-orange-400">Navigation Map Locator</span>
-                        <span class="text-xs font-semibold text-slate-300">Hyderabad (TS), India</span>
+                <!-- Google Maps Interactive Redirection & Iframe Card -->
+                <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col min-h-[380px]">
+                    <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white border-b border-slate-800">
+                        <span class="text-xs font-bold uppercase tracking-wider text-orange-400" data-t="contact_map_title">Navigation Map Locator</span>
+                        <span class="text-xs font-semibold text-slate-300" data-t="contact_map_desc">Hyderabad (TS), India</span>
                     </div>
                     <div class="flex-grow relative">
+                        <!-- Direct Google Map embedded framework pointing to general area safely -->
                         <iframe title="Shop Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15228.40822694119!2d78.474668!3d17.385044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb978a6e1a939f%3A0xbc1d6c82439c29d0!2sHyderabad%2C%20Telangana%2C%20India!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" class="absolute inset-0 w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 text-center">
+                        <!-- Direct Google Maps app deep redirection hyperlink requested -->
+                        <a href="https://maps.app.goo.gl/u4Wc1rkHotCQpjRz6?g_st=aw" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl shadow-md transform hover:scale-102 transition-all text-sm">
+                            <span data-t="contact_map_btn">📍 Open in Google Maps</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -385,10 +430,10 @@
 
         <!-- ================= PAGE 6: ENQUIRY FORM ================= -->
         <section id="page-enquiry" class="page-section hidden max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
                 <div class="bg-gradient-to-r from-orange-500 to-amber-500 p-8 text-white">
-                    <h2 class="text-3xl font-black">Direct Product Enquiry Form</h2>
-                    <p class="text-slate-950 mt-2 font-medium text-sm">
+                    <h2 class="text-3xl font-black" data-t="enquiry_title">Direct Product Enquiry Form</h2>
+                    <p class="text-slate-950 mt-2 font-medium text-sm" data-t="enquiry_sub">
                         No login required. Submit details and we will review our physical inventory instantly.
                     </p>
                 </div>
@@ -396,40 +441,38 @@
                 <form id="enquiry-form" onsubmit="submitEnquiry(event)" class="p-8 space-y-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Full Name *</label>
-                            <input type="text" id="enq-name" required placeholder="e.g. Ramesh Kumar" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_name">Full Name *</label>
+                            <input type="text" id="enq-name" required placeholder="e.g. Ramesh Kumar" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Mobile Number *</label>
-                            <input type="tel" id="enq-mobile" required placeholder="10 digit phone number" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_mobile">Mobile Number *</label>
+                            <input type="tel" id="enq-mobile" required placeholder="10 digit phone number" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Delivery Location</label>
-                        <input type="text" id="enq-location" placeholder="e.g. Hyderabad" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_location">Delivery Location</label>
+                        <input type="text" id="enq-location" placeholder="e.g. Hyderabad" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Subject / Item Group *</label>
-                        <input type="text" id="enq-subject" required placeholder="e.g. Copper wiring rates quote" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_subject">Subject / Item Group *</label>
+                        <input type="text" id="enq-subject" required placeholder="e.g. Copper wiring rates quote" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Detailed Message</label>
-                        <textarea id="enq-message" rows="4" placeholder="Enter sizing dimensions, custom lengths, or general pipe flow queries here..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"></textarea>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_message">Detailed Message</label>
+                        <textarea id="enq-message" rows="4" placeholder="Enter sizing dimensions, custom lengths..." class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"></textarea>
                     </div>
 
                     <div class="flex items-center space-x-2 text-xs text-slate-500 pt-1">
                         <span class="text-orange-500 font-bold">ℹ️</span>
-                        <p>Our representatives will respond via Call or WhatsApp within 1 - 3 business hours.</p>
+                        <p data-t="form_info">Our representatives will respond via Call or WhatsApp within 1 - 3 business hours.</p>
                     </div>
 
-                    <div class="pt-4 border-t border-slate-100 flex justify-end space-x-3">
-                        <button type="button" onclick="resetEnquiryForm()" class="px-4 py-3 border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-100 text-sm font-semibold">Reset Form</button>
-                        <button type="submit" class="inline-flex items-center space-x-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg hover:scale-102 transition-transform text-sm">
-                            <span>Submit Enquiry Form</span>
-                        </button>
+                    <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end space-x-3">
+                        <button type="button" onclick="resetEnquiryForm()" class="px-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-semibold" data-t="form_reset">Reset Form</button>
+                        <button type="submit" class="inline-flex items-center space-x-2 bg-slate-900 dark:bg-orange-500 hover:bg-slate-800 hover:dark:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg hover:scale-102 transition-transform text-sm" data-t="form_submit">Submit Enquiry Form</button>
                     </div>
                 </form>
             </div>
@@ -438,23 +481,23 @@
         <!-- ================= PAGE 7: ADMIN AREA ================= -->
         <section id="page-admin" class="page-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
             <!-- NOT LOGGED IN VIEW -->
-            <div id="admin-login-card" class="max-w-md mx-auto bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden mt-6">
+            <div id="admin-login-card" class="max-w-md mx-auto bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden mt-6">
                 <div class="bg-slate-900 p-8 text-center text-white">
-                    <div class="w-12 h-12 rounded-2xl bg-orange-500 text-slate-950 flex items-center justify-center mx-auto mb-3 shadow-lg font-bold">🔐</div>
-                    <h2 class="text-2xl font-black">Authorized Portal</h2>
-                    <p class="text-slate-400 text-xs mt-1">Management security workspace login</p>
+                    <div class="w-12 h-12 rounded-2xl bg-orange-500 text-slate-950 flex items-center justify-center mx-auto mb-3 shadow-lg font-bold text-xl">🔐</div>
+                    <h2 class="text-2xl font-black" data-t="admin_title">Authorized Portal</h2>
+                    <p class="text-slate-400 text-xs mt-1" data-t="admin_sub">Management security workspace login</p>
                 </div>
 
                 <form onsubmit="handleAdminLogin(event)" class="p-8 space-y-6">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Enter Access Key Password</label>
-                        <input type="password" id="admin-password-input" required placeholder="Password" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="admin_pass_label">Enter Access Key Password</label>
+                        <input type="password" id="admin-password-input" required placeholder="Password" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm">
                     </div>
-                    <div class="p-3 bg-amber-50 rounded-lg text-xs text-amber-800 border border-amber-200/50 flex items-start space-x-2">
+                    <div class="p-3 bg-amber-50 dark:bg-slate-950 rounded-lg text-xs text-amber-800 dark:text-amber-400 border border-amber-200/50 dark:border-amber-900/40 flex items-start space-x-2">
                         <span class="mt-0.5">⚠️</span>
-                        <span>Use local default password: <strong class="font-extrabold uppercase">admin</strong> to unlock control modes instantly.</span>
+                        <span data-t="admin_pass_warning">Use local default password: admin to unlock control modes instantly.</span>
                     </div>
-                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transition-colors">
+                    <button type="submit" class="w-full bg-slate-900 dark:bg-orange-500 hover:bg-slate-800 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transition-colors" data-t="admin_btn">
                         Authenticate System
                     </button>
                 </form>
@@ -467,88 +510,88 @@
                     <div>
                         <div class="flex items-center space-x-2">
                             <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
-                            <span class="text-xs font-bold tracking-widest text-emerald-400 uppercase">Live Console Mode</span>
+                            <span class="text-xs font-bold tracking-widest text-emerald-400 uppercase" data-t="admin_live_console">Live Console Mode</span>
                         </div>
                         <h2 class="text-3xl font-black mt-1">Admin Dashboard</h2>
                     </div>
                     <div class="mt-4 sm:mt-0 flex gap-2">
                         <button onclick="openSettingsModal()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5">
-                            ⚙️ <span>Shop Settings</span>
+                            ⚙️ <span data-t="admin_settings">Shop Settings</span>
                         </button>
                         <button onclick="handleAdminLogout()" class="bg-rose-900/40 hover:bg-rose-900 text-rose-300 font-semibold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5">
-                            🚪 <span>Exit Session</span>
+                            🚪 <span data-t="admin_exit">Exit Session</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Live stats grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 flex items-center justify-between shadow-sm">
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
                         <div>
-                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Products Catalog</span>
-                            <span id="stat-products-count" class="text-3xl font-black text-slate-900 block mt-1">0</span>
-                            <button onclick="navigateTo('products')" class="text-xs text-blue-600 hover:underline font-semibold mt-2 block">Manage Catalog Items →</button>
+                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_products">Products Catalog</span>
+                            <span id="stat-products-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span>
+                            <button onclick="navigateTo('products')" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold mt-2 block">Manage Catalog Items →</button>
                         </div>
-                        <div class="p-4 bg-blue-50 text-blue-600 rounded-2xl text-xl font-bold">📦</div>
+                        <div class="p-4 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-2xl text-xl font-bold">📦</div>
                     </div>
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 flex items-center justify-between shadow-sm">
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
                         <div>
-                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Gallery Pictures</span>
-                            <span id="stat-gallery-count" class="text-3xl font-black text-slate-900 block mt-1">0</span>
-                            <button onclick="navigateTo('gallery')" class="text-xs text-orange-600 hover:underline font-semibold mt-2 block">Manage Photo Grid →</button>
+                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_gallery">Gallery Pictures</span>
+                            <span id="stat-gallery-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span>
+                            <button onclick="navigateTo('gallery')" class="text-xs text-orange-600 dark:text-orange-450 hover:underline font-semibold mt-2 block">Manage Photo Grid →</button>
                         </div>
-                        <div class="p-4 bg-orange-50 text-orange-600 rounded-2xl text-xl font-bold">🖼️</div>
+                        <div class="p-4 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-450 rounded-2xl text-xl font-bold">🖼️</div>
                     </div>
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 flex items-center justify-between shadow-sm">
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
                         <div>
-                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Guest Enquiries</span>
-                            <span id="stat-enquiries-count" class="text-3xl font-black text-slate-900 block mt-1">0</span>
-                            <span id="stat-pending-count" class="text-xs text-amber-600 font-bold block mt-1">0 Pending</span>
+                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_enquiries">Guest Enquiries</span>
+                            <span id="stat-enquiries-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span>
+                            <span id="stat-pending-count" class="text-xs text-amber-650 font-bold block mt-1">0 Pending</span>
                         </div>
-                        <div class="p-4 bg-purple-50 text-purple-600 rounded-2xl text-xl font-bold">📥</div>
+                        <div class="p-4 bg-purple-50 dark:bg-slate-800 text-purple-600 dark:text-purple-400 rounded-2xl text-xl font-bold">📥</div>
                     </div>
                 </div>
 
                 <!-- Inbox management table -->
-                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-                    <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+                    <div class="bg-slate-100 dark:bg-slate-800 px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
                         <div class="flex items-center space-x-2">
                             <span class="text-lg">📥</span>
-                            <h3 class="font-extrabold text-slate-900 text-lg">Inbox Enquiries Management</h3>
+                            <h3 class="font-extrabold text-slate-900 dark:text-white text-lg">Inbox Enquiries Management</h3>
                         </div>
                     </div>
 
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-sm">
                             <thead>
-                                <tr class="bg-slate-50 border-b border-slate-200 text-slate-400 font-bold text-xs uppercase tracking-wider">
-                                    <th class="p-4">Customer Details</th>
-                                    <th class="p-4">Context Subject</th>
-                                    <th class="p-4">Message Details</th>
-                                    <th class="p-4">Submitted Date</th>
-                                    <th class="p-4 text-center">Operational Status</th>
-                                    <th class="p-4 text-right">Action</th>
+                                <tr class="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-400 font-bold text-xs uppercase tracking-wider">
+                                    <th class="p-4" data-t="admin_table_cust">Customer Details</th>
+                                    <th class="p-4" data-t="admin_table_subj">Context Subject</th>
+                                    <th class="p-4" data-t="admin_table_msg">Message Details</th>
+                                    <th class="p-4" data-t="admin_table_date">Submitted Date</th>
+                                    <th class="p-4 text-center" data-t="admin_table_status">Operational Status</th>
+                                    <th class="p-4 text-right" data-t="admin_table_action">Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="enquiries-table-body" class="divide-y divide-slate-100 font-medium">
+                            <tbody id="enquiries-table-body" class="divide-y divide-slate-150 dark:divide-slate-800 font-medium">
                                 <!-- Loaded dynamically via JavaScript -->
                             </tbody>
                         </table>
                     </div>
                     <div id="no-enquiries-fallback" class="p-12 text-center text-slate-400 hidden">
-                        <p class="font-bold">No enquiries registered yet</p>
-                        <p class="text-xs mt-1">Client submissions will instantly populate here in real-time mode.</p>
+                        <p class="font-bold" data-t="admin_no_enq">No enquiries registered yet</p>
+                        <p class="text-xs mt-1" data-t="admin_no_enq_sub">Client submissions will instantly populate here in real-time mode.</p>
                     </div>
                 </div>
 
-                <!-- Security Access Token changer -->
-                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-                    <h3 class="font-extrabold text-slate-900 text-lg mb-2">Change Administrative Password</h3>
-                    <p class="text-xs text-slate-500 mb-4">Modify the system login key passcode used to access this secure admin console.</p>
+                <!-- Security Access Password changer -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                    <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-2" data-t="admin_change_pass">Change Administrative Password</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-4" data-t="admin_change_pass_sub">Modify the system login key passcode used to access this secure admin console.</p>
                     
                     <form onsubmit="handlePasswordChange(event)" class="flex flex-col sm:flex-row gap-3 max-w-md">
-                        <input type="text" id="new-admin-password-field" placeholder="Enter safe new password (min 4 characters)" required class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs flex-grow">
-                        <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-lg shrink-0">
+                        <input type="text" id="new-admin-password-field" placeholder="Enter safe new password (min 4 characters)" required class="px-4 py-2.5 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg text-xs flex-grow">
+                        <button type="submit" class="bg-slate-900 dark:bg-orange-500 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-lg shrink-0" data-t="admin_update_btn">
                             Update Password
                         </button>
                     </form>
@@ -566,45 +609,45 @@
                 <div class="md:col-span-5 space-y-4">
                     <div class="flex items-center space-x-2 justify-center sm:justify-start">
                         <div class="bg-orange-500 p-2 rounded-lg text-slate-950 font-bold text-lg">⚡</div>
-                        <h4 class="text-xl font-extrabold text-white tracking-tight id-shop-name">Sri Balaji Electrical Shop</h4>
+                        <h4 class="text-xl font-extrabold text-white tracking-tight id-shop-name" data-t="hero_title">Sri Balaji Electrical Shop</h4>
                     </div>
-                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm" data-t="footer_desc">
                         Certified premium switches, plumbing pipes, wires, fans, distribution boards, and lighting fittings at absolute best retail rates.
                     </p>
                     <div class="text-xs font-bold text-orange-400">
-                        Support Hotline: <a id="footer-tel" href="tel:9515168300" class="hover:underline text-white font-extrabold id-phone-text">9515168300</a>
+                        <span data-t="footer_support">Support Hotline:</span> <a id="footer-tel" href="tel:9515168300" class="hover:underline text-white font-extrabold id-phone-text">9515168300</a>
                     </div>
                 </div>
 
                 <div class="md:col-span-3 space-y-3 text-xs">
-                    <h5 class="font-black uppercase text-slate-200 tracking-widest">Quick Directions</h5>
+                    <h5 class="font-black uppercase text-slate-200 tracking-widest" data-t="footer_directions">Quick Directions</h5>
                     <div class="flex flex-col space-y-2">
-                        <button onclick="navigateTo('home'); window.scrollTo({top:0})" class="text-left hover:text-orange-400 transition-colors">Home Page</button>
-                        <button onclick="navigateTo('products'); window.scrollTo({top:0})" class="text-left hover:text-orange-400 transition-colors">Products Catalogue</button>
-                        <button onclick="navigateTo('gallery'); window.scrollTo({top:0})" class="text-left hover:text-orange-400 transition-colors">Showcase Photos</button>
-                        <button onclick="navigateTo('enquiry'); window.scrollTo({top:0})" class="text-left hover:text-orange-400 transition-colors">Quotation Enquiry</button>
+                        <button onclick="navigateTo('home'); window.scrollTo({top:0})" class="text-center sm:text-left hover:text-orange-400 transition-colors" data-t="nav_home">Home Page</button>
+                        <button onclick="navigateTo('products'); window.scrollTo({top:0})" class="text-center sm:text-left hover:text-orange-400 transition-colors" data-t="nav_products">Products Catalogue</button>
+                        <button onclick="navigateTo('gallery'); window.scrollTo({top:0})" class="text-center sm:text-left hover:text-orange-400 transition-colors" data-t="nav_gallery">Showcase Photos</button>
+                        <button onclick="navigateTo('enquiry'); window.scrollTo({top:0})" class="text-center sm:text-left hover:text-orange-400 transition-colors" data-t="nav_enquiry">Quotation Enquiry</button>
                     </div>
                 </div>
 
                 <div class="md:col-span-4 space-y-3 text-xs">
-                    <h5 class="font-black uppercase text-slate-200 tracking-widest">Store Hours & Locations</h5>
-                    <p id="footer-hours" class="leading-relaxed">Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed</p>
-                    <p id="footer-address" class="text-slate-500 leading-relaxed">Hyderabad, India</p>
+                    <h5 class="font-black uppercase text-slate-200 tracking-widest" data-t="footer_hours_title">Store Hours & Locations</h5>
+                    <p id="footer-hours" class="leading-relaxed" data-t="contact_hours_val">Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed</p>
+                    <p id="footer-address" class="text-slate-500 leading-relaxed">D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India</p>
                 </div>
 
             </div>
 
             <div class="pt-8 text-center text-xs flex flex-col sm:flex-row justify-between items-center text-slate-500 gap-4">
-                <p>© 2026 <span id="footer-copyright-name">Sri Balaji Electrical Shop</span>. All Rights Reserved.</p>
+                <p>© 2026 <span id="footer-copyright-name">Sri Balaji Electrical Shop</span>. <span data-t="all_rights_reserved">All Rights Reserved.</span></p>
                 <button onclick="navigateTo('admin'); window.scrollTo({top:0, behavior:'smooth'})" class="hover:text-white flex items-center space-x-1">
-                    <span>🔐 Secure Admin Area</span>
+                    <span data-t="footer_secure">🔐 Secure Admin Area</span>
                 </button>
             </div>
         </div>
     </footer>
 
     <!-- FLOATING ACTIONS SUPPORT BADGES -->
-    <div class="fixed bottom-6 right-6 z-40 flex flex-col space-y-3">
+    <div class="fixed bottom-6 right-6 z-45 flex flex-col space-y-3">
         <!-- Call dialer -->
         <a id="floating-call-btn" href="tel:9515168300" class="bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform group relative" title="Call Store Now">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.387a12.035 12.035 0 01-7.108-7.108c-.145-.44.02-1.071.387-1.34l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
@@ -625,57 +668,57 @@
 
     <!-- ================= MODALS & CRUDS OVERLAYS ================= -->
     <!-- PRODUCT ADD/EDIT MODAL OVERLAY -->
-    <div id="product-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-2xl overflow-hidden border border-slate-200 shadow-2xl">
+    <div id="product-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
             <div class="bg-slate-900 p-6 text-white flex justify-between items-center">
                 <h3 id="product-modal-title" class="text-xl font-bold">Configure Product Item</h3>
                 <button onclick="closeProductModal()" class="p-1.5 hover:bg-slate-800 rounded-lg">✕</button>
             </div>
 
-            <form onsubmit="saveProductForm(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+            <form onsubmit="saveProductForm(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-slate-800 dark:text-white">
                 <input type="hidden" id="modal-product-id">
                 
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Product Title / Brand Name *</label>
-                  <input type="text" id="modal-product-name" required placeholder="e.g. Anchor Sockets" class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Product Title / Brand Name *</label>
+                  <input type="text" id="modal-product-name" required placeholder="e.g. Anchor Sockets" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Category Group *</label>
-                    <select id="modal-product-category" class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm font-semibold focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Category Group *</label>
+                    <select id="modal-product-category" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none">
                         <!-- Populated dynamically -->
                     </select>
                   </div>
 
                   <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Price (₹ INR) *</label>
-                    <input type="number" id="modal-product-price" required placeholder="Price" class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Price (₹ INR) *</label>
+                    <input type="number" id="modal-product-price" required placeholder="Price" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                   </div>
                 </div>
 
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Short Specifications/Details</label>
-                  <textarea id="modal-product-description" rows="3" placeholder="Explain manufacturer parameters, brand tags..." class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"></textarea>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Short Specifications/Details</label>
+                  <textarea id="modal-product-description" rows="3" placeholder="Explain manufacturer parameters, brand tags..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></textarea>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Stock Availability Status *</label>
-                    <select id="modal-product-availability" class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm font-semibold focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Stock Availability Status *</label>
+                    <select id="modal-product-availability" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none">
                       <option value="In Stock">In Stock</option>
                       <option value="Out of Stock">Out of Stock</option>
                     </select>
                   </div>
 
                   <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Image URL Address / Local Name</label>
-                    <input type="text" id="modal-product-image" placeholder="image_d57726.png or URL" class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Image URL Address / Local Name</label>
+                    <input type="text" id="modal-product-image" placeholder="image_d57726.png or URL" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                   </div>
                 </div>
 
-                <div class="pt-4 border-t flex justify-end space-x-2">
-                  <button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-lg text-slate-600 hover:bg-slate-100 text-sm">Cancel</button>
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2">
+                  <button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button>
                   <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md">Save Configuration</button>
                 </div>
             </form>
@@ -683,25 +726,25 @@
     </div>
 
     <!-- GALLERY ADD/EDIT MODAL OVERLAY -->
-    <div id="gallery-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-md overflow-hidden border border-slate-200 shadow-2xl animate-scaleUp">
+    <div id="gallery-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
             <div class="bg-slate-900 p-6 text-white flex justify-between items-center">
                 <h3 id="gallery-modal-title" class="text-xl font-bold">Gallery Photo Details</h3>
                 <button onclick="closeGalleryModal()" class="p-1.5 hover:bg-slate-800 rounded-lg">✕</button>
             </div>
 
-            <form onsubmit="saveGalleryForm(event)" class="p-6 space-y-4">
+            <form onsubmit="saveGalleryForm(event)" class="p-6 space-y-4 text-slate-800 dark:text-white">
                 <input type="hidden" id="modal-gallery-id">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Image Caption Label *</label>
-                    <input type="text" id="modal-gallery-caption" required placeholder="e.g. Safety wire displays" class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Image Caption Label *</label>
+                    <input type="text" id="modal-gallery-caption" required placeholder="e.g. Safety wire displays" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Image URL / Local File Name</label>
-                    <input type="text" id="modal-gallery-image" placeholder="image_d576ee.jpg or URL" class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Image URL / Local File Name</label>
+                    <input type="text" id="modal-gallery-image" placeholder="image_d576ee.jpg or URL" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                 </div>
-                <div class="pt-4 border-t flex justify-end space-x-2">
-                    <button type="button" onclick="closeGalleryModal()" class="px-4 py-2 border rounded-lg text-slate-600 hover:bg-slate-100 text-sm">Cancel</button>
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2">
+                    <button type="button" onclick="closeGalleryModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button>
                     <button type="submit" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-sm">Save Element</button>
                 </div>
             </form>
@@ -709,65 +752,367 @@
     </div>
 
     <!-- GLOBAL CONFIGURATION SETTINGS MODAL OVERLAY -->
-    <div id="settings-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-lg overflow-hidden border border-slate-200 shadow-2xl animate-scaleUp">
+    <div id="settings-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-lg overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
             <div class="bg-slate-900 p-6 text-white flex justify-between items-center">
                 <h3 class="text-xl font-bold flex items-center space-x-2">⚙️ <span>Adjust Shop Configuration Settings</span></h3>
                 <button onclick="closeSettingsModal()" class="p-1.5 hover:bg-slate-800 rounded-lg">✕</button>
             </div>
 
-            <form onsubmit="saveSettingsForm(event)" class="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+            <form onsubmit="saveSettingsForm(event)" class="p-6 space-y-4 max-h-[70vh] overflow-y-auto text-slate-800 dark:text-white">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Shop Name Title</label>
-                    <input type="text" id="setting-shop-name" required class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm font-semibold focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Shop Name Title</label>
+                    <input type="text" id="setting-shop-name" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm font-semibold">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Phone Number</label>
-                        <input type="text" id="setting-phone" required class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none">
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Phone Number</label>
+                        <input type="text" id="setting-phone" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp Support</label>
-                        <input type="text" id="setting-whatsapp" required class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none">
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">WhatsApp Support</label>
+                        <input type="text" id="setting-whatsapp" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Hero Banner URL / File Name</label>
-                    <input type="text" id="setting-hero-banner" class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Hero Banner URL / File Name</label>
+                    <input type="text" id="setting-hero-banner" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Store Physical Address</label>
-                    <input type="text" id="setting-address" class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Store Physical Address</label>
+                    <input type="text" id="setting-address" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Business Timings</label>
-                    <input type="text" id="setting-hours" class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Business Timings</label>
+                    <input type="text" id="setting-hours" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm">
                 </div>
 
-                <div class="pt-4 border-t flex justify-end space-x-2">
-                    <button type="button" onclick="closeSettingsModal()" class="px-4 py-2 border rounded-lg text-slate-600 hover:bg-slate-100 text-sm">Cancel</button>
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2">
+                    <button type="button" onclick="closeSettingsModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button>
                     <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm">Save Global Settings</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- CUSTOM COMPLIANT OVERLAY ALERT POPUP MODULE (Replaces alert() and confirm() perfectly) -->
+    <div id="custom-alert-box" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-sm overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl p-6 text-center animate-fadeIn">
+            <div id="custom-alert-icon" class="text-4xl mb-3">🔔</div>
+            <h4 id="custom-alert-title" class="text-lg font-extrabold text-slate-900 dark:text-white mb-2">Notice</h4>
+            <p id="custom-alert-message" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-6">Details of request action.</p>
+            <div class="flex items-center justify-center space-x-2">
+                <button id="custom-alert-cancel" onclick="resolveCustomConfirm(false)" class="hidden px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold">Cancel</button>
+                <button id="custom-alert-confirm" onclick="resolveCustomConfirm(true)" class="px-6 py-2 bg-slate-900 dark:bg-orange-500 hover:bg-slate-800 dark:hover:bg-orange-600 text-white text-xs font-bold rounded-lg shadow-sm">OK</button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- ================= CORE JAVASCRIPT LOGIC ================= -->
     <script>
-        // Default Constants & Static Local Mock Data
+        // Multi-lingual Translation Catalog Database
+        const TRANSLATIONS = {
+            en: {
+                nav_home: "Home",
+                nav_products: "Products",
+                nav_gallery: "Gallery",
+                nav_about: "About Us",
+                nav_contact: "Contact",
+                nav_enquiry: "Send Enquiry",
+                nav_admin: "Admin",
+                hero_badge: "⚡ Quality Assured Electrical Solutions",
+                hero_title: "Sri Balaji Electrical Shop",
+                hero_desc: "All Electrical, Plumbing, Hardware & Home Utility Products are Available Under One Roof with Premium Brand Assurance.",
+                call_now: "Call Now",
+                hero_whatsapp: "💬 WhatsApp Us",
+                hero_direct_enq: "Send Direct Online Enquiry",
+                highlight_brands: "Quality Brands",
+                highlight_brands_sub: "Premium electrical products",
+                highlight_pricing: "Best Pricing",
+                highlight_pricing_sub: "Wholesale & retail rates",
+                highlight_service: "Friendly Service",
+                highlight_service_sub: "Guidance for home setups",
+                highlight_support: "Customer Support",
+                highlight_support_sub: "Speedy WhatsApp response",
+                featured_title: "Featured Products",
+                featured_sub: "Our Showcase",
+                featured_view_all: "All Products",
+                catalog_title: "Products Catalogue",
+                catalog_desc: "Sort through our comprehensive list of safety items, plumbing pipes, wires, and household equipment.",
+                filter_label: "Filter by Category",
+                search_placeholder: "Search products by title, category, description...",
+                gallery_title: "Shop Showcase & Gallery",
+                gallery_desc: "Have a visual tour inside our local showroom. We stock certified wiring supplies, conduit piping layout tools, and light fittings.",
+                about_badge: "About Our Business",
+                about_title: "Sri Balaji Electricals",
+                about_desc: "Your trusted neighborhood location supplying top-quality electrical, plumbing pipelines, and home maintenance devices.",
+                about_p1: "At Sri Balaji Electrical Shop, we pride ourselves on holding a comprehensive inventory of heavy-duty materials required for building development, household repair setups, wiring improvements, and fixture fittings.",
+                about_p2: "Our focus is safety first. Every switch, wire loop, or PVC conduit pipe we sell conforms to official safety indices. We guide household users to get correct current metrics and premium quality plumbing parts.",
+                about_pillars_title: "Four Pillars of Our Commitment",
+                pillar1_title: "Quality Products",
+                pillar1_desc: "Authorized stock from top-tier brands like Havells, Finolex, and Syska to guarantee safety.",
+                pillar2_title: "Best Prices",
+                pillar2_desc: "Honest margins on single utility pieces as well as batch construction blueprints.",
+                pillar3_title: "Friendly Service",
+                pillar3_desc: "Need help deciding on conduit sizing or lighting thresholds? Our team is glad to guide.",
+                pillar4_title: "Customer Support",
+                pillar4_desc: "Call, message, or drop an offline query and get rapid, personalized support sessions.",
+                contact_title: "Contact Sri Balaji Shop",
+                contact_desc: "Visit us locally in Hyderabad or connect via phone/WhatsApp for product orders.",
+                contact_card_title: "Store Location & Details",
+                contact_phone: "Phone Number",
+                contact_wa: "WhatsApp Support",
+                contact_address: "Store Physical Address",
+                contact_hours: "Operational Timing Schedules",
+                contact_hours_val: "Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed",
+                contact_map_title: "Navigation Map Locator",
+                contact_map_btn: "📍 Open in Google Maps",
+                contact_map_desc: "Hyderabad (TS), India",
+                enquiry_title: "Direct Product Enquiry Form",
+                enquiry_sub: "No login required. Submit details and we will review our physical inventory instantly.",
+                form_name: "Full Name *",
+                form_mobile: "Mobile Number *",
+                form_location: "Delivery Location",
+                form_subject: "Subject / Item Group *",
+                form_message: "Detailed Message",
+                form_info: "Our representatives will respond via Call or WhatsApp within 1 - 3 business hours.",
+                form_reset: "Reset Form",
+                form_submit: "Submit Enquiry Form",
+                admin_title: "Authorized Portal",
+                admin_sub: "Management security workspace login",
+                admin_pass_label: "Enter Access Key Password",
+                admin_pass_warning: "Use local default password: admin to unlock control modes instantly.",
+                admin_btn: "Authenticate System",
+                admin_live_console: "Live Console Mode",
+                admin_exit: "Exit Session",
+                admin_settings: "Shop Settings",
+                admin_stat_products: "Products Catalog",
+                admin_stat_gallery: "Gallery Pictures",
+                admin_stat_enquiries: "Guest Enquiries",
+                admin_table_cust: "Customer Details",
+                admin_table_subj: "Context Subject",
+                admin_table_msg: "Message Details",
+                admin_table_date: "Submitted Date",
+                admin_table_status: "Operational Status",
+                admin_table_action: "Action",
+                admin_no_enq: "No enquiries registered yet",
+                admin_no_enq_sub: "Client submissions will instantly populate here in real-time mode.",
+                admin_change_pass: "Change Administrative Password",
+                admin_change_pass_sub: "Modify the system login key passcode used to access this secure admin console.",
+                admin_update_btn: "Update Password",
+                footer_desc: "Certified premium switches, plumbing pipes, wires, fans, distribution boards, and lighting fittings at absolute best retail rates.",
+                footer_support: "Support Hotline:",
+                footer_directions: "Quick Directions",
+                footer_hours_title: "Store Hours & Locations",
+                footer_secure: "Secure Admin Area",
+                all_rights_reserved: "All Rights Reserved."
+            },
+            te: {
+                nav_home: "హోమ్",
+                nav_products: "ఉత్పత్తులు",
+                nav_gallery: "గ్యాలరీ",
+                nav_about: "మా గురించి",
+                nav_contact: "సంప్రదించండి",
+                nav_enquiry: "విచారణ పంపండి",
+                nav_admin: "అడ్మిన్",
+                hero_badge: "⚡ నాణ్యత హామీ ఇవ్వబడిన విద్యుత్ పరిష్కారాలు",
+                hero_title: "శ్రీ బాలాజీ ఎలక్ట్రికల్ షాప్",
+                hero_desc: "అన్ని ఎలక్ట్రికల్, ప్లంబింగ్, హార్డ్‌వేర్ & గృహోపకరణాల ఉత్పత్తులు ఒకే చోట అత్యుత్తమ బ్రాండ్ నాణ్యతతో లభిస్తాయి.",
+                call_now: "ఇప్పుడే కాల్ చేయండి",
+                hero_whatsapp: "💬 వాట్సాప్ చాట్",
+                hero_direct_enq: "ఆన్‌లైన్ విచారణ పంపండి",
+                highlight_brands: "నాణ్యమైన బ్రాండ్లు",
+                highlight_brands_sub: "ప్రీమియం ఎలక్ట్రికల్ ఉత్పత్తులు",
+                highlight_pricing: "ఉత్తమ ధరలు",
+                highlight_pricing_sub: "హోల్‌సేల్ & రిటైల్ రేట్లు",
+                highlight_service: "స్నేహపూర్వక సేవ",
+                highlight_service_sub: "ఇంటి వైరింగ్ సూచనలు",
+                highlight_support: "కస్టమర్ సపోర్ట్",
+                highlight_support_sub: "వేగవంతమైన వాట్సాప్ స్పందన",
+                featured_title: "ముఖ్యమైన ఉత్పత్తులు",
+                featured_sub: "మా ప్రదర్శన",
+                featured_view_all: "అన్ని ఉత్పత్తులు",
+                catalog_title: "ఉత్పత్తుల కేటలాగ్",
+                catalog_desc: "మా భద్రతా పరికరాలు, ప్లంబింగ్ పైపులు, వైర్లు మరియు గృహోపకరణాల సమగ్ర జాబితాను చూడండి.",
+                filter_label: "కేటగిరీ వారీగా ఫిల్టర్",
+                search_placeholder: "పేరు, కేటగిరీ లేదా వివరణతో వెతకండి...",
+                gallery_title: "షాప్ షోకేస్ & గ్యాలరీ",
+                gallery_desc: "మా లోకల్ షోరూమ్ ఒకసారి చూడండి. సర్టిఫైడ్ వైరింగ్ సామాగ్రి, పైపింగ్ పరికరాలు మరియు లైట్లు మా వద్ద ఉన్నాయి.",
+                about_badge: "మా వ్యాపారం గురించి",
+                about_title: "శ్రీ బాలాజీ ఎలక్ట్రికల్స్",
+                about_desc: "ఉత్తమమైన ఎలక్ట్రికల్, ప్లంబింగ్ పైపులు మరియు గృహాల మరమ్మత్తు పరికరాలను అందించే మీ నమ్మకమైన షాప్.",
+                about_p1: "శ్రీ బాలాజీ ఎలక్ట్రికల్ షాప్ వద్ద, గృహ నిర్మాణాలకు, వైరింగ్ మెరుగుదలలకు మరియు ఫిట్టింగ్‌లకు అవసరమైన భారీ సామాగ్రిని మేము నిల్వ ఉంచుతాము.",
+                about_p2: "మా ప్రాధాన్యత ఎల్లప్పుడూ భద్రతకే. మేము విక్రయించే ప్రతి స్విచ్, వైర్ లూప్ లేదా PVC పైపు అధికారిక భద్రతా సూచీలకు లోబడి ఉంటుంది. కస్టమర్లకు సరైన గైడెన్స్ ఇస్తాము.",
+                about_pillars_title: "మా సేవా నిబద్ధత - 4 స్తంభాలు",
+                pillar1_title: "నాణ్యమైన ఉత్పత్తులు",
+                pillar1_desc: "భద్రతకు హామీగా హావెల్స్, ఫినోలెక్స్ మరియు సిస్కా వంటి అగ్ర బ్రాండ్ల నుండి అధికారిక స్టాక్.",
+                pillar2_title: "ఉత్తమ ధరలు",
+                pillar2_desc: "సింగిల్ పీస్ అయినా లేదా బల్క్ కన్స్ట్రక్షన్ సామాగ్రి అయినా సరసమైన హోల్సేల్ ధరలు.",
+                pillar3_title: "స్నేహపూర్వక సేవ",
+                pillar3_desc: "పైపుల సైజులు లేదా లైటింగ్ ఎంపికలో కస్టమర్లకు ఉచిత సలహాలు, సూచనలు ఇస్తాము.",
+                pillar4_title: "కస్టమర్ సపోర్ట్",
+                pillar4_desc: "కాల్, వాట్సాప్ లేదా ఆన్‌లైన్ ఫామ్ ద్వారా వేగవంతమైన మరియు వ్యక్తిగతీకరించిన సపోర్ట్.",
+                contact_title: "బాలాజీ షాప్ సంప్రదించండి",
+                contact_desc: "హైదరాబాద్‌లో మమ్మల్ని నేరుగా సందర్శించండి లేదా ఆర్డర్ల కోసం ఫోన్/వాట్సాప్ ద్వారా సంప్రదించండి.",
+                contact_card_title: "షాప్ స్థానం & వివరాలు",
+                contact_phone: "ఫోన్ నంబర్",
+                contact_wa: "వాట్సాప్ సపోర్ట్",
+                contact_address: "షాప్ చిరునామా",
+                contact_hours: "పని వేళలు",
+                contact_hours_val: "సోమవారం - శనివారం: ఉదయం 9:00 - రాత్రి 9:00, ఆదివారం: సెలవు",
+                contact_map_title: "మ్యాప్ లొకేటర్",
+                contact_map_btn: "📍 గూగుల్ మ్యాప్స్ లో ఓపెన్ చేయండి",
+                contact_map_desc: "హైదరాబాద్ (TS), ఇండియా",
+                enquiry_title: "డైరెక్ట్ ప్రొడక్ట్ ఎంక్వైరీ ఫామ్",
+                enquiry_sub: "లాగిన్ అవసరం లేదు. వివరాలను సబ్మిట్ చేయండి, మేము స్టాక్ చూసి వెంటనే తెలియజేస్తాము.",
+                form_name: "పూర్తి పేరు *",
+                form_mobile: "మొబైల్ నంబర్ *",
+                form_location: "డెలివరీ లొకేషన్",
+                form_subject: "విషయం / ప్రొడక్ట్ గ్రూప్ *",
+                form_message: "సందేశం / వివరాలు",
+                form_info: "మా ప్రతినిధులు 1 - 3 గంటల్లోపు కాల్ లేదా వాట్సాప్ ద్వారా మిమ్మల్ని సంప్రదిస్తారు.",
+                form_reset: "ఫామ్ రీసెట్",
+                form_submit: "ఎంక్వైరీ సబ్మిట్ చేయండి",
+                admin_title: "అడ్మిన్ పోర్టల్",
+                admin_sub: "మేనేజ్‌మెంట్ లాగిన్ ఏరియా",
+                admin_pass_label: "యాక్సెస్ కీ పాస్‌వర్డ్ ఎంటర్ చేయండి",
+                admin_pass_warning: "లాగిన్ కావడానికి డిఫాల్ట్ పాస్‌వర్డ్ 'admin' వాడండి.",
+                admin_btn: "లాగిన్ అవ్వండి",
+                admin_live_console: "లైవ్ అడ్మిన్ కన్సోల్",
+                admin_exit: "సెషన్ ముగించు",
+                admin_settings: "షాప్ సెట్టింగ్స్",
+                admin_stat_products: "మొత్తం ఉత్పత్తులు",
+                admin_stat_gallery: "గ్యాలరీ చిత్రాలు",
+                admin_stat_enquiries: "మొత్తం విచారణలు",
+                admin_table_cust: "కస్టమర్ వివరాలు",
+                admin_table_subj: "విషయం",
+                admin_table_msg: "సందేశం",
+                admin_table_date: "తేదీ",
+                admin_table_status: "స్థితి",
+                admin_table_action: "చర్య",
+                admin_no_enq: "ఇంకా విచారణలు రాలేదు",
+                admin_no_enq_sub: "కస్టమర్ సబ్మిట్ చేసిన వెంటనే ఇక్కడ ప్రత్యక్షమవుతాయి.",
+                admin_change_pass: "అడ్మిన్ పాస్‌వర్డ్ మార్చండి",
+                admin_change_pass_sub: "ఈ అడ్మిన్ ప్యానెల్ యాక్సెస్ చేయడానికి ఉపయోగించే పాస్‌వర్డ్‌ను అప్‌డేట్ చేయండి.",
+                admin_update_btn: "పాస్‌వర్డ్ అప్‌డేట్",
+                footer_desc: "ధృవీకరించబడిన స్విచ్‌లు, ప్లంబింగ్ పైపులు, వైర్లు, ఫ్యాన్లు మరియు లైటింగ్ ఫిట్టింగ్‌లు అత్యుత్తమ రిటైల్ ధరలకే లభించును.",
+                footer_support: "సపోర్ట్ హాట్‌లైన్:",
+                footer_directions: "త్వరిత మార్గాలు",
+                footer_hours_title: "పనివేళలు & స్థానాలు",
+                footer_secure: "సెక్యూర్ అడ్మిన్ లాగిన్",
+                all_rights_reserved: "సర్వ హక్కులూ ప్రత్యేకించబడినవి."
+            },
+            hi: {
+                nav_home: "होम",
+                nav_products: "उत्पाद",
+                nav_gallery: "गैलरी",
+                nav_about: "हमारे बारे में",
+                nav_contact: "संपर्क",
+                nav_enquiry: "पूछताछ भेजें",
+                nav_admin: "एडमिन",
+                hero_badge: "⚡ गुणवत्ता सुनिश्चित इलेक्ट्रिकल समाधान",
+                hero_title: "श्री बालाजी इलेक्ट्रिकल शॉप",
+                hero_desc: "सभी इलेक्ट्रिकल, प्लंबिंग, हार्डवेयर और घरेलू उपयोग के उत्पाद एक ही छत के नीचे प्रीमियम ब्रांड आश्वासन के साथ उपलब्ध हैं।",
+                call_now: "अभी कॉल करें",
+                hero_whatsapp: "💬 व्हाट्सएप करें",
+                hero_direct_enq: "सीधे ऑनलाइन पूछताछ भेजें",
+                highlight_brands: "गुणवत्ता वाले ब्रांड",
+                highlight_brands_sub: "प्रीमियम इलेक्ट्रिकल उत्पाद",
+                highlight_pricing: "सर्वोत्तम मूल्य",
+                highlight_pricing_sub: "थोक और खुदरा दरें",
+                highlight_service: "मैत्रीपूर्ण सेवा",
+                highlight_service_sub: "घर की वायरिंग के लिए मार्गदर्शन",
+                highlight_support: "कस्टमर सपोर्ट",
+                highlight_support_sub: "त्वरित व्हाट्सएप प्रतिक्रिया",
+                featured_title: "विशेष रुप से प्रदर्शित उत्पाद",
+                featured_sub: "हमारा शोकेस",
+                featured_view_all: "सभी उत्पाद",
+                catalog_title: "उत्पाद कैटलॉग",
+                catalog_desc: "सुरक्षा उपकरणों, प्लंबिंग पाइपों, तारों और घरेलू उपकरणों की हमारी सूची देखें।",
+                filter_label: "श्रेणी के अनुसार फ़िल्टर करें",
+                search_placeholder: "शीर्षक, श्रेणी या विवरण द्वारा उत्पाद खोजें...",
+                gallery_title: "दुकान शोकेस और गैलरी",
+                gallery_desc: "हमारे शोरूम का एक दृश्य दौरा करें। हमारे पास प्रमाणित वायरिंग आपूर्ति, पाइपिंग उपकरण और लाइटें हैं।",
+                about_badge: "हमारे व्यवसाय के बारे में",
+                about_title: "श्री बालाजी इलेक्ट्रिकल्स",
+                about_desc: "शीर्ष गुणवत्ता वाले इलेक्ट्रिकल, प्लंबिंग पाइपलाइन और घरेलू रखरखाव उपकरण की आपूर्ति करने वाली आपकी भरोसेमंद दुकान।",
+                about_p1: "श्री बालाजी इलेक्ट्रिकल शॉप में, हम घरेलू मरम्मत, वायरिंग सुधार और फिटिंग के लिए आवश्यक भारी सामग्री का एक व्यापक स्टॉक रखते हैं।",
+                about_p2: "हमारी प्राथमिकता हमेशा सुरक्षा है। हमारे द्वारा बेचे जाने वाले हर स्विच, वायर लूप या पीवीसी पाइप आधिकारिक सुरक्षा मानकों के अनुरूप होते हैं।",
+                about_pillars_title: "हमारी प्रतिबद्धता के चार स्तंभ",
+                pillar1_title: "गुणवत्ता उत्पाद",
+                pillar1_desc: "सुरक्षा की गारंटी के लिए हैवेल्स, फिनोलेक्स और सिस्का जैसे शीर्ष ब्रांडों से आधिकारिक स्टॉक।",
+                pillar2_title: "सर्वोत्तम मूल्य",
+                pillar2_desc: "एकल घरेलू टुकड़ों के साथ-साथ थोक निर्माण ब्लूप्रिंट पर भी उचित थोक मार्जिन।",
+                pillar3_title: "मैत्रीपूर्ण सेवा",
+                pillar3_desc: "पाइप के आकार या लाइटिंग विकल्पों के चयन में हमारी टीम आपकी सहायता के लिए सदैव उपलब्ध है।",
+                pillar4_title: "ग्राहक सहायता",
+                pillar4_desc: "कॉल, व्हाट्सएप या ऑनलाइन पूछताछ द्वारा व्यक्तिगत और त्वरित सहायता प्राप्त करें।",
+                contact_title: "बालाजी शॉप से संपर्क करें",
+                contact_desc: "हैदराबाद में स्थानीय स्तर पर हमसे मिलें या उत्पाद ऑर्डर के लिए फोन/व्हाट्सएप के माध्यम से जुड़ें।",
+                contact_card_title: "स्टोर का स्थान और विवरण",
+                contact_phone: "फ़ोन नंबर",
+                contact_wa: "व्हाट्सएप सपोर्ट",
+                contact_address: "स्टोर का पता",
+                contact_hours: "संचालन का समय",
+                contact_hours_val: "सोमवार - शनिवार: सुबह 9:00 - रात 9:00, रविवार: बंद",
+                contact_map_title: "नेविगेशन मानचित्र लोकेटर",
+                contact_map_btn: "📍 गूगल मैप्स में खोलें",
+                contact_map_desc: "हैदराबाद (TS), भारत",
+                enquiry_title: "प्रत्यक्ष उत्पाद पूछताछ फॉर्म",
+                enquiry_sub: "कोई लॉगिन आवश्यक नहीं है। विवरण सबमिट करें और हम तुरंत स्टॉक की जांच करेंगे।",
+                form_name: "पूरा नाम *",
+                form_mobile: "मोबाइल नंबर *",
+                form_location: "वितरण स्थान",
+                form_subject: "विषय / उत्पाद समूह *",
+                form_message: "विस्तृत संदेश",
+                form_info: "हमारे प्रतिनिधि 1 - 3 व्यावसायिक घंटों के भीतर कॉल या व्हाट्सएप के माध्यम से प्रतिक्रिया देंगे।",
+                form_reset: "फ़ॉर्म रीसेट करें",
+                form_submit: "पूछताछ फॉर्म सबमिट करें",
+                admin_title: "अधिकृत पोर्टल",
+                admin_sub: "प्रबंधन सुरक्षा लॉगिन",
+                admin_pass_label: "एक्सेस कुंजी पासवर्ड दर्ज करें",
+                admin_pass_warning: "कंट्रोल मोड को अनलॉक करने के लिए डिफ़ॉल्ट पासवर्ड 'admin' का उपयोग करें।",
+                admin_btn: "प्रमाणित करें",
+                admin_live_console: "लाइव एडमिन कनसोेल",
+                admin_exit: "सत्र समाप्त करें",
+                admin_settings: "दुकान सेटिंग्स",
+                admin_stat_products: "उत्पाद सूची",
+                admin_stat_gallery: "गैलरी के चित्र",
+                admin_stat_enquiries: "कुल पूछताछ",
+                admin_table_cust: "ग्राहक का विवरण",
+                admin_table_subj: "विषय",
+                admin_table_msg: "संदेश विवरण",
+                admin_table_date: "जमा करने की तिथि",
+                admin_table_status: "ऑपरेशनल स्थिति",
+                admin_table_action: "कार्रवाई",
+                admin_no_enq: "अभी तक कोई पूछताछ दर्ज नहीं की गई है",
+                admin_no_enq_sub: "ग्राहक सबमिशन वास्तविक समय में तुरंत यहां दिखाई देंगे।",
+                admin_change_pass: "प्रशासनिक पासवर्ड बदलें",
+                admin_change_pass_sub: "इस सुरक्षित एडमिन कंसोल तक पहुंचने के लिए उपयोग किए जाने वाले सिस्टम पासवर्ड को अपडेट करें।",
+                admin_update_btn: "पासवर्ड अपडेट करें",
+                footer_desc: "प्रमाणित स्विच, प्लंबिंग पाइप, तार, पंखे और लाइटिंग फिटिंग बिल्कुल सर्वोत्तम दरों पर उपलब्ध हैं।",
+                footer_support: "सपोर्ट हॉटलाइन:",
+                footer_directions: "त्वरित मार्ग",
+                footer_hours_title: "स्टोर का समय और स्थान",
+                footer_secure: "सुरक्षित एडमिन क्षेत्र",
+                all_rights_reserved: "सर्वाधिकार सुरक्षित।"
+            }
+        };
+
+        // Standard Default Data values
         const DEFAULT_PRODUCTS = [
-            { id: "prod-1", name: "Anchor Roma Classic Modular Switches", description: "Premium high-durability modular electrical switches, sleek white design, fire-retardant material.", category: "Switches", price: 45, availability: "In Stock", image: "image_d57726.png" },
-            { id: "prod-2", name: "Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description: "Flame Retardant (FR) multi-strand copper cables ideal for premium residential wiring and distribution boards.", category: "Wires", price: 1540, availability: "In Stock", image: "image_d57726.png" },
-            { id: "prod-3", name: "Syska 9W LED Bright Bulbs (Cool Day Light)", description: "Energy-saving LED bulbs, B22 cap, long life up to 15 years, zero flickering and ultra-bright output.", category: "LED Lights", price: 110, availability: "In Stock", image: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-4", name: "Crompton Hill Briz 1200mm Ceiling Fan", description: "High speed durable electric ceiling fan with powerful copper motor and heavy-duty double ball bearings.", category: "Fans", price: 2350, availability: "In Stock", image: "https://images.unsplash.com/photo-1618944847023-38aa001235f0?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-5", name: "Sudhakar PVC Conduit Pipe (1 inch, 3m)", description: "Heavy-duty fire-retardant PVC electrical pipes designed for easy under-wall wiring and protection.", category: "PVC Pipes", price: 95, availability: "In Stock", image: "https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-6", name: "Jaquar Wall-Mounted Brass Shower Faucet", description: "Premium rust-free chrome finished brass shower mixture with responsive flow control and modern design.", category: "Plumbing Items", price: 1850, availability: "In Stock", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-7", name: "Link Heavy Duty Brass Padlock (70mm)", description: "Ultimate security padlocks with hardened steel shackle and smart anti-drill brass core technology.", category: "Hardware Items", price: 480, availability: "In Stock", image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=500&q=80" }
+            { id: "prod-1", name: "Anchor Roma Classic Modular Switches", description: "Premium modular switches, sleek white, fire-retardant material.", category: "Switches", price: 45, availability: "In Stock", image: "image_d57726.png" },
+            { id: "prod-2", name: "Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description: "Flame Retardant multi-strand cables ideal for residential wiring.", category: "Wires", price: 1540, availability: "In Stock", image: "image_d57726.png" },
+            { id: "prod-3", name: "Syska 9W LED Bright Bulbs (Cool Day Light)", description: "Energy-saving LED bulbs, B22 cap, zero flickering.", category: "LED Lights", price: 110, availability: "In Stock", image: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
+            { id: "prod-4", name: "Crompton Hill Briz 1200mm Ceiling Fan", description: "High speed electric ceiling fan with powerful copper motor.", category: "Fans", price: 2350, availability: "In Stock", image: "https://images.unsplash.com/photo-1618944847023-38aa001235f0?auto=format&fit=crop&w=500&q=80" },
+            { id: "prod-5", name: "Sudhakar PVC Conduit Pipe (1 inch, 3m)", description: "Heavy-duty fire-retardant PVC electrical pipes designed for easy wiring.", category: "PVC Pipes", price: 95, availability: "In Stock", image: "https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
+            { id: "prod-6", name: "Jaquar Wall-Mounted Brass Shower Faucet", description: "Premium rust-free chrome finished brass shower mixture.", category: "Plumbing Items", price: 1850, availability: "In Stock", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" },
+            { id: "prod-7", name: "Link Heavy Duty Brass Padlock (70mm)", description: "Ultimate security padlocks with hardened steel shackle.", category: "Hardware Items", price: 480, availability: "In Stock", image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=500&q=80" }
         ];
 
         const DEFAULT_GALLERY = [
@@ -788,10 +1133,12 @@
             adminPassword: "admin"
         };
 
-        // Application State Managers (Synchronized via LocalStorage)
+        // System State
         let state = {
             currentPage: 'home',
             mobileMenuOpen: false,
+            lang: localStorage.getItem('sri_balaji_lang') || 'en',
+            theme: localStorage.getItem('sri_balaji_theme') || 'light',
             products: JSON.parse(localStorage.getItem('sri_balaji_products')) || DEFAULT_PRODUCTS,
             gallery: JSON.parse(localStorage.getItem('sri_balaji_gallery')) || DEFAULT_GALLERY,
             enquiries: JSON.parse(localStorage.getItem('sri_balaji_enquiries')) || [],
@@ -801,30 +1148,112 @@
             productSearch: ''
         };
 
-        // ROUTING SYSTEM
+        // Custom alert resolver promises
+        let customAlertPromiseResolver = null;
+
+        // Custom Overlay Modal Dialog Alert / Confirm system
+        function showCustomAlert(message, title = "Notice", icon = "🔔", showCancel = false) {
+            document.getElementById('custom-alert-title').innerText = title;
+            document.getElementById('custom-alert-message').innerText = message;
+            document.getElementById('custom-alert-icon').innerText = icon;
+            
+            const cancelBtn = document.getElementById('custom-alert-cancel');
+            if (showCancel) {
+                cancelBtn.classList.remove('hidden');
+            } else {
+                cancelBtn.classList.add('hidden');
+            }
+
+            document.getElementById('custom-alert-box').classList.remove('hidden');
+            document.getElementById('custom-alert-box').classList.add('flex');
+
+            return new Promise((resolve) => {
+                customAlertPromiseResolver = resolve;
+            });
+        }
+
+        function resolveCustomConfirm(value) {
+            document.getElementById('custom-alert-box').classList.add('hidden');
+            document.getElementById('custom-alert-box').classList.remove('flex');
+            if (customAlertPromiseResolver) {
+                customAlertPromiseResolver(value);
+                customAlertPromiseResolver = null;
+            }
+        }
+
+        // Language Translation Handler
+        function updateLanguageDOM() {
+            const dictionary = TRANSLATIONS[state.lang];
+            
+            // Translate static elements marked with data-t
+            document.querySelectorAll('[data-t]').forEach(element => {
+                const key = element.getAttribute('data-t');
+                if (dictionary[key]) {
+                    element.innerText = dictionary[key];
+                }
+            });
+
+            // Update selectors
+            document.getElementById('language-switcher').value = state.lang;
+            document.getElementById('language-switcher-mobile').value = state.lang;
+
+            // Re-render items to apply translated categories dynamically
+            renderCategoryChips();
+            renderProductsCatalog();
+        }
+
+        function changeLanguage(langCode) {
+            state.lang = langCode;
+            localStorage.setItem('sri_balaji_lang', langCode);
+            updateLanguageDOM();
+            showToast("Language changed / భాష మార్చబడింది / भाषा बदल दी गई है", "info");
+        }
+
+        // Theme (Dark / Light Mode) Switches
+        function applyThemeDOM() {
+            const html = document.documentElement;
+            if (state.theme === 'dark') {
+                html.classList.add('dark');
+                document.getElementById('theme-icon-desktop').innerText = '☀️';
+                document.getElementById('theme-icon-mobile').innerText = '☀️';
+            } else {
+                html.classList.remove('dark');
+                document.getElementById('theme-icon-desktop').innerText = '🌙';
+                document.getElementById('theme-icon-mobile').innerText = '🌙';
+            }
+        }
+
+        function toggleTheme() {
+            state.theme = state.theme === 'light' ? 'dark' : 'light';
+            localStorage.setItem('sri_balaji_theme', state.theme);
+            applyThemeDOM();
+            showToast(state.theme === 'dark' ? 'Dark Mode Activated' : 'Light Mode Activated', 'info');
+        }
+
+        // Navigation system
         function navigateTo(pageId) {
             state.currentPage = pageId;
             
-            // Hide all sections first
+            // Hide all pages
             document.querySelectorAll('.page-section').forEach(section => {
                 section.classList.add('hidden');
             });
 
-            // Show selected section
+            // Show selected page
             const target = document.getElementById(`page-${pageId}`);
             if (target) target.classList.remove('hidden');
 
-            // Update header nav button states
+            // Update header navigation button classes
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 const btnPage = btn.getAttribute('data-page');
                 if (btnPage === pageId) {
-                    btn.className = "nav-btn px-4 py-2 rounded-lg font-semibold text-sm transition-all bg-orange-500 text-white shadow-md shadow-orange-500/20";
+                    btn.className = "nav-btn px-4 py-2 rounded-lg font-bold text-sm transition-all bg-orange-500 text-white shadow-md shadow-orange-500/20";
                 } else {
                     btn.className = "nav-btn px-4 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800";
                 }
             });
 
-            // Maintain special style on Admin page trigger
+            // Admin button specific highlight styling
             const adminBtn = document.getElementById('nav-admin-btn');
             if (adminBtn) {
                 if (state.currentPage === 'admin') {
@@ -836,7 +1265,7 @@
                 }
             }
 
-            // Trigger dynamic renders based on target page
+            // Dynamic view loading triggers
             if (pageId === 'home') renderFeaturedProducts();
             if (pageId === 'products') {
                 renderCategoryChips();
@@ -845,7 +1274,7 @@
             if (pageId === 'gallery') renderGalleryGrid();
             if (pageId === 'admin') renderAdminDashboard();
 
-            // Auto-scroll to top on transition
+            // Window automatic scroll up
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -859,7 +1288,7 @@
             }
         }
 
-        // TOAST SYSTEM IMPLEMENTATION
+        // Toast Messages injector
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toastId = 'toast-' + Date.now();
@@ -891,26 +1320,27 @@
             }
         }
 
-        // DATA RENDERING CONTROLLERS
+        // Dynamic Home Featured list previewer
         function renderFeaturedProducts() {
             const container = document.getElementById('featured-products-container');
+            if (!container) return;
             container.innerHTML = '';
             
             state.products.slice(0, 4).forEach(p => {
                 const html = `
-                    <div class="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col group hover:shadow-xl hover:border-slate-200 transition-all duration-300">
-                        <div class="relative aspect-video bg-slate-100 overflow-hidden">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='image_d57726.png'">
+                    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-md border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col group hover:shadow-xl hover:border-slate-200 transition-all duration-300">
+                        <div class="relative aspect-video bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'">
                             <span class="absolute top-2.5 left-2.5 px-2 py-1 bg-slate-900/80 text-white font-medium text-[10px] rounded-md tracking-wider uppercase">${p.category}</span>
                         </div>
                         <div class="p-4 flex-grow flex flex-col justify-between">
                             <div>
-                                <h3 class="font-bold text-slate-900 group-hover:text-blue-600 line-clamp-1 transition-colors">${p.name}</h3>
-                                <p class="text-xs text-slate-500 line-clamp-2 mt-1.5 leading-relaxed">${p.description}</p>
+                                <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-1 transition-colors">${p.name}</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1.5 leading-relaxed">${p.description}</p>
                             </div>
-                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                                <span class="text-lg font-extrabold text-slate-900">₹${p.price}</span>
-                                <button onclick="triggerDirectEnquiry('${p.name}')" class="px-3 py-1.5 bg-slate-100 hover:bg-orange-500 hover:text-white text-slate-700 text-xs font-bold rounded-lg transition-colors">Send Enquiry</button>
+                            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                <span class="text-lg font-extrabold text-slate-900 dark:text-white">₹${p.price}</span>
+                                <button onclick="triggerDirectEnquiry('${p.name}')" class="px-3 py-1.5 bg-slate-100 hover:bg-orange-500 dark:bg-slate-800 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold rounded-lg transition-colors">Enquire</button>
                             </div>
                         </div>
                     </div>
@@ -919,23 +1349,25 @@
             });
         }
 
+        // Catalog categories rendering
         function renderCategoryChips() {
             const container = document.getElementById('category-chips-container');
+            if (!container) return;
             container.innerHTML = '';
             
-            // All Chip
+            // "All" button element
             const allCount = state.products.length;
-            const allActiveStyle = state.selectedCategory === 'All' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200';
+            const allActiveStyle = state.selectedCategory === 'All' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200';
             container.insertAdjacentHTML('beforeend', `
                 <button onclick="setCategoryFilter('All')" class="px-4 py-2 rounded-lg text-xs font-bold tracking-wide transition-all ${allActiveStyle}">
                     All Items (${allCount})
                 </button>
             `);
 
-            // Category list chips
+            // Category list elements
             CATEGORIES.forEach(cat => {
                 const count = state.products.filter(p => p.category === cat).length;
-                const activeStyle = state.selectedCategory === cat ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200';
+                const activeStyle = state.selectedCategory === cat ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200';
                 container.insertAdjacentHTML('beforeend', `
                     <button onclick="setCategoryFilter('${cat}')" class="px-4 py-2 rounded-lg text-xs font-bold tracking-wide transition-all ${activeStyle}">
                         ${cat} (${count})
@@ -944,8 +1376,10 @@
             });
         }
 
+        // Catalog products list rendering
         function renderProductsCatalog() {
             const container = document.getElementById('products-catalog-grid');
+            if (!container) return;
             container.innerHTML = '';
 
             const filtered = state.products.filter(p => {
@@ -963,14 +1397,14 @@
                 const stockBadgeClass = isOutOfStock ? 'bg-rose-100 text-rose-800' : 'bg-emerald-100 text-emerald-800';
                 
                 let actionArea = `
-                    <button onclick="triggerDirectEnquiry('${p.name}')" ${isOutOfStock ? 'disabled' : ''} class="w-full py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-2 transition-all ${isOutOfStock ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600 text-white shadow-sm'}">
+                    <button onclick="triggerDirectEnquiry('${p.name}')" ${isOutOfStock ? 'disabled' : ''} class="w-full py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-2 transition-all ${isOutOfStock ? 'bg-slate-150 text-slate-400 cursor-not-allowed dark:bg-slate-800' : 'bg-orange-500 hover:bg-orange-600 text-white shadow-sm'}">
                         <span>${isOutOfStock ? 'Unavailable' : 'Enquire via Form'}</span>
                     </button>
                 `;
 
                 if (state.adminLoggedIn) {
                     actionArea = `
-                        <div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-slate-100">
+                        <div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800">
                           <button onclick="openProductModal('edit', '${p.id}')" class="bg-amber-100 text-amber-800 p-2 rounded-lg flex items-center justify-center hover:bg-amber-200" title="Edit Product Info">✍️</button>
                           <button onclick="toggleProductStock('${p.id}')" class="bg-blue-100 text-blue-800 text-[10px] font-bold p-2 rounded-lg flex items-center justify-center hover:bg-blue-200" title="Toggle Stock">Stock</button>
                           <button onclick="deleteProduct('${p.id}')" class="bg-red-100 text-red-800 p-2 rounded-lg flex items-center justify-center hover:bg-red-200" title="Delete Product">🗑️</button>
@@ -979,23 +1413,23 @@
                 }
 
                 const html = `
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col group hover:shadow-xl hover:border-blue-300/50 transition-all duration-300 relative">
+                    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group hover:shadow-xl hover:border-blue-300/50 transition-all duration-300 relative">
                         <div class="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
                             <span class="px-2.5 py-1 bg-slate-900/80 text-white font-bold text-[9px] rounded-md uppercase tracking-wider backdrop-blur-xs">${p.category}</span>
                             <span class="px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider text-center ${stockBadgeClass}">${p.availability}</span>
                         </div>
-                        <div class="relative aspect-square bg-slate-50 overflow-hidden border-b border-slate-100">
+                        <div class="relative aspect-square bg-slate-50 dark:bg-slate-850 overflow-hidden border-b border-slate-100 dark:border-slate-800">
                             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='image_d57726.png'">
                         </div>
-                        <div class="p-4 flex-grow flex flex-col justify-between bg-white">
+                        <div class="p-4 flex-grow flex flex-col justify-between bg-white dark:bg-slate-900">
                             <div class="space-y-1">
-                                <h3 class="font-extrabold text-slate-900 group-hover:text-blue-600 text-base leading-tight line-clamp-2 transition-colors">${p.name}</h3>
-                                <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">${p.description}</p>
+                                <h3 class="font-extrabold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 text-base leading-tight line-clamp-2 transition-colors">${p.name}</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${p.description}</p>
                             </div>
-                            <div class="mt-4 pt-3 border-t border-slate-100">
+                            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
                                 <div class="flex items-baseline space-x-1 justify-between mb-3">
                                     <span class="text-slate-400 text-xs">Best Retail Price:</span>
-                                    <span class="text-xl font-black text-slate-900">₹${p.price}</span>
+                                    <span class="text-xl font-black text-slate-900 dark:text-white">₹${p.price}</span>
                                 </div>
                                 ${actionArea}
                             </div>
@@ -1006,8 +1440,10 @@
             });
         }
 
+        // Showcase photo grid rendering
         function renderGalleryGrid() {
             const container = document.getElementById('gallery-grid-container');
+            if (!container) return;
             container.innerHTML = '';
 
             state.gallery.forEach(g => {
@@ -1022,12 +1458,12 @@
                 }
 
                 const html = `
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300">
+                    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300">
                         <div class="relative aspect-square overflow-hidden bg-slate-900">
                             <img src="${g.image}" alt="${g.caption}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" onerror="this.src='image_d576ee.jpg'">
                         </div>
-                        <div class="p-4 flex-grow flex items-center justify-between bg-white">
-                            <p class="text-xs text-slate-600 font-medium italic leading-relaxed pr-4">${g.caption || "Balaji Electrical Area"}</p>
+                        <div class="p-4 flex-grow flex items-center justify-between bg-white dark:bg-slate-900">
+                            <p class="text-xs text-slate-600 dark:text-slate-300 font-medium italic leading-relaxed pr-4">${g.caption || "Balaji Electrical Area"}</p>
                             ${adminControls}
                         </div>
                     </div>
@@ -1036,6 +1472,7 @@
             });
         }
 
+        // Admin workspace rendering
         function renderAdminDashboard() {
             if (!state.adminLoggedIn) {
                 document.getElementById('admin-login-card').classList.remove('hidden');
@@ -1046,16 +1483,15 @@
             document.getElementById('admin-login-card').classList.add('hidden');
             document.getElementById('admin-dashboard-panel').classList.remove('hidden');
 
-            // Render stats metrics
+            // Set statistics
             document.getElementById('stat-products-count').innerText = state.products.length;
-            document.getElementById('stat-gallery-count').style.innerText = state.gallery.length;
             document.getElementById('stat-gallery-count').innerText = state.gallery.length;
             document.getElementById('stat-enquiries-count').innerText = state.enquiries.length;
             
             const pendingCount = state.enquiries.filter(e => e.status !== 'Contacted').length;
             document.getElementById('stat-pending-count').innerText = `${pendingCount} Pending`;
 
-            // Render enquiry records table
+            // Setup inbox requests management table
             const tableBody = document.getElementById('enquiries-table-body');
             tableBody.innerHTML = '';
             
@@ -1064,28 +1500,28 @@
             } else {
                 document.getElementById('no-enquiries-fallback').classList.add('hidden');
                 state.enquiries.forEach(enq => {
-                    const statusClass = enq.status === 'Contacted' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800';
+                    const statusClass = enq.status === 'Contacted' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300';
                     const tr = `
-                        <tr class="hover:bg-slate-50/50">
+                        <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
                             <td class="p-4">
-                                <p class="font-black text-slate-900">${enq.name}</p>
-                                <p class="text-xs text-slate-500 mt-0.5">📞 ${enq.mobile}</p>
+                                <p class="font-black text-slate-900 dark:text-white">${enq.name}</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">📞 ${enq.mobile}</p>
                                 ${enq.location ? `<p class="text-[10px] text-slate-400">📍 ${enq.location}</p>` : ''}
                             </td>
                             <td class="p-4">
-                                <span class="inline-block px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-xs font-bold leading-tight">${enq.subject}</span>
+                                <span class="inline-block px-2.5 py-1 bg-blue-50 dark:bg-slate-800 text-blue-750 dark:text-blue-300 rounded-md text-xs font-bold leading-tight">${enq.subject}</span>
                             </td>
                             <td class="p-4 max-w-xs">
-                                <p class="text-xs text-slate-600 line-clamp-2" title="${enq.message}">${enq.message || "No description details."}</p>
+                                <p class="text-xs text-slate-600 dark:text-slate-350 line-clamp-2" title="${enq.message}">${enq.message || "No description details."}</p>
                             </td>
-                            <td class="p-4 text-slate-500 text-xs">${enq.date}</td>
+                            <td class="p-4 text-slate-500 dark:text-slate-450 text-xs">${enq.date}</td>
                             <td class="p-4 text-center">
                                 <button onclick="toggleEnquiryStatus('${enq.id}')" class="px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider inline-flex items-center space-x-1 ${statusClass}">
                                     <span>${enq.status || 'Pending'}</span>
                                 </button>
                             </td>
                             <td class="p-4 text-right">
-                                <button onclick="deleteEnquiry('${enq.id}')" class="text-rose-600 hover:text-rose-800 p-2 hover:bg-rose-50 rounded-lg transition-colors">🗑️</button>
+                                <button onclick="deleteEnquiry('${enq.id}')" class="text-rose-600 hover:text-rose-800 p-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors">🗑️</button>
                             </td>
                         </tr>
                     `;
@@ -1094,11 +1530,11 @@
             }
         }
 
-        // GLOBAL SHOP VALUES SYNCHRONIZER
+        // Global shop settings updates
         function updateShopBrandingDOM() {
             const s = state.settings;
             
-            // Text values updates
+            // Text adjustments
             document.querySelectorAll('.id-shop-name').forEach(el => el.innerText = s.shopName);
             document.getElementById('nav-shop-name').innerText = s.shopName;
             document.querySelectorAll('.id-phone-text').forEach(el => el.innerText = s.phone);
@@ -1109,7 +1545,7 @@
             document.getElementById('footer-address').innerText = s.address;
             document.getElementById('footer-hours').innerText = s.hours;
 
-            // Direct dialer / chat linkages
+            // Hyperlinks setup
             document.getElementById('nav-mobile-call').href = `tel:${s.phone}`;
             document.getElementById('hero-call-btn').href = `tel:${s.phone}`;
             document.getElementById('hero-whatsapp-btn').href = `https://wa.me/91${s.whatsapp}`;
@@ -1121,19 +1557,18 @@
             document.getElementById('floating-whatsapp-btn').href = `https://wa.me/91${s.whatsapp}?text=Hello%20Balaji%20Electricals`;
             document.getElementById('footer-tel').href = `tel:${s.phone}`;
 
-            // Banner image updates
+            // Banner setting
             const heroBanner = document.getElementById('hero-banner');
             if (heroBanner) {
                 heroBanner.src = s.heroBannerUrl;
             }
         }
 
-        // MODALS HANDLERS & FORMS ACTIONS
+        // Crud products modallers
         function openProductModal(mode, productId = null) {
             const modal = document.getElementById('product-modal');
             const title = document.getElementById('product-modal-title');
             
-            // Populate category selector
             const categorySelect = document.getElementById('modal-product-category');
             categorySelect.innerHTML = '';
             CATEGORIES.forEach(cat => {
@@ -1182,11 +1617,9 @@
             const image = document.getElementById('modal-product-image').value || "image_d57726.png";
 
             if (id) {
-                // Update
                 state.products = state.products.map(p => p.id === id ? { id, name, category, price, description, availability, image } : p);
                 showToast("Product updated successfully!");
             } else {
-                // Create
                 const newId = 'prod-' + Date.now();
                 state.products.push({ id: newId, name, category, price, description, availability, image });
                 showToast("New product catalogued successfully!");
@@ -1210,8 +1643,9 @@
             renderProductsCatalog();
         }
 
-        function deleteProduct(id) {
-            if (confirm("Are you sure you want to remove this product?")) {
+        async function deleteProduct(id) {
+            const confirm = await showCustomAlert("Are you sure you want to remove this product?", "Confirmation required", "❓", true);
+            if (confirm) {
                 state.products = state.products.filter(p => p.id !== id);
                 localStorage.setItem('sri_balaji_products', JSON.stringify(state.products));
                 showToast("Product deleted from system", "info");
@@ -1219,6 +1653,7 @@
             }
         }
 
+        // Showcase pictures upload modallers
         function openGalleryModal(mode, galleryId = null) {
             const modal = document.getElementById('gallery-modal');
             const title = document.getElementById('gallery-modal-title');
@@ -1267,8 +1702,9 @@
             renderGalleryGrid();
         }
 
-        function deleteGalleryItem(id) {
-            if (confirm("Are you sure you want to remove this image from the showcase?")) {
+        async function deleteGalleryItem(id) {
+            const confirm = await showCustomAlert("Are you sure you want to remove this image from the showcase?", "Confirmation required", "❓", true);
+            if (confirm) {
                 state.gallery = state.gallery.filter(g => g.id !== id);
                 localStorage.setItem('sri_balaji_gallery', JSON.stringify(state.gallery));
                 showToast("Image removed from gallery", "info");
@@ -1276,6 +1712,7 @@
             }
         }
 
+        // Global brand settings modallers
         function openSettingsModal() {
             const modal = document.getElementById('settings-modal');
             const s = state.settings;
@@ -1315,7 +1752,7 @@
             renderAdminDashboard();
         }
 
-        // DIRECT PUBLIC ENQUIRIES CONTROLLER
+        // Customer request submissions handler
         function submitEnquiry(e) {
             e.preventDefault();
             const name = document.getElementById('enq-name').value;
@@ -1338,7 +1775,7 @@
             state.enquiries.unshift(newEnquiry);
             localStorage.setItem('sri_balaji_enquiries', JSON.stringify(state.enquiries));
             
-            showToast("Thank you! Your quotation enquiry has been sent safely.", "success");
+            showCustomAlert("Thank you! Your quotation enquiry has been sent safely. Our team will contact you soon.", "Submission Successful", "🎉");
             resetEnquiryForm();
             navigateTo('home');
         }
@@ -1366,8 +1803,9 @@
             renderAdminDashboard();
         }
 
-        function deleteEnquiry(id) {
-            if (confirm("Permanently delete this customer request?")) {
+        async function deleteEnquiry(id) {
+            const confirm = await showCustomAlert("Permanently delete this customer request?", "Confirmation required", "❓", true);
+            if (confirm) {
                 state.enquiries = state.enquiries.filter(e => e.id !== id);
                 localStorage.setItem('sri_balaji_enquiries', JSON.stringify(state.enquiries));
                 showToast("Request details removed from inbox database", "info");
@@ -1375,7 +1813,7 @@
             }
         }
 
-        // ADMIN AUTH SESSION WORKSPACE
+        // Admin workspace authentication setups
         function handleAdminLogin(e) {
             e.preventDefault();
             const input = document.getElementById('admin-password-input').value;
@@ -1387,7 +1825,7 @@
                 showToast("Administrative access validated!", "success");
                 document.getElementById('admin-password-input').value = '';
                 
-                // Show admin operation items
+                // Show operation items
                 document.getElementById('admin-add-product-btn').classList.remove('hidden');
                 document.getElementById('admin-add-gallery-btn').classList.remove('hidden');
                 
@@ -1402,7 +1840,7 @@
             localStorage.removeItem('sri_balaji_admin_auth');
             showToast("Dashboard secure session finished.", "info");
             
-            // Hide admin triggers
+            // Hide admin operations triggers
             document.getElementById('admin-add-product-btn').classList.add('hidden');
             document.getElementById('admin-add-gallery-btn').classList.add('hidden');
             
@@ -1422,7 +1860,7 @@
             showToast("Admin passcode changed successfully!", "success");
         }
 
-        // SEARCH AND CATEGORIES FILTERS
+        // Catalog filtering search operations
         function handleSearch(val) {
             state.productSearch = val;
             renderProductsCatalog();
@@ -1434,10 +1872,10 @@
             renderProductsCatalog();
         }
 
-        // INITIALIZATION PROCEDURE ON PAGE LOAD
+        // System bootloader initialization
         window.onload = function() {
-            // Apply current shop brand identity values
-            updateShopBrandingDOM();
+            // Apply theme configuration
+            applyThemeDOM();
 
             // Setup proper UI view according to admin logged state
             if (state.adminLoggedIn) {
@@ -1452,11 +1890,17 @@
                 document.getElementById('nav-mobile-admin').innerText = "🔑 Admin Login";
             }
 
-            // Route to target default page
+            // Apply shop configuration settings
+            updateShopBrandingDOM();
+
+            // Update language values
+            updateLanguageDOM();
+
+            // Default home route redirection
             navigateTo('home');
         };
 
-        // Static parameters declarations
+        // Standard categories configuration list
         const CATEGORIES = [
             "Electrical Items",
             "Switches",
