@@ -25,7 +25,13 @@
         }
     </script>
     
-    <!-- Custom Scrollbar and Transition Animates -->
+    <!-- Firebase Compat SDKs (Loaded as browser globals to prevent ESM import crashes) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+    <!-- Custom styling animations & layout fixes -->
     <style>
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
@@ -33,7 +39,6 @@
         }
         .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
         
-        /* Smooth transitions for theme toggle changes */
         * {
             transition: background-color 0.3s ease, border-color 0.3s ease, text-decoration 0.2s ease;
         }
@@ -48,12 +53,12 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- NAVIGATION HEADER -->
+    <!-- ================= NAVIGATION HEADER ================= -->
     <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-xl border-b border-orange-500/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
+          <div class="flex justify-between items-center h-20">
                 
-                <!-- Logo & Brand Name -->
+                <!-- Logo & Shop Name Title -->
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
                     <div class="bg-gradient-to-br from-orange-500 to-amber-400 p-2.5 rounded-xl shadow-lg ring-2 ring-white/10 hover:scale-105 transition-transform">
                         <svg class="w-7 h-7 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -61,7 +66,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-orange-400 via-amber-200 to-white bg-clip-text text-transparent" id="nav-shop-name" data-t="hero_title">
+                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-orange-400 via-amber-200 to-white bg-clip-text text-transparent id-shop-name" id="nav-shop-name" data-t="hero_title">
                             Sri Balaji Electrical Shop
                         </h1>
                         <p class="text-[10px] sm:text-xs text-orange-400 font-medium tracking-widest uppercase">
@@ -70,20 +75,22 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden xl:flex items-center space-x-1">
-                    <button onclick="navigateTo('home')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="home" data-t="nav_home">Home</button>
-                    <button onclick="navigateTo('products')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="products" data-t="nav_products">Products</button>
-                    <button onclick="navigateTo('gallery')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="gallery" data-t="nav_gallery">Gallery</button>
-                    <button onclick="navigateTo('about')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="about" data-t="nav_about">About Us</button>
-                    <button onclick="navigateTo('contact')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="contact" data-t="nav_contact">Contact</button>
-                    <button onclick="navigateTo('enquiry')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800" data-page="enquiry" data-t="nav_enquiry">Send Enquiry</button>
+                <!-- Desktop Navigation tabs (lg:flex ensures visibility on standard laptop screens) -->
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <span id="public-nav-links" class="flex items-center space-x-1">
+                        <button onclick="navigateTo('home')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all" data-page="home" data-t="nav_home">Home</button>
+                        <button onclick="navigateTo('products')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all" data-page="products" data-t="nav_products">Products</button>
+                        <button onclick="navigateTo('gallery')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all" data-page="gallery" data-t="nav_gallery">Gallery</button>
+                        <button onclick="navigateTo('about')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all" data-page="about" data-t="nav_about">About Us</button>
+                        <button onclick="navigateTo('contact')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all" data-page="contact" data-t="nav_contact">Contact</button>
+                        <button onclick="navigateTo('enquiry')" class="nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all" data-page="enquiry" data-t="nav_enquiry">Send Enquiry</button>
+                    </span>
                     
                     <span class="h-6 w-px bg-slate-700 mx-1"></span>
 
                     <!-- Admin Access Button -->
                     <button onclick="navigateTo('admin')" class="nav-btn flex items-center space-x-1 px-3 py-2 rounded-lg font-semibold text-sm border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" data-page="admin" id="nav-admin-btn">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+                        <span id="nav-admin-icon">🔑</span>
                         <span id="nav-admin-text" data-t="nav_admin">Admin</span>
                     </button>
 
@@ -94,7 +101,7 @@
                         <select onchange="changeLanguage(this.value)" id="language-switcher" class="bg-slate-800 text-slate-200 text-xs font-bold rounded-lg px-2.5 py-1.5 border border-slate-700 focus:outline-none focus:ring-1 focus:ring-orange-500 cursor-pointer">
                             <option value="en">🇺🇸 EN</option>
                             <option value="te">🇮🇳 తె</option>
-                            <option value="hi">🇮🇳 हि</option>
+                            <option value="hi">🇮🇳  हि</option>
                         </select>
                     </div>
 
@@ -105,7 +112,7 @@
                 </nav>
 
                 <!-- Mobile Action Toggle Buttons -->
-                <div class="xl:hidden flex items-center space-x-1.5">
+                <div class="lg:hidden flex items-center space-x-1.5">
                     <select onchange="changeLanguage(this.value)" id="language-switcher-mobile" class="bg-slate-800 text-slate-200 text-xs font-bold rounded-lg px-2 py-1.5 border border-slate-700 focus:outline-none cursor-pointer">
                         <option value="en">EN</option>
                         <option value="te">తె</option>
@@ -116,7 +123,7 @@
                         <span id="theme-icon-mobile">🌙</span>
                     </button>
 
-                    <a href="tel:9515168300" class="p-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white" id="nav-mobile-call">
+                    <a id="nav-mobile-call" href="tel:9515168300" class="p-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.387a12.035 12.035 0 01-7.108-7.108c-.145-.44.02-1.071.387-1.34l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
                     </a>
                     <button onclick="toggleMobileMenu()" class="p-2 bg-slate-800 text-slate-200 hover:text-white rounded-lg">
@@ -128,28 +135,29 @@
         </div>
 
         <!-- Mobile Navigation Menu Dropdown -->
-        <div id="mobile-menu" class="hidden xl:hidden bg-slate-900 border-t border-slate-800 shadow-2xl">
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 border-t border-slate-800 shadow-2xl">
             <div class="px-2 pt-2 pb-4 space-y-1">
-                <button onclick="navigateTo('home'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_home">Home Page</button>
-                <button onclick="navigateTo('products'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_products">Products Catalogue</button>
-                <button onclick="navigateTo('gallery'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_gallery">Shop Gallery</button>
-                <button onclick="navigateTo('about'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_about">About Us</button>
-                <button onclick="navigateTo('contact'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_contact">Contact Shop</button>
-                <button onclick="navigateTo('enquiry'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_enquiry">Submit Enquiry</button>
+                <span id="public-mobile-nav-links" class="block space-y-1">
+                    <button onclick="navigateTo('home'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_home">Home Page</button>
+                    <button onclick="navigateTo('products'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_products">Products Catalogue</button>
+                    <button onclick="navigateTo('gallery'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_gallery">Shop Gallery</button>
+                    <button onclick="navigateTo('about'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_about">About Us</button>
+                    <button onclick="navigateTo('contact'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_contact">Contact Shop</button>
+                    <button onclick="navigateTo('enquiry'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800" data-t="nav_enquiry">Submit Enquiry</button>
+                </span>
                 <button onclick="navigateTo('admin'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-orange-400 hover:bg-slate-800" id="nav-mobile-admin" data-t="footer_secure">🔑 Secure Admin Area</button>
             </div>
         </div>
     </header>
 
-    <!-- MAIN VIEWPORT CONTAINER -->
+    <!-- ================= MAIN VIEWPORT CONTAINER ================= -->
     <main class="flex-grow">
 
         <!-- ================= PAGE 1: HOME ================= -->
         <section id="page-home" class="page-section animate-fadeIn">
-            <!-- Hero banner utilizing "image_d576ee.jpg" verbatim -->
             <div class="relative bg-slate-950 text-white overflow-hidden min-h-[520px] flex items-center">
                 <div class="absolute inset-0 z-0">
-                    <img id="hero-banner" src="image_d576ee.jpg" alt="Shop Banner" class="w-full h-full object-cover object-center opacity-35 transform scale-100" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&h=500&q=80'">
+                    <img id="hero-banner" src="image_d576ee.jpg" alt="Shop Banner" class="w-full h-full object-cover object-center opacity-35 transform scale-100">
                     <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent"></div>
                 </div>
 
@@ -166,10 +174,10 @@
                         </p>
 
                         <div class="mt-8 flex flex-col sm:flex-row gap-4">
-                            <a id="hero-call-btn" href="tel:9515168300" class="inline-flex items-center justify-center space-x-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-blue-600/30 hover:scale-105 transition-transform text-center">
+                            <a id="hero-call-btn" href="tel:9515168300" class="inline-flex items-center justify-center space-x-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-blue-600/30 hover:scale-105 transition-all text-center">
                                 📞 <span data-t="call_now" class="mr-1">Call Now</span>: <span class="id-phone-text">9515168300</span>
                             </a>
-                            <a id="hero-whatsapp-btn" href="https://wa.me/919515168300" target="_blank" class="inline-flex items-center justify-center space-x-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-600/30 hover:scale-105 transition-transform text-center" data-t="hero_whatsapp">
+                            <a id="hero-whatsapp-btn" href="https://wa.me/919515168300" target="_blank" class="inline-flex items-center justify-center space-x-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-600/30 hover:scale-105 transition-all text-center" data-t="hero_whatsapp">
                                 💬 WhatsApp Us
                             </a>
                         </div>
@@ -212,7 +220,7 @@
                 </div>
             </div>
 
-            <!-- Highlights / Featured list preview section -->
+            <!-- Featured Showcase Section -->
             <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-end mb-10">
                     <div>
@@ -226,7 +234,7 @@
                 </div>
 
                 <div id="featured-products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Loaded dynamically via JavaScript -->
+                    <!-- Populated dynamically via JS -->
                 </div>
             </section>
         </section>
@@ -252,12 +260,12 @@
                 <div>
                     <span class="text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest block mb-3" data-t="filter_label">Filter by Category</span>
                     <div id="category-chips-container" class="flex flex-wrap gap-2">
-                        <!-- Loaded dynamically via JavaScript -->
+                        <!-- Loaded dynamically via JS -->
                     </div>
                 </div>
             </div>
 
-            <!-- Inventory state count and add item trigger -->
+            <!-- Inventory State Count -->
             <div class="flex justify-between items-center mb-6">
                 <p class="text-slate-500 dark:text-slate-400 text-sm" id="catalog-count-text">Found 0 products</p>
                 <button id="admin-add-product-btn" onclick="openProductModal('add')" class="hidden bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center space-x-1.5 shadow-md">
@@ -267,7 +275,7 @@
 
             <!-- Main Dynamic Grid -->
             <div id="products-catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Loaded dynamically via JavaScript -->
+                <!-- Loaded dynamically via JS -->
             </div>
         </section>
 
@@ -276,7 +284,7 @@
             <div class="text-center mb-10">
                 <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight" data-t="gallery_title">Shop Showcase & Gallery</h2>
                 <p class="text-slate-500 dark:text-slate-400 mt-2 max-w-2xl mx-auto" data-t="gallery_desc">
-                    Have a visual tour inside our local showroom. We stock certified wiring supplies, conduit piping layout tools, and light fittings.
+                    Have a tour inside our showroom. We stock certified wiring supplies, conduit piping layout tools, and light fittings.
                 </p>
             </div>
 
@@ -288,7 +296,7 @@
 
             <!-- Grid container -->
             <div id="gallery-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Loaded dynamically via JavaScript -->
+                <!-- Loaded dynamically via JS -->
             </div>
         </section>
 
@@ -306,19 +314,19 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
                     <div>
                         <h3 class="text-2xl font-bold text-slate-900 dark:text-white" data-t="about_pillars_title">One-Stop Electrical & Plumbing Solutions</h3>
-                        <p class="text-slate-600 dark:text-slate-350 mt-4 leading-relaxed" data-t="about_p1">
+                        <p class="text-slate-600 dark:text-slate-355 mt-4 leading-relaxed" data-t="about_p1">
                             At Sri Balaji Electrical Shop, we pride ourselves on holding a comprehensive inventory of heavy-duty materials required for building development, household repair setups, wiring improvements, and fixture fittings.
                         </p>
-                        <p class="text-slate-600 dark:text-slate-350 mt-4 leading-relaxed" data-t="about_p2">
+                        <p class="text-slate-600 dark:text-slate-355 mt-4 leading-relaxed" data-t="about_p2">
                             Our focus is safety first. Every switch, wire loop, or PVC conduit pipe we sell conforms to official safety indices. We guide household users to get correct current metrics and premium quality plumbing parts.
                         </p>
                     </div>
                     <div>
-                        <img src="image_d576ee.jpg" alt="About Shop Display" class="rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'">
+                        <img src="image_d576ee.jpg" alt="About Shop Display" class="rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 w-full h-80 object-cover">
                     </div>
                 </div>
 
-                <!-- 4 Pillars Section -->
+                <!-- Commitment Pillars -->
                 <div class="bg-slate-900 dark:bg-slate-900 border border-slate-800 rounded-3xl p-8 sm:p-12 text-white">
                     <h3 class="text-2xl sm:text-3xl font-extrabold text-center tracking-tight mb-10" data-t="about_pillars_title">Four Pillars of Our Commitment</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -400,7 +408,7 @@
 
                     <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row gap-3">
                         <a id="contact-footer-tel" href="tel:9515168300" class="flex-grow inline-flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-colors text-sm">
-                            <span data-t="hero_call">Call Store Now</span>
+                            <span data-t="call_now">Call Store Now</span>
                         </a>
                         <a id="contact-footer-wa" href="https://wa.me/919515168300" target="_blank" class="flex-grow inline-flex items-center justify-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-colors text-sm">
                             <span data-t="hero_whatsapp">WhatsApp Chat</span>
@@ -408,18 +416,16 @@
                     </div>
                 </div>
 
-                <!-- Google Maps Interactive Redirection & Iframe Card -->
+                <!-- Google Maps Interactive Map Redirection Card -->
                 <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col min-h-[380px]">
                     <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white border-b border-slate-800">
                         <span class="text-xs font-bold uppercase tracking-wider text-orange-400" data-t="contact_map_title">Navigation Map Locator</span>
                         <span class="text-xs font-semibold text-slate-300" data-t="contact_map_desc">Hyderabad (TS), India</span>
                     </div>
                     <div class="flex-grow relative">
-                        <!-- Direct Google Map embedded framework pointing to general area safely -->
                         <iframe title="Shop Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15228.40822694119!2d78.474668!3d17.385044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb978a6e1a939f%3A0xbc1d6c82439c29d0!2sHyderabad%2C%20Telangana%2C%20India!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" class="absolute inset-0 w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 text-center">
-                        <!-- Direct Google Maps app deep redirection hyperlink requested -->
                         <a href="https://maps.app.goo.gl/tYKh4TAWhDSzsGdF7" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl shadow-md transform hover:scale-102 transition-all text-sm">
                             <span data-t="contact_map_btn">📍 Open in Google Maps</span>
                         </a>
@@ -433,7 +439,7 @@
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
                 <div class="bg-gradient-to-r from-orange-500 to-amber-500 p-8 text-white">
                     <h2 class="text-3xl font-black" data-t="enquiry_title">Direct Product Enquiry Form</h2>
-                    <p class="text-slate-950 mt-2 font-medium text-sm" data-t="enquiry_sub">
+                    <p class="text-slate-955 mt-2 font-medium text-sm" data-t="enquiry_sub">
                         No login required. Submit details and we will review our physical inventory instantly.
                     </p>
                 </div>
@@ -472,7 +478,7 @@
 
                     <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end space-x-3">
                         <button type="button" onclick="resetEnquiryForm()" class="px-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-semibold" data-t="form_reset">Reset Form</button>
-                        <button type="submit" class="inline-flex items-center space-x-2 bg-slate-900 dark:bg-orange-500 hover:bg-slate-800 hover:dark:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg hover:scale-102 transition-transform text-sm" data-t="form_submit">Submit Enquiry Form</button>
+                        <button type="submit" class="inline-flex items-center space-x-2 bg-slate-900 dark:bg-orange-500 hover:bg-slate-800 hover:dark:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg hover:scale-102 transition-all text-sm" data-t="form_submit">Submit Enquiry Form</button>
                     </div>
                 </form>
             </div>
@@ -505,7 +511,6 @@
 
             <!-- LOGGED IN PANEL -->
             <div id="admin-dashboard-panel" class="hidden space-y-8 animate-fadeIn">
-                <!-- Action bar row -->
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-900 p-6 rounded-2xl text-white shadow-xl">
                     <div>
                         <div class="flex items-center space-x-2">
@@ -524,7 +529,7 @@
                     </div>
                 </div>
 
-                <!-- Live stats grid -->
+                <!-- Stats card row -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
                         <div>
@@ -538,9 +543,9 @@
                         <div>
                             <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_gallery">Gallery Pictures</span>
                             <span id="stat-gallery-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span>
-                            <button onclick="navigateTo('gallery')" class="text-xs text-orange-600 dark:text-orange-450 hover:underline font-semibold mt-2 block">Manage Photo Grid →</button>
+                            <button onclick="navigateTo('gallery')" class="text-xs text-orange-600 dark:text-orange-455 hover:underline font-semibold mt-2 block">Manage Photo Grid →</button>
                         </div>
-                        <div class="p-4 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-450 rounded-2xl text-xl font-bold">🖼️</div>
+                        <div class="p-4 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-455 rounded-2xl text-xl font-bold">🖼️</div>
                     </div>
                     <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
                         <div>
@@ -552,7 +557,7 @@
                     </div>
                 </div>
 
-                <!-- Inbox management table -->
+                <!-- Inbox table -->
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
                     <div class="bg-slate-100 dark:bg-slate-800 px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
                         <div class="flex items-center space-x-2">
@@ -574,7 +579,7 @@
                                 </tr>
                             </thead>
                             <tbody id="enquiries-table-body" class="divide-y divide-slate-150 dark:divide-slate-800 font-medium">
-                                <!-- Loaded dynamically via JavaScript -->
+                                <!-- Loaded dynamically via JS -->
                             </tbody>
                         </table>
                     </div>
@@ -584,7 +589,7 @@
                     </div>
                 </div>
 
-                <!-- Security Access Password changer -->
+                <!-- Pass changer -->
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
                     <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-2" data-t="admin_change_pass">Change Administrative Password</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mb-4" data-t="admin_change_pass_sub">Modify the system login key passcode used to access this secure admin console.</p>
@@ -601,7 +606,7 @@
 
     </main>
 
-    <!-- FOOTER -->
+    <!-- ================= FOOTER ================= -->
     <footer class="bg-slate-950 text-slate-400 pt-16 pb-8 border-t-2 border-orange-500/40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-900 text-center sm:text-left">
@@ -648,12 +653,10 @@
 
     <!-- FLOATING ACTIONS SUPPORT BADGES -->
     <div class="fixed bottom-6 right-6 z-45 flex flex-col space-y-3">
-        <!-- Call dialer -->
         <a id="floating-call-btn" href="tel:9515168300" class="bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform group relative" title="Call Store Now">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.387a12.035 12.035 0 01-7.108-7.108c-.145-.44.02-1.071.387-1.34l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
         </a>
 
-        <!-- WhatsApp Support -->
         <a id="floating-whatsapp-btn" href="https://wa.me/919515168300" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform relative group" title="WhatsApp Live Chat">
             <span class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border border-white animate-pulse"></span>
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
@@ -661,15 +664,13 @@
     </div>
 
     <!-- TOAST INJECTOR PORTAL -->
-    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col space-y-2 max-w-sm w-full">
-        <!-- Toast elements dynamically injected via JS -->
-    </div>
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col space-y-2 max-w-sm w-full"></div>
 
 
-    <!-- ================= MODALS & CRUDS OVERLAYS ================= -->
+    <!-- ================= MODALS & OVERLAYS ================= -->
     <!-- PRODUCT ADD/EDIT MODAL OVERLAY -->
     <div id="product-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs items-center justify-center p-4 hidden">
-        <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl animate-fadeIn">
             <div class="bg-slate-900 p-6 text-white flex justify-between items-center">
                 <h3 id="product-modal-title" class="text-xl font-bold">Configure Product Item</h3>
                 <button onclick="closeProductModal()" class="p-1.5 hover:bg-slate-800 rounded-lg">✕</button>
@@ -712,9 +713,18 @@
                   </div>
 
                   <div>
-                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Image URL Address / Local Name</label>
-                    <input type="text" id="modal-product-image" placeholder="image_d57726.png or URL" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Product Image Link URL</label>
+                    <input type="text" id="modal-product-image" placeholder="image_d57726.png or public URL" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                   </div>
+                </div>
+
+                <!-- Firebase Storage Image Upload Component -->
+                <div class="p-4 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
+                    <label class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 uppercase mb-1">Or Upload Local Image to Firebase Cloud Storage</label>
+                    <input type="file" id="modal-product-file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100 dark:file:bg-slate-800 dark:file:text-orange-400">
+                    <div id="product-upload-progress" class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-2 hidden">
+                        <div id="product-upload-progress-bar" class="bg-orange-500 h-1.5 rounded-full" style="width: 0%"></div>
+                    </div>
                 </div>
 
                 <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2">
@@ -727,7 +737,7 @@
 
     <!-- GALLERY ADD/EDIT MODAL OVERLAY -->
     <div id="gallery-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs items-center justify-center p-4 hidden">
-        <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl animate-fadeIn">
             <div class="bg-slate-900 p-6 text-white flex justify-between items-center">
                 <h3 id="gallery-modal-title" class="text-xl font-bold">Gallery Photo Details</h3>
                 <button onclick="closeGalleryModal()" class="p-1.5 hover:bg-slate-800 rounded-lg">✕</button>
@@ -740,9 +750,19 @@
                     <input type="text" id="modal-gallery-caption" required placeholder="e.g. Safety wire displays" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Image URL / Local File Name</label>
-                    <input type="text" id="modal-gallery-image" placeholder="image_d576ee.jpg or URL" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Image Link URL</label>
+                    <input type="text" id="modal-gallery-image" placeholder="image_d576ee.jpg or public URL" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                 </div>
+
+                <!-- Firebase Storage Image Upload Component -->
+                <div class="p-4 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
+                    <label class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 uppercase mb-1">Or Upload Local Image to Firebase Cloud Storage</label>
+                    <input type="file" id="modal-gallery-file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100 dark:file:bg-slate-800 dark:file:text-orange-400">
+                    <div id="gallery-upload-progress" class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-2 hidden">
+                        <div id="gallery-upload-progress-bar" class="bg-emerald-500 h-1.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+
                 <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2">
                     <button type="button" onclick="closeGalleryModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button>
                     <button type="submit" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-sm">Save Element</button>
@@ -753,7 +773,7 @@
 
     <!-- GLOBAL CONFIGURATION SETTINGS MODAL OVERLAY -->
     <div id="settings-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs items-center justify-center p-4 hidden">
-        <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-lg overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-lg overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl animate-fadeIn">
             <div class="bg-slate-900 p-6 text-white flex justify-between items-center">
                 <h3 class="text-xl font-bold flex items-center space-x-2">⚙️ <span>Adjust Shop Configuration Settings</span></h3>
                 <button onclick="closeSettingsModal()" class="p-1.5 hover:bg-slate-800 rounded-lg">✕</button>
@@ -812,314 +832,138 @@
         </div>
     </div>
 
-
-    <!-- ================= CORE JAVASCRIPT LOGIC ================= -->
+    <!-- ================= CORE UNIFIED JAVASCRIPT LOGIC ================= -->
     <script>
-        // Multi-lingual Translation Catalog Database
+        // Multi-lingual Translation Catalog Database (Persisting translation keys verbatim)
         const TRANSLATIONS = {
             en: {
-                nav_home: "Home",
-                nav_products: "Products",
-                nav_gallery: "Gallery",
-                nav_about: "About Us",
-                nav_contact: "Contact",
-                nav_enquiry: "Send Enquiry",
-                nav_admin: "Admin",
-                hero_badge: "⚡ Quality Assured Electrical Solutions",
-                hero_title: "Sri Balaji Electrical Shop",
+                nav_home: "Home", nav_products: "Products", nav_gallery: "Gallery", nav_about: "About Us", nav_contact: "Contact", nav_enquiry: "Send Enquiry", nav_admin: "Admin",
+                hero_badge: "⚡ Quality Assured Electrical Solutions", hero_title: "Sri Balaji Electrical Shop",
                 hero_desc: "All Electrical, Plumbing, Hardware & Home Utility Products are Available Under One Roof with Premium Brand Assurance.",
-                call_now: "Call Now",
-                hero_whatsapp: "💬 WhatsApp Us",
-                hero_direct_enq: "Send Direct Online Enquiry",
-                highlight_brands: "Quality Brands",
-                highlight_brands_sub: "Premium electrical products",
-                highlight_pricing: "Best Pricing",
-                highlight_pricing_sub: "Wholesale & retail rates",
-                highlight_service: "Friendly Service",
-                highlight_service_sub: "Guidance for home setups",
-                highlight_support: "Customer Support",
-                highlight_support_sub: "Speedy WhatsApp response",
-                featured_title: "Featured Products",
-                featured_sub: "Our Showcase",
-                featured_view_all: "All Products",
-                catalog_title: "Products Catalogue",
-                catalog_desc: "Sort through our comprehensive list of safety items, plumbing pipes, wires, and household equipment.",
-                filter_label: "Filter by Category",
-                search_placeholder: "Search products by title, category, description...",
-                gallery_title: "Shop Showcase & Gallery",
-                gallery_desc: "Have a visual tour inside our local showroom. We stock certified wiring supplies, conduit piping layout tools, and light fittings.",
-                about_badge: "About Our Business",
-                about_title: "Sri Balaji Electricals",
-                about_desc: "Your trusted neighborhood location supplying top-quality electrical, plumbing pipelines, and home maintenance devices.",
-                about_p1: "At Sri Balaji Electrical Shop, we pride ourselves on holding a comprehensive inventory of heavy-duty materials required for building development, household repair setups, wiring improvements, and fixture fittings.",
-                about_p2: "Our focus is safety first. Every switch, wire loop, or PVC conduit pipe we sell conforms to official safety indices. We guide household users to get correct current metrics and premium quality plumbing parts.",
+                call_now: "Call Now", hero_whatsapp: "💬 WhatsApp Us", hero_direct_enq: "Send Direct Online Enquiry",
+                highlight_brands: "Quality Brands", highlight_brands_sub: "Premium electrical products",
+                highlight_pricing: "Best Pricing", highlight_pricing_sub: "Wholesale & retail rates",
+                highlight_service: "Friendly Service", highlight_service_sub: "Guidance for home setups",
+                highlight_support: "Customer Support", highlight_support_sub: "Speedy WhatsApp response",
+                featured_title: "Featured Products", featured_sub: "Our Showcase", featured_view_all: "All Products",
+                catalog_title: "Products Catalogue", catalog_desc: "Sort through our comprehensive list of safety items, plumbing pipes, wires, and household equipment.",
+                filter_label: "Filter by Category", search_placeholder: "Search products by title...",
+                gallery_title: "Shop Showcase & Gallery", gallery_desc: "Have a visual tour inside our local showroom.",
+                about_badge: "About Our Business", about_title: "Sri Balaji Electricals", about_desc: "Your trusted neighborhood location supplying top-quality electrical & plumbing pipelines.",
                 about_pillars_title: "Four Pillars of Our Commitment",
-                pillar1_title: "Quality Products",
-                pillar1_desc: "Authorized stock from top-tier brands like Havells, Finolex, and Syska to guarantee safety.",
-                pillar2_title: "Best Prices",
-                pillar2_desc: "Honest margins on single utility pieces as well as batch construction blueprints.",
-                pillar3_title: "Friendly Service",
-                pillar3_desc: "Need help deciding on conduit sizing or lighting thresholds? Our team is glad to guide.",
-                pillar4_title: "Customer Support",
-                pillar4_desc: "Call, message, or drop an offline query and get rapid, personalized support sessions.",
-                contact_title: "Contact Sri Balaji Shop",
-                contact_desc: "Visit us locally in Hyderabad or connect via phone/WhatsApp for product orders.",
-                contact_card_title: "Store Location & Details",
-                contact_phone: "Phone Number",
-                contact_wa: "WhatsApp Support",
-                contact_address: "Store Physical Address",
-                contact_hours: "Operational Timing Schedules",
-                contact_hours_val: "Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed",
-                contact_map_title: "Navigation Map Locator",
-                contact_map_btn: "📍 Open in Google Maps",
-                contact_map_desc: "Hyderabad (TS), India",
-                enquiry_title: "Direct Product Enquiry Form",
-                enquiry_sub: "No login required. Submit details and we will review our physical inventory instantly.",
-                form_name: "Full Name *",
-                form_mobile: "Mobile Number *",
-                form_location: "Delivery Location",
-                form_subject: "Subject / Item Group *",
-                form_message: "Detailed Message",
-                form_info: "Our representatives will respond via Call or WhatsApp within 1 - 3 business hours.",
-                form_reset: "Reset Form",
-                form_submit: "Submit Enquiry Form",
-                admin_title: "Authorized Portal",
-                admin_sub: "Management security workspace login",
-                admin_pass_label: "Enter Access Key Password",
-                admin_pass_warning: "Use local default password: admin to unlock control modes instantly.",
-                admin_btn: "Authenticate System",
-                admin_live_console: "Live Console Mode",
-                admin_exit: "Exit Session",
-                admin_settings: "Shop Settings",
-                admin_stat_products: "Products Catalog",
-                admin_stat_gallery: "Gallery Pictures",
-                admin_stat_enquiries: "Guest Enquiries",
-                admin_table_cust: "Customer Details",
-                admin_table_subj: "Context Subject",
-                admin_table_msg: "Message Details",
-                admin_table_date: "Submitted Date",
-                admin_table_status: "Operational Status",
-                admin_table_action: "Action",
-                admin_no_enq: "No enquiries registered yet",
-                admin_no_enq_sub: "Client submissions will instantly populate here in real-time mode.",
-                admin_change_pass: "Change Administrative Password",
-                admin_change_pass_sub: "Modify the system login key passcode used to access this secure admin console.",
-                admin_update_btn: "Update Password",
-                footer_desc: "Certified premium switches, plumbing pipes, wires, fans, distribution boards, and lighting fittings at absolute best retail rates.",
-                footer_support: "Support Hotline:",
-                footer_directions: "Quick Directions",
-                footer_hours_title: "Store Hours & Locations",
-                footer_secure: "Secure Admin Area",
-                all_rights_reserved: "All Rights Reserved."
+                pillar1_title: "Quality Products", pillar1_desc: "Authorized stock from top-tier brands like Havells, Finolex, and Syska.",
+                pillar2_title: "Best Prices", pillar2_desc: "Honest margins on single utility pieces as well as batch construction blueprints.",
+                pillar3_title: "Friendly Service", pillar3_desc: "Need help deciding on conduit sizing? Our team is glad to guide.",
+                pillar4_title: "Customer Support", pillar4_desc: "Call, message, or drop an offline query and get rapid support sessions.",
+                contact_title: "Contact Sri Balaji Shop", contact_desc: "Visit us locally in Hyderabad or connect via phone/WhatsApp.",
+                contact_card_title: "Store Location & Details", contact_phone: "Phone Number", contact_wa: "WhatsApp Support", contact_address: "Store Physical Address", contact_hours: "Operational Schedules", contact_hours_val: "Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed",
+                contact_map_title: "Navigation Map Locator", contact_map_btn: "📍 Open in Google Maps", contact_map_desc: "Hyderabad (TS), India",
+                enquiry_title: "Direct Product Enquiry Form", enquiry_sub: "No login required. Submit details and we will review our inventory.",
+                form_name: "Full Name *", form_mobile: "Mobile Number *", form_location: "Delivery Location", form_subject: "Subject / Item Group *", form_message: "Detailed Message",
+                form_info: "Our representatives will respond within 1 - 3 business hours.", form_reset: "Reset Form", form_submit: "Submit Enquiry Form",
+                admin_title: "Authorized Portal", admin_sub: "Management security workspace login",
+                admin_pass_label: "Enter Access Key Password", admin_pass_warning: "Use local default password: admin to unlock instantly.",
+                admin_btn: "Authenticate System", admin_live_console: "Live Console Mode", admin_exit: "Exit Session", admin_settings: "Shop Settings",
+                admin_stat_products: "Products Catalog", admin_stat_gallery: "Gallery Pictures", admin_stat_enquiries: "Guest Enquiries",
+                admin_table_cust: "Customer Details", admin_table_subj: "Context Subject", admin_table_msg: "Message Details", admin_table_date: "Submitted Date", admin_table_status: "Operational Status", admin_table_action: "Action",
+                admin_no_enq: "No enquiries registered yet", admin_no_enq_sub: "Client submissions will instantly populate here.",
+                admin_change_pass: "Change Administrative Password", admin_change_pass_sub: "Modify the system login key passcode.", admin_update_btn: "Update Password",
+                footer_desc: "Certified premium switches, plumbing pipes, wires, fans, distribution boards, and lighting fittings.",
+                footer_support: "Support Hotline:", footer_directions: "Quick Directions", footer_hours_title: "Store Hours & Locations",
+                footer_secure: "Secure Admin Area", all_rights_reserved: "All Rights Reserved."
             },
             te: {
-                nav_home: "హోమ్",
-                nav_products: "ఉత్పత్తులు",
-                nav_gallery: "గ్యాలరీ",
-                nav_about: "మా గురించి",
-                nav_contact: "సంప్రదించండి",
-                nav_enquiry: "విచారణ పంపండి",
-                nav_admin: "అడ్మిన్",
-                hero_badge: "⚡ నాణ్యత హామీ ఇవ్వబడిన విద్యుత్ పరిష్కారాలు",
-                hero_title: "శ్రీ బాలాజీ ఎలక్ట్రికల్ షాప్",
+                nav_home: "హోమ్", nav_products: "ఉత్పత్తులు", nav_gallery: "గ్యాలరీ", nav_about: "మా గురించి", nav_contact: "సంప్రదించండి", nav_enquiry: "విచారణ పంపండి", nav_admin: "అడ్మిన్",
+                hero_badge: "⚡ నాణ్యత హామీ ఇవ్వబడిన విద్యుత్ పరిష్కారాలు", hero_title: "శ్రీ బాలాజీ ఎలక్ట్రికల్ షాప్",
                 hero_desc: "అన్ని ఎలక్ట్రికల్, ప్లంబింగ్, హార్డ్‌వేర్ & గృహోపకరణాల ఉత్పత్తులు ఒకే చోట అత్యుత్తమ బ్రాండ్ నాణ్యతతో లభిస్తాయి.",
-                call_now: "ఇప్పుడే కాల్ చేయండి",
-                hero_whatsapp: "💬 వాట్సాప్ చాట్",
-                hero_direct_enq: "ఆన్‌లైన్ విచారణ పంపండి",
-                highlight_brands: "నాణ్యమైన బ్రాండ్లు",
-                highlight_brands_sub: "ప్రీమియం ఎలక్ట్రికల్ ఉత్పత్తులు",
-                highlight_pricing: "ఉత్తమ ధరలు",
-                highlight_pricing_sub: "హోల్‌సేల్ & రిటైల్ రేట్లు",
-                highlight_service: "స్నేహపూర్వక సేవ",
-                highlight_service_sub: "ఇంటి వైరింగ్ సూచనలు",
-                highlight_support: "కస్టమర్ సపోర్ట్",
-                highlight_support_sub: "వేగవంతమైన వాట్సాప్ స్పందన",
-                featured_title: "ముఖ్యమైన ఉత్పత్తులు",
-                featured_sub: "మా ప్రదర్శన",
-                featured_view_all: "అన్ని ఉత్పత్తులు",
-                catalog_title: "ఉత్పత్తుల కేటలాగ్",
-                catalog_desc: "మా భద్రతా పరికరాలు, ప్లంబింగ్ పైపులు, వైర్లు మరియు గృహోపకరణాల సమగ్ర జాబితాను చూడండి.",
-                filter_label: "కేటగిరీ వారీగా ఫిల్టర్",
-                search_placeholder: "పేరు, కేటగిరీ లేదా వివరణతో వెతకండి...",
-                gallery_title: "షాప్ షోకేస్ & గ్యాలరీ",
-                gallery_desc: "మా లోకల్ షోరూమ్ ఒకసారి చూడండి. సర్టిఫైడ్ వైరింగ్ సామాగ్రి, పైపింగ్ పరికరాలు మరియు లైట్లు మా వద్ద ఉన్నాయి.",
-                about_badge: "మా వ్యాపారం గురించి",
-                about_title: "శ్రీ బాలాజీ ఎలక్ట్రికల్స్",
-                about_desc: "ఉత్తమమైన ఎలక్ట్రికల్, ప్లంబింగ్ పైపులు మరియు గృహాల మరమ్మత్తు పరికరాలను అందించే మీ నమ్మకమైన షాప్.",
-                about_p1: "శ్రీ బాలాజీ ఎలక్ట్రికల్ షాప్ వద్ద, గృహ నిర్మాణాలకు, వైరింగ్ మెరుగుదలలకు మరియు ఫిట్టింగ్‌లకు అవసరమైన భారీ సామాగ్రిని మేము నిల్వ ఉంచుతాము.",
-                about_p2: "మా ప్రాధాన్యత ఎల్లప్పుడూ భద్రతకే. మేము విక్రయించే ప్రతి స్విచ్, వైర్ లూప్ లేదా PVC పైపు అధికారిక భద్రతా సూచీలకు లోబడి ఉంటుంది. కస్టమర్లకు సరైన గైడెన్స్ ఇస్తాము.",
+                call_now: "ఇప్పుడే కాల్ చేయండి", hero_whatsapp: "💬 వాట్సాప్ చాట్", hero_direct_enq: "ఆన్‌లైన్ విచారణ పంపండి",
+                highlight_brands: "నాణ్యమైన బ్రాండ్లు", highlight_brands_sub: "ప్రీమియం ఎలక్ట్రికల్ ఉత్పత్తులు",
+                highlight_pricing: "ఉత్తమ ధరలు", highlight_pricing_sub: "హోల్‌సేల్ & రిటైల్ రేట్లు",
+                highlight_service: "స్నేహపూర్వక సేవ", highlight_service_sub: "ఇంటి వైరింగ్ సూచనలు",
+                highlight_support: "కస్టమర్ సపోర్ట్", highlight_support_sub: "వేగవంతమైన వాట్సాప్ స్పందన",
+                featured_title: "ముఖ్యమైన ఉత్పత్తులు", featured_sub: "మా ప్రదర్శన", featured_view_all: "అన్ని ఉత్పత్తులు",
+                catalog_title: "ఉత్పత్తుల కేటలాగ్", catalog_desc: "మా భద్రతా పరికరాలు, ప్లంబింగ్ పైపులు, వైర్లు మరియు గృహోపకరణాల సమగ్ర జాబితా.",
+                filter_label: "కేటగిరీ వారీగా ఫిల్టర్", search_placeholder: "పేరుతో వెతకండి...",
+                gallery_title: "షాప్ షోకేస్ & గ్యాలరీ", gallery_desc: "మా లోకల్ షోరూమ్ ఒకసారి చూడండి.",
+                about_badge: "మా వ్యాపారం గురించి", about_title: "శ్రీ బాలాజీ ఎలక్ట్రికల్స్", about_desc: "ఉత్తమమైన ఎలక్ట్రికల్, ప్లంబింగ్ పైపులు మరియు గృహాల మరమ్మత్తు పరికరాలను అందించే మీ నమ్మకమైన షాప్.",
                 about_pillars_title: "మా సేవా నిబద్ధత - 4 స్తంభాలు",
-                pillar1_title: "నాణ్యమైన ఉత్పత్తులు",
-                pillar1_desc: "భద్రతకు హామీగా హావెల్స్, ఫినోలెక్స్ మరియు సిస్కా వంటి అగ్ర బ్రాండ్ల నుండి అధికారిక స్టాక్.",
-                pillar2_title: "ఉత్తమ ధరలు",
-                pillar2_desc: "సింగిల్ పీస్ అయినా లేదా బల్క్ కన్స్ట్రక్షన్ సామాగ్రి అయినా సరసమైన హోల్సేల్ ధరలు.",
-                pillar3_title: "స్నేహపూర్వక సేవ",
-                pillar3_desc: "పైపుల సైజులు లేదా లైటింగ్ ఎంపికలో కస్టమర్లకు ఉచిత సలహాలు, సూచనలు ఇస్తాము.",
-                pillar4_title: "కస్టమర్ సపోర్ట్",
-                pillar4_desc: "కాల్, వాట్సాప్ లేదా ఆన్‌లైన్ ఫామ్ ద్వారా వేగవంతమైన మరియు వ్యక్తిగతీకరించిన సపోర్ట్.",
-                contact_title: "బాలాజీ షాప్ సంప్రదించండి",
-                contact_desc: "హైదరాబాద్‌లో మమ్మల్ని నేరుగా సందర్శించండి లేదా ఆర్డర్ల కోసం ఫోన్/వాట్సాప్ ద్వారా సంప్రదించండి.",
-                contact_card_title: "షాప్ స్థానం & వివరాలు",
-                contact_phone: "ఫోన్ నంబర్",
-                contact_wa: "వాట్సాప్ సపోర్ట్",
-                contact_address: "షాప్ చిరునామా",
-                contact_hours: "పని వేళలు",
-                contact_hours_val: "సోమవారం - శనివారం: ఉదయం 9:00 - రాత్రి 9:00, ఆదివారం: సెలవు",
-                contact_map_title: "మ్యాప్ లొకేటర్",
-                contact_map_btn: "📍 గూగుల్ మ్యాప్స్ లో ఓపెన్ చేయండి",
-                contact_map_desc: "హైదరాబాద్ (TS), ఇండియా",
-                enquiry_title: "డైరెక్ట్ ప్రొడక్ట్ ఎంక్వైరీ ఫామ్",
-                enquiry_sub: "లాగిన్ అవసరం లేదు. వివరాలను సబ్మిట్ చేయండి, మేము స్టాక్ చూసి వెంటనే తెలియజేస్తాము.",
-                form_name: "పూర్తి పేరు *",
-                form_mobile: "మొబైల్ నంబర్ *",
-                form_location: "డెలివరీ లొకేషన్",
-                form_subject: "విషయం / ప్రొడక్ట్ గ్రూప్ *",
-                form_message: "సందేశం / వివరాలు",
-                form_info: "మా ప్రతినిధులు 1 - 3 గంటల్లోపు కాల్ లేదా వాట్సాప్ ద్వారా మిమ్మల్ని సంప్రదిస్తారు.",
-                form_reset: "ఫామ్ రీసెట్",
-                form_submit: "ఎంక్వైరీ సబ్మిట్ చేయండి",
-                admin_title: "అడ్మిన్ పోర్టల్",
-                admin_sub: "మేనేజ్‌మెంట్ లాగిన్ ఏరియా",
-                admin_pass_label: "యాక్సెస్ కీ పాస్‌వర్డ్ ఎంటర్ చేయండి",
-                admin_pass_warning: "లాగిన్ కావడానికి డిఫాల్ట్ పాస్‌వర్డ్ 'admin' వాడండి.",
-                admin_btn: "లాగిన్ అవ్వండి",
-                admin_live_console: "లైవ్ అడ్మిన్ కన్సోల్",
-                admin_exit: "సెషన్ ముగించు",
-                admin_settings: "షాప్ సెట్టింగ్స్",
-                admin_stat_products: "మొత్తం ఉత్పత్తులు",
-                admin_stat_gallery: "గ్యాలరీ చిత్రాలు",
-                admin_stat_enquiries: "మొత్తం విచారణలు",
-                admin_table_cust: "కస్టమర్ వివరాలు",
-                admin_table_subj: "విషయం",
-                admin_table_msg: "సందేశం",
-                admin_table_date: "తేదీ",
-                admin_table_status: "స్థితి",
-                admin_table_action: "చర్య",
-                admin_no_enq: "ఇంకా విచారణలు రాలేదు",
-                admin_no_enq_sub: "కస్టమర్ సబ్మిట్ చేసిన వెంటనే ఇక్కడ ప్రత్యక్షమవుతాయి.",
-                admin_change_pass: "అడ్మిన్ పాస్‌వర్డ్ మార్చండి",
-                admin_change_pass_sub: "ఈ అడ్మిన్ ప్యానెల్ యాక్సెస్ చేయడానికి ఉపయోగించే పాస్‌వర్డ్‌ను అప్‌డేట్ చేయండి.",
+                pillar1_title: "నాణ్యమైన ఉత్పత్తులు", pillar1_desc: "భద్రతకు హామీగా హావెల్స్, ఫినోలెక్స్ మరియు సిస్కా వంటి అగ్ర బ్రాండ్ల నుండి స్టాక్.",
+                pillar2_title: "ఉత్తమ ధరలు", pillar2_desc: "సింగిల్ పీస్ అయినా లేదా బల్క్ కన్స్ట్రక్షన్ సామాగ్రి అయినా సరసమైన హోల్సేల్ ధరలు.",
+                pillar3_title: "స్నేహపూర్వక సేవ", pillar3_desc: "పైపుల సైజులు లేదా లైటింగ్ ఎంపికలో కస్టమర్లకు ఉచిత సలహాలు ఇస్తాము.",
+                pillar4_title: "కస్టమర్ సపోర్ట్", pillar4_desc: "కాల్, వాట్సాప్ లేదా ఆన్‌లైన్ ద్వారా వేగవంతమైన మరియు వ్యక్తిగతీకరించిన సపోర్ట్.",
+                contact_title: "బాలాజీ షాప్ సంప్రదించండి", contact_desc: "హైదరాబాద్‌లో మమ్మల్ని నేరుగా సందర్శించండి లేదా ఆర్డర్ల కోసం ఫోన్/వాట్సాప్ ద్వారా సంప్రదించండి.",
+                contact_card_title: "షాప్ స్థానం & వివరాలు", contact_phone: "ఫోన్ నంబర్", contact_wa: "వాట్సాప్ సపోర్ట్", contact_address: "షాప్ చిరునామా", contact_hours: "పని వేళలు", contact_hours_val: "సోమవారం - శనివారం: ఉదయం 9:00 - రాత్రి 9:00, ఆదివారం: సెలవు",
+                contact_map_title: "మ్యాప్ లొకేటర్", contact_map_btn: "📍 గూగుల్ మ్యాప్స్ లో ఓపెన్ చేయండి", contact_map_desc: "హైదరాబాద్ (TS), ఇండియా",
+                enquiry_title: "డైరెక్ట్ ప్రొడక్ట్ ఎంక్వైరీ ఫామ్", enquiry_sub: "లాగిన్ అవసరం లేదు. వివరాలను సబ్మిట్ చేయండి, మేము స్టాక్ చూసి వెంటనే తెలియజేస్తాము.",
+                form_name: "పూర్తి పేరు *", form_mobile: "మొబైల్ నంబర్ *", form_location: "డెలివరీ లొకేషన్", form_subject: "విషయం / ప్రొడక్ట్ గ్రూప్ *", form_message: "సందేశం / వివరాలు",
+                form_info: "మా ప్రతినిధులు 1 - 3 గంటల్లోపు కాల్ లేదా వాట్సాప్ ద్వారా మిమ్మల్ని సంప్రదిస్తారు.", form_reset: "ఫామ్ రీసెట్", form_submit: "ఎంక్వైరీ సబ్మిట్ చేయండి",
+                admin_title: "అడ్మిన్ పోర్టల్", admin_sub: "మేనేజ్‌మెంట్ లాగిన్ ఏరియా",
+                admin_pass_label: "యాక్సెస్ కీ పాస్‌వర్డ్ ఎంటర్ చేయండి", admin_pass_warning: "లాగిన్ కావడానికి డిఫాల్ట్ పాస్‌వర్డ్ 'admin' వాడండి.",
+                admin_btn: "లాగిన్ అవ్వండి", admin_live_console: "లైవ్ అడ్మిన్ కన్సోల్", admin_exit: "సెషన్ ముగించు", admin_settings: "షాప్ సెట్టింగ్స్",
+                admin_stat_products: "మొత్తం ఉత్పత్తులు", admin_stat_gallery: "గ్యాలరీ చిత్రాలు", admin_stat_enquiries: "మొత్తం విచారణలు",
+                admin_table_cust: "కస్టమర్ వివరాలు", admin_table_subj: "విషయం", admin_table_msg: "సందేశం", admin_table_date: "తేదీ", admin_table_status: "స్థితి", admin_table_action: "చర్య",
+                admin_no_enq: "ఇంకా విచారణలు రాలేదు", admin_no_enq_sub: "కస్టమర్ సబ్మిట్ చేసిన వెంటనే ఇక్కడ ప్రత్యక్షమవుతాయి.",
+                admin_change_pass: "అడ్మిన్ పాస్‌వర్డ్ మార్చండి", admin_change_pass_sub: "ఈ అడ్మిన్ ప్యానెల్ యాక్సెస్ చేయడానికి ఉపయోగించే పాస్‌వర్డ్‌ను అప్‌డేట్ చేయండి.",
                 admin_update_btn: "పాస్‌వర్డ్ అప్‌డేట్",
                 footer_desc: "ధృవీకరించబడిన స్విచ్‌లు, ప్లంబింగ్ పైపులు, వైర్లు, ఫ్యాన్లు మరియు లైటింగ్ ఫిట్టింగ్‌లు అత్యుత్తమ రిటైల్ ధరలకే లభించును.",
-                footer_support: "సపోర్ట్ హాట్‌లైన్:",
-                footer_directions: "త్వరిత మార్గాలు",
-                footer_hours_title: "పనివేళలు & స్థానాలు",
-                footer_secure: "సెక్యూర్ అడ్మిన్ లాగిన్",
-                all_rights_reserved: "సర్వ హక్కులూ ప్రత్యేకించబడినవి."
+                footer_support: "సపోర్ట్ హాట్‌లైన్:", footer_directions: "త్వరిత మార్గాలు", footer_hours_title: "పనివేళలు & స్థానాలు",
+                footer_secure: "సెక్యూర్ అడ్మిన్ లాగిన్", all_rights_reserved: "సర్వ హక్కులూ ప్రత్యేకించబడినవి."
             },
             hi: {
-                nav_home: "होम",
-                nav_products: "उत्पाद",
-                nav_gallery: "गैलरी",
-                nav_about: "हमारे बारे में",
-                nav_contact: "संपर्क",
-                nav_enquiry: "पूछताछ भेजें",
-                nav_admin: "एडमिन",
-                hero_badge: "⚡ गुणवत्ता सुनिश्चित इलेक्ट्रिकल समाधान",
-                hero_title: "श्री बालाजी इलेक्ट्रिकल शॉप",
-                hero_desc: "सभी इलेक्ट्रिकल, प्लंबिंग, हार्डवेयर और घरेलू उपयोग के उत्पाद एक ही छत के नीचे प्रीमियम ब्रांड आश्वासन के साथ उपलब्ध हैं।",
-                call_now: "अभी कॉल करें",
-                hero_whatsapp: "💬 व्हाट्सएप करें",
-                hero_direct_enq: "सीधे ऑनलाइन पूछताछ भेजें",
-                highlight_brands: "गुणवत्ता वाले ब्रांड",
-                highlight_brands_sub: "प्रीमियम इलेक्ट्रिकल उत्पाद",
-                highlight_pricing: "सर्वोत्तम मूल्य",
-                highlight_pricing_sub: "थोक और खुदरा दरें",
-                highlight_service: "मैत्रीपूर्ण सेवा",
-                highlight_service_sub: "घर की वायरिंग के लिए मार्गदर्शन",
-                highlight_support: "कस्टमर सपोर्ट",
-                highlight_support_sub: "त्वरित व्हाट्सएप प्रतिक्रिया",
-                featured_title: "विशेष रुप से प्रदर्शित उत्पाद",
-                featured_sub: "हमारा शोकेस",
-                featured_view_all: "सभी उत्पाद",
-                catalog_title: "उत्पाद कैटलॉग",
-                catalog_desc: "सुरक्षा उपकरणों, प्लंबिंग पाइपों, तारों और घरेलू उपकरणों की हमारी सूची देखें।",
-                filter_label: "श्रेणी के अनुसार फ़िल्टर करें",
-                search_placeholder: "शीर्षक, श्रेणी या विवरण द्वारा उत्पाद खोजें...",
-                gallery_title: "दुकान शोकेस और गैलरी",
-                gallery_desc: "हमारे शोरूम का एक दृश्य दौरा करें। हमारे पास प्रमाणित वायरिंग आपूर्ति, पाइपिंग उपकरण और लाइटें हैं।",
-                about_badge: "हमारे व्यवसाय के बारे में",
-                about_title: "श्री बालाजी इलेक्ट्रिकल्स",
-                about_desc: "शीर्ष गुणवत्ता वाले इलेक्ट्रिकल, प्लंबिंग पाइपलाइन और घरेलू रखरखाव उपकरण की आपूर्ति करने वाली आपकी भरोसेमंद दुकान।",
-                about_p1: "श्री बालाजी इलेक्ट्रिकल शॉप में, हम घरेलू मरम्मत, वायरिंग सुधार और फिटिंग के लिए आवश्यक भारी सामग्री का एक व्यापक स्टॉक रखते हैं।",
-                about_p2: "हमारी प्राथमिकता हमेशा सुरक्षा है। हमारे द्वारा बेचे जाने वाले हर स्विच, वायर लूप या पीवीसी पाइप आधिकारिक सुरक्षा मानकों के अनुरूप होते हैं।",
+                nav_home: "होम", nav_products: "उत्पाद", nav_gallery: "कैलरी", nav_about: "हमारे बारे में", nav_contact: "संपर्क", nav_enquiry: "पूछताछ भेजें", nav_admin: "एडमिन",
+                hero_badge: "⚡ गुणवत्ता सुनिश्चित इलेक्ट्रिकल समाधान", hero_title: "श्री बालाजी इलेक्ट्रिकल शॉप",
+                hero_desc: "सभी इलेक्ट्रिकल,  प्लंबिंग, हार्डवेयर और घरेलू उपयोग के उत्पाद एक ही छत के नीचे प्रीमियम ब्रांड आश्वासन के साथ उपलब्ध हैं।",
+                call_now: "अभी कॉल करें", hero_whatsapp: "💬 व्हाट्सएप करें", hero_direct_enq: "सीधे ऑनलाइन पूछताछ भेजें",
+                highlight_brands: "गुणवत्ता वाले ब्रांड", highlight_brands_sub: "प्रीमियम इलेक्ट्रिकल उत्पाद",
+                highlight_pricing: "सर्वोत्तम मूल्य", highlight_pricing_sub: "थोक और खुदरा दरें",
+                highlight_service: "मैत्रीपूर्ण सेवा", highlight_service_sub: "घर की वायरिंग के लिए मार्गदर्शन",
+                highlight_support: "कस्टमर सपोर्ट", highlight_support_sub: "त्वरित व्हाट्सएप प्रतिक्रिया",
+                featured_title: "विशेष रुप से प्रदर्शित उत्पाद", featured_sub: "हमारा शोकेस", featured_view_all: "सभी उत्पाद",
+                catalog_title: "उत्पाद कैटलॉग", catalog_desc: "सुरक्षा उपकरणों, प्लंबिंग पाइपों, तारों और घरेलू उपकरणों की हमारी सूची देखें।",
+                filter_label: "श्रेणी के अनुसार फ़िल्टर करें", search_placeholder: "शीर्षक से खोजें...",
+                gallery_title: "दुकान शोकेस और गैलरी", gallery_desc: "हमारे शोरूम का एक दृश्य दौरा करें।",
+                about_badge: "हमारे व्यवसाय के बारे में", about_title: "श्री बालाजी इलेक्ट्रिकल्स", about_desc: "शीर्ष गुणवत्ता वाले इलेक्ट्रिकल, प्लंबिंग पाइपलाइन और घरेलू रखरखाव उपकरण की आपूर्ति करने वाली आपकी भरोसेमंद दुकान।",
                 about_pillars_title: "हमारी प्रतिबद्धता के चार स्तंभ",
-                pillar1_title: "गुणवत्ता उत्पाद",
-                pillar1_desc: "सुरक्षा की गारंटी के लिए हैवेल्स, फिनोलेक्स और सिस्का जैसे शीर्ष ब्रांडों से आधिकारिक स्टॉक।",
-                pillar2_title: "सर्वोत्तम मूल्य",
-                pillar2_desc: "एकल घरेलू टुकड़ों के साथ-साथ थोक निर्माण ब्लूप्रिंट पर भी उचित थोक मार्जिन।",
-                pillar3_title: "मैत्रीपूर्ण सेवा",
-                pillar3_desc: "पाइप के आकार या लाइटिंग विकल्पों के चयन में हमारी टीम आपकी सहायता के लिए सदैव उपलब्ध है।",
-                pillar4_title: "ग्राहक सहायता",
-                pillar4_desc: "कॉल, व्हाट्सएप या ऑनलाइन पूछताछ द्वारा व्यक्तिगत और त्वरित सहायता प्राप्त करें।",
-                contact_title: "बालाजी शॉप से संपर्क करें",
-                contact_desc: "हैदराबाद में स्थानीय स्तर पर हमसे मिलें या उत्पाद ऑर्डर के लिए फोन/व्हाट्सएप के माध्यम से जुड़ें।",
-                contact_card_title: "स्टोर का स्थान और विवरण",
-                contact_phone: "फ़ोन नंबर",
-                contact_wa: "व्हाट्सएप सपोर्ट",
-                contact_address: "स्टोर का पता",
-                contact_hours: "संचालन का समय",
-                contact_hours_val: "सोमवार - शनिवार: सुबह 9:00 - रात 9:00, रविवार: बंद",
-                contact_map_title: "नेविगेशन मानचित्र लोकेटर",
-                contact_map_btn: "📍 गूगल मैप्स में खोलें",
-                contact_map_desc: "हैदराबाद (TS), भारत",
-                enquiry_title: "प्रत्यक्ष उत्पाद पूछताछ फॉर्म",
-                enquiry_sub: "कोई लॉगिन आवश्यक नहीं है। विवरण सबमिट करें और हम तुरंत स्टॉक की जांच करेंगे।",
-                form_name: "पूरा नाम *",
-                form_mobile: "मोबाइल नंबर *",
-                form_location: "वितरण स्थान",
-                form_subject: "विषय / उत्पाद समूह *",
-                form_message: "विस्तृत संदेश",
-                form_info: "हमारे प्रतिनिधि 1 - 3 व्यावसायिक घंटों के भीतर कॉल या व्हाट्सएप के माध्यम से प्रतिक्रिया देंगे।",
-                form_reset: "फ़ॉर्म रीसेट करें",
-                form_submit: "पूछताछ फॉर्म सबमिट करें",
-                admin_title: "अधिकृत पोर्टल",
-                admin_sub: "प्रबंधन सुरक्षा लॉगिन",
-                admin_pass_label: "एक्सेस कुंजी पासवर्ड दर्ज करें",
-                admin_pass_warning: "कंट्रोल मोड को अनलॉक करने के लिए डिफ़ॉल्ट पासवर्ड 'admin' का उपयोग करें।",
-                admin_btn: "प्रमाणित करें",
-                admin_live_console: "लाइव एडमिन कनसोेल",
-                admin_exit: "सत्र समाप्त करें",
-                admin_settings: "दुकान सेटिंग्स",
-                admin_stat_products: "उत्पाद सूची",
-                admin_stat_gallery: "गैलरी के चित्र",
-                admin_stat_enquiries: "कुल पूछताछ",
-                admin_table_cust: "ग्राहक का विवरण",
-                admin_table_subj: "विषय",
-                admin_table_msg: "संदेश विवरण",
-                admin_table_date: "जमा करने की तिथि",
-                admin_table_status: "ऑपरेशनल स्थिति",
-                admin_table_action: "कार्रवाई",
-                admin_no_enq: "अभी तक कोई पूछताछ दर्ज नहीं की गई है",
-                admin_no_enq_sub: "ग्राहक सबमिशन वास्तविक समय में तुरंत यहां दिखाई देंगे।",
-                admin_change_pass: "प्रशासनिक पासवर्ड बदलें",
-                admin_change_pass_sub: "इस सुरक्षित एडमिन कंसोल तक पहुंचने के लिए उपयोग किए जाने वाले सिस्टम पासवर्ड को अपडेट करें।",
+                pillar1_title: "गुणवत्ता उत्पाद", pillar1_desc: "सुरक्षा की गारंटी के लिए हैवेल्स, फिनोलेक्स और सिस्का जैसे ब्रांडों से स्टॉक।",
+                pillar2_title: "सर्वोत्तम मूल्य", pillar2_desc: "एकल घरेलू टुकड़ों के साथ-साथ थोक निर्माण पर भी उचित थोक मार्जिन।",
+                pillar3_title: "मैत्रीपूर्ण सेवा", pillar3_desc: "पाइप के आकार या लाइटिंग विकल्पों के चयन में हमारी टीम आपकी सहायता करेगी।",
+                pillar4_title: "ग्राहक सहायता", pillar4_desc: "कॉल, व्हाट्सएप या ऑनलाइन पूछताछ द्वारा व्यक्तिगत और त्वरित सहायता प्राप्त करें।",
+                contact_title: "बालाजी शॉप से संपर्क करें", contact_desc: "हैदाबाद में स्थानीय स्तर पर हमसे मिलें या उत्पाद आदेश के लिए फोन/व्हाट्सएप के माध्यम से जुड़ें।",
+                contact_card_title: "स्टोर का स्थान और विवरण", contact_phone: "फ़ोन नंबर", contact_wa: "व्हाट्सएप सपोर्ट", contact_address: "स्टोर का पता", contact_hours: "संचालन का समय", contact_hours_val: "सोमवार - शनिवार: सुबह 9:00 - रात 9:00, रविवार: बंद",
+                contact_map_title: "मानचित्र लोकेटर", contact_map_btn: "📍 गूगल मैप्स में खोलें", contact_map_desc: "हैदराबाद (TS), भारत",
+                enquiry_title: "प्रत्यक्ष उत्पाद पूछताछ फॉर्म", enquiry_sub: "कोई लॉगिन आवश्यक नहीं है। विवरण सबमिट करें और हम तुरंत स्टॉक की जांच करेंगे।",
+                form_name: "पूरा नाम *", form_mobile: "मोबाइल नंबर *", form_location: "वितरण स्थान", form_subject: "विषय / उत्पाद समूह *", form_message: "विस्तृत संदेश",
+                form_info: "हमारे प्रतिनिधि 1 - 3 व्यावसायिक घंटों के भीतर कॉल या व्हाट्सएप के माध्यम से प्रतिक्रिया देंगे।", form_reset: "फ़ॉर्म रीसेट करें", form_submit: "पूछताछ फॉर्म सबमिट करें",
+                admin_title: "अधिकृत पोर्टल", admin_sub: "प्रबंधन सुरक्षा लॉगिन",
+                admin_pass_label: "एक्सेस कुंजी पासवर्ड दर्ज करें", admin_pass_warning: "कंट्रोल मोड को अनलॉक करने के लिए डिफ़ॉल्ट पासवर्ड 'admin' का उपयोग करें।",
+                admin_btn: "प्रमाणित करें", admin_live_console: "लाइव एडमिन कनसोेल", admin_exit: "सत्र समाप्त करें", admin_settings: "दुकान सेटिंग्स",
+                admin_stat_products: "उत्पाद सूची", admin_stat_gallery: "कैलरी के चित्र", admin_stat_enquiries: "कुल पूछताछ",
+                admin_table_cust: "ग्राहक का विवरण", admin_table_subj: "विषय", admin_table_msg: "संदेश विवरण", admin_table_date: "जमा करने की तिथि", admin_table_status: "ऑपरेशनल स्थिति", admin_table_action: "कार्रवाई",
+                admin_no_enq: "अभी तक कोई पूछताछ दर्ज नहीं की गई है", admin_no_enq_sub: "ग्राहक सबमिशन वास्तविक समय में तुरंत यहां दिखाई देंगे।",
+                admin_change_pass: "प्रस्थानिक पासवर्ड बदलें", admin_change_pass_sub: "इस सुरक्षित एडमिन कंसोल तक पहुंचने के लिए पासवर्ड बदलें।",
                 admin_update_btn: "पासवर्ड अपडेट करें",
                 footer_desc: "प्रमाणित स्विच, प्लंबिंग पाइप, तार, पंखे और लाइटिंग फिटिंग बिल्कुल सर्वोत्तम दरों पर उपलब्ध हैं।",
-                footer_support: "सपोर्ट हॉटलाइन:",
-                footer_directions: "त्वरित मार्ग",
-                footer_hours_title: "स्टोर का समय और स्थान",
-                footer_secure: "सुरक्षित एडमिन क्षेत्र",
-                all_rights_reserved: "सर्वाधिकार सुरक्षित।"
+                footer_support: "सपोर्ट हॉटलाइन:", footer_directions: "त्वरित मार्ग", footer_hours_title: "स्टोर का समय और स्थान",
+                footer_secure: "सुरक्षित एडमिन क्षेत्र", सर्वाधिकार सुरक्षित: "सर्वाधिकार सुरक्षित।"
             }
         };
 
-        // Standard Default Data values
+        // Static Defaults for Fallbacks (Verbatim local files used if Firebase fails or config is absent)
         const DEFAULT_PRODUCTS = [
             { id: "prod-1", name: "Anchor Roma Classic Modular Switches", description: "Premium modular switches, sleek white, fire-retardant material.", category: "Switches", price: 45, availability: "In Stock", image: "image_d57726.png" },
             { id: "prod-2", name: "Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description: "Flame Retardant multi-strand cables ideal for residential wiring.", category: "Wires", price: 1540, availability: "In Stock", image: "image_d57726.png" },
-            { id: "prod-3", name: "Syska 9W LED Bright Bulbs (Cool Day Light)", description: "Energy-saving LED bulbs, B22 cap, zero flickering.", category: "LED Lights", price: 110, availability: "In Stock", image: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-4", name: "Crompton Hill Briz 1200mm Ceiling Fan", description: "High speed electric ceiling fan with powerful copper motor.", category: "Fans", price: 2350, availability: "In Stock", image: "https://images.unsplash.com/photo-1618944847023-38aa001235f0?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-5", name: "Sudhakar PVC Conduit Pipe (1 inch, 3m)", description: "Heavy-duty fire-retardant PVC electrical pipes designed for easy wiring.", category: "PVC Pipes", price: 95, availability: "In Stock", image: "https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-6", name: "Jaquar Wall-Mounted Brass Shower Faucet", description: "Premium rust-free chrome finished brass shower mixture.", category: "Plumbing Items", price: 1850, availability: "In Stock", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" },
-            { id: "prod-7", name: "Link Heavy Duty Brass Padlock (70mm)", description: "Ultimate security padlocks with hardened steel shackle.", category: "Hardware Items", price: 480, availability: "In Stock", image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=500&q=80" }
+            { id: "prod-3", name: "Syska 9W LED Bright Bulbs (Cool Day Light)", description: "Energy-saving LED bulbs, B22 cap, zero flickering.", category: "LED Lights", price: 110, availability: "In Stock", image: "image_d57726.png" },
+            { id: "prod-4", name: "Crompton Hill Briz 1200mm Ceiling Fan", description: "High speed electric ceiling fan with powerful copper motor.", category: "Fans", price: 2350, availability: "In Stock", image: "image_d57726.png" },
+            { id: "prod-5", name: "Sudhakar PVC Conduit Pipe (1 inch, 3m)", description: "Heavy-duty fire-retardant PVC electrical pipes designed for easy wiring.", category: "PVC Pipes", price: 95, availability: "In Stock", image: "image_d57726.png" },
+            { id: "prod-6", name: "Jaquar Wall-Mounted Brass Shower Faucet", description: "Premium rust-free chrome finished brass shower mixture.", category: "Plumbing Items", price: 1850, availability: "In Stock", image: "image_d57726.png" },
+            { id: "prod-7", name: "Link Heavy Duty Brass Padlock (70mm)", description: "Ultimate security padlocks with hardened steel shackle.", category: "Hardware Items", price: 480, availability: "In Stock", image: "image_d57726.png" }
         ];
 
         const DEFAULT_GALLERY = [
             { id: "gal-1", caption: "Our Main Display Shop Front & Product Rows", image: "image_d576ee.jpg" },
             { id: "gal-2", caption: "Fully Stocked Electrical Wire Reels & Pipes", image: "image_d57726.png" },
-            { id: "gal-3", caption: "Premium Switches, Sockets & Distribution Boards", image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=800&q=80" },
-            { id: "gal-4", caption: "Branded LED Light Bulbs and Ceiling Accessories", image: "https://images.unsplash.com/photo-1565814636199-ae8133055c1c?auto=format&fit=crop&w=800&q=80" }
+            { id: "gal-3", caption: "Premium Switches, Sockets & Distribution Boards", image: "image_d576ee.jpg" },
+            { id: "gal-4", caption: "Branded LED Light Bulbs and Ceiling Accessories", image: "image_d57726.png" }
         ];
 
         const DEFAULT_SETTINGS = {
@@ -1133,25 +977,376 @@
             adminPassword: "admin"
         };
 
-        // System State
+        const CATEGORIES = [
+            "Electrical Items", "Switches", "Wires", "LED Lights", "Fans", "PVC Pipes", "Plumbing Items", "Hardware Items", "Other Products"
+        ];
+
+        // Active Application State Memory Buffers (NO MORE LOCAL STORAGE FOR DATABASE RECORDS)
         let state = {
             currentPage: 'home',
             mobileMenuOpen: false,
             lang: localStorage.getItem('sri_balaji_lang') || 'en',
             theme: localStorage.getItem('sri_balaji_theme') || 'light',
-            products: JSON.parse(localStorage.getItem('sri_balaji_products')) || DEFAULT_PRODUCTS,
-            gallery: JSON.parse(localStorage.getItem('sri_balaji_gallery')) || DEFAULT_GALLERY,
-            enquiries: JSON.parse(localStorage.getItem('sri_balaji_enquiries')) || [],
-            settings: JSON.parse(localStorage.getItem('sri_balaji_settings')) || DEFAULT_SETTINGS,
-            adminLoggedIn: localStorage.getItem('sri_balaji_admin_auth') === 'true',
+            products: [...DEFAULT_PRODUCTS],
+            gallery: [...DEFAULT_GALLERY],
+            enquiries: [],
+            settings: { ...DEFAULT_SETTINGS },
+            adminLoggedIn: sessionStorage.getItem('sri_balaji_admin_auth') === 'true',
             selectedCategory: 'All',
-            productSearch: ''
+            productSearch: '',
+            user: null
         };
 
-        // Custom alert resolver promises
+        // Custom Overlay Modal Promise Resolver
         let customAlertPromiseResolver = null;
 
-        // Custom Overlay Modal Dialog Alert / Confirm system
+        // ==========================================================
+        // FIREBASE CLOUD DEPLOYMENT INTEGRATION KEYS
+        // ==========================================================
+        let firebaseConfig;
+        try {
+            firebaseConfig = typeof __firebase_config !== 'undefined' && __firebase_config
+                ? JSON.parse(__firebase_config)
+                : null;
+        } catch (e) {
+            console.error("Failed to parse system firebase config", e);
+        }
+
+        if (!firebaseConfig) {
+            firebaseConfig = {
+                apiKey: "PASTE_HERE",
+                authDomain: "PASTE_HERE",
+                projectId: "PASTE_HERE",
+                storageBucket: "PASTE_HERE",
+                messagingSenderId: "PASTE_HERE",
+                appId: "PASTE_HERE"
+            };
+        }
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'sri-balaji-electrical';
+        let db = null;
+        let isFirebaseActive = false;
+
+        // Helper function mapping STRICT PATH ISOLATION RULES (RULE 1)
+        function getCollectionRef(name) {
+            return db.collection('artifacts').doc(appId).collection('public').doc('data').collection(name);
+        }
+
+        // Authenticated Bootloader Initialization (RULE 3 Priority & Failures Safety Shield)
+        async function runAuthAndInitialize() {
+            try {
+                if (typeof firebase === 'undefined') {
+                    throw new Error("Firebase SDK is blocked or not loaded in browser.");
+                }
+                if (!firebaseConfig.apiKey || firebaseConfig.apiKey === "PASTE_HERE") {
+                    throw new Error("Firebase apiKey is set to placeholder.");
+                }
+                
+                // Initialize Compat SDK directly
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+                isFirebaseActive = true;
+                
+                // RULE 3: Perform secure authentication prior to launching collection reads
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    const userCredential = await firebase.auth().signInWithCustomToken(__initial_auth_token);
+                    state.user = userCredential.user;
+                } else {
+                    const userCredential = await firebase.auth().signInAnonymously();
+                    state.user = userCredential.user;
+                }
+                
+                console.log("Firebase Authenticated Successfully!");
+                fetchSystemData();
+            } catch (err) {
+                console.warn("Firebase auth/initialization fallback warning:", err.message);
+                isFirebaseActive = false;
+                fetchSystemData();
+            }
+        }
+
+        // Database Read & Real-time Live Synchronization Subscriptions
+        function fetchSystemData() {
+            if (isFirebaseActive && db && state.user) {
+                
+                // Verify/Seed Settings config file
+                getCollectionRef('settings').doc('config').get().then((docSnapshot) => {
+                    if (!docSnapshot.exists) {
+                        getCollectionRef('settings').doc('config').set(DEFAULT_SETTINGS);
+                    }
+                }).catch(e => console.warn("Initial settings lookup failed:", e));
+
+                // Settings Document subscription listener
+                getCollectionRef('settings').doc('config').onSnapshot((docSnapshot) => {
+                    if (docSnapshot.exists) {
+                        state.settings = docSnapshot.data();
+                        updateShopBrandingDOM();
+                        renderAdminDashboard();
+                    }
+                }, (error) => {
+                    console.warn("Firestore settings lookup warning:", error);
+                });
+
+                // Products list subscription listener
+                getCollectionRef('products').onSnapshot((snapshot) => {
+                    let items = [];
+                    snapshot.forEach(doc => {
+                        items.push({ id: doc.id, ...doc.data() });
+                    });
+                    if (items.length > 0) {
+                        state.products = items;
+                    } else {
+                        // Seed catalog default records on first launch
+                        DEFAULT_PRODUCTS.forEach(p => {
+                            getCollectionRef('products').doc(p.id).set(p);
+                        });
+                        state.products = [...DEFAULT_PRODUCTS];
+                    }
+                    renderFeaturedProducts();
+                    renderProductsCatalog();
+                    renderAdminDashboard();
+                }, (error) => {
+                    console.warn("Firestore products lookup error:", error);
+                });
+
+                // Showcase Gallery subscription listener
+                getCollectionRef('gallery').onSnapshot((snapshot) => {
+                    let items = [];
+                    snapshot.forEach(doc => {
+                        items.push({ id: doc.id, ...doc.data() });
+                    });
+                    if (items.length > 0) {
+                        state.gallery = items;
+                    } else {
+                        // Seed showcase gallery records on first launch
+                        DEFAULT_GALLERY.forEach(g => {
+                            getCollectionRef('gallery').doc(g.id).set(g);
+                        });
+                        state.gallery = [...DEFAULT_GALLERY];
+                    }
+                    renderGalleryGrid();
+                    renderAdminDashboard();
+                }, (error) => {
+                    console.warn("Firestore gallery subscription error:", error);
+                });
+
+                // Customer enquiries subscription listener
+                getCollectionRef('enquiries').onSnapshot((snapshot) => {
+                    let items = [];
+                    snapshot.forEach(doc => {
+                        items.push({ id: doc.id, ...doc.data() });
+                    });
+                    items.sort((a, b) => b.id.localeCompare(a.id));
+                    state.enquiries = items;
+                    renderAdminDashboard();
+                }, (error) => {
+                    console.warn("Firestore enquiries subscription error:", error);
+                });
+
+            } else {
+                // FALLBACK MODE (Firebase down or config is empty):
+                updateShopBrandingDOM();
+                renderFeaturedProducts();
+                renderProductsCatalog();
+                renderGalleryGrid();
+                renderAdminDashboard();
+            }
+        }
+
+        // Firebase Storage File Uploader with visual UI progress updates
+        function uploadToFirebaseStorage(file, folder, progressBarContainerId, progressBarId) {
+            return new Promise((resolve, reject) => {
+                // strict lock to prevent users using developer tools to exploit upload API
+                if (!state.adminLoggedIn) {
+                    showToast("Security Block: Only authenticated admins can upload files.", "error");
+                    reject("Unauthorized upload attempt.");
+                    return;
+                }
+                if (!isFirebaseActive) {
+                    reject("Firebase not initialized");
+                    return;
+                }
+                
+                const container = document.getElementById(progressBarContainerId);
+                const progressBar = document.getElementById(progressBarId);
+                
+                container.classList.remove('hidden');
+                progressBar.style.width = '0%';
+                
+                const storageRef = firebase.storage().ref();
+                // Store path matching appId standard structure
+                const fileRef = storageRef.child(`artifacts/${appId}/${folder}/${Date.now()}_${file.name}`);
+                const uploadTask = fileRef.put(file);
+                
+                uploadTask.on('state_changed', 
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        progressBar.style.width = progress + '%';
+                    }, 
+                    (error) => {
+                        container.classList.add('hidden');
+                        reject(error);
+                    }, 
+                    () => {
+                        container.classList.add('hidden');
+                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            resolve(downloadURL);
+                        }).catch(reject);
+                    }
+                );
+            });
+        }
+
+        // Write Operations back to Firestore database
+        function writeSettingsData(updatedData) {
+            if (!state.adminLoggedIn) {
+                showToast("Security Block: Unauthorized configurations save attempt.", "error");
+                return;
+            }
+            state.settings = updatedData;
+            if (isFirebaseActive && db && state.user) {
+                getCollectionRef('settings').doc('config').set(updatedData).catch(err => {
+                    showToast("Failed to write configurations to Cloud DB", "error");
+                });
+            } else {
+                updateShopBrandingDOM();
+            }
+        }
+
+        function writeProductsData(productId, productData) {
+            if (!state.adminLoggedIn) {
+                showToast("Security Block: Unauthorized product save attempt.", "error");
+                return;
+            }
+            if (isFirebaseActive && db && state.user) {
+                if (productId) {
+                    getCollectionRef('products').doc(productId).set(productData).catch(err => {
+                        showToast("Error updating document on Firestore", "error");
+                    });
+                } else {
+                    getCollectionRef('products').add(productData).catch(err => {
+                        showToast("Error saving document to Firestore", "error");
+                    });
+                }
+            } else {
+                // Offline fallback operations in-memory
+                if (productId) {
+                    state.products = state.products.map(p => p.id === productId ? { id: productId, ...productData } : p);
+                } else {
+                    const newId = 'prod-' + Date.now();
+                    state.products.push({ id: newId, ...productData });
+                }
+                renderProductsCatalog();
+            }
+        }
+
+        function deleteProductData(productId) {
+            if (!state.adminLoggedIn) {
+                showToast("Security Block: Unauthorized action.", "error");
+                return;
+            }
+            if (isFirebaseActive && db && state.user) {
+                getCollectionRef('products').doc(productId).delete().catch(err => {
+                    showToast("Database deletion operation failed", "error");
+                });
+            } else {
+                state.products = state.products.filter(p => p.id !== productId);
+                renderProductsCatalog();
+            }
+        }
+
+        function writeGalleryData(galleryId, galleryData) {
+            if (!state.adminLoggedIn) {
+                showToast("Security Block: Unauthorized gallery save attempt.", "error");
+                return;
+            }
+            if (isFirebaseActive && db && state.user) {
+                if (galleryId) {
+                    getCollectionRef('gallery').doc(galleryId).set(galleryData).catch(err => {
+                        showToast("Error updating gallery item to database", "error");
+                    });
+                } else {
+                    getCollectionRef('gallery').add(galleryData).catch(err => {
+                        showToast("Error writing gallery item to database", "error");
+                    });
+                }
+            } else {
+                if (galleryId) {
+                    state.gallery = state.gallery.map(g => g.id === galleryId ? { id: galleryId, ...galleryData } : g);
+                } else {
+                    const newId = 'gal-' + Date.now();
+                    state.gallery.push({ id: newId, ...galleryData });
+                }
+                renderGalleryGrid();
+            }
+        }
+
+        // ==========================================================
+        // STRICTOR ACCESS AUTHORIZATION GATES (No User Uploads Mistake Fix)
+        // ==========================================================
+        function deleteGalleryData(galleryId) {
+            if (!state.adminLoggedIn) {
+                showToast("Security Block: Unauthorized action.", "error");
+                return;
+            }
+            if (isFirebaseActive && db && state.user) {
+                getCollectionRef('gallery').doc(galleryId).delete().catch(err => {
+                    showToast("Database operation failed", "error");
+                });
+            } else {
+                state.gallery = state.gallery.filter(g => g.id !== galleryId);
+                renderGalleryGrid();
+            }
+        }
+
+        function submitEnquiryData(enquiryData) {
+            if (isFirebaseActive && db) {
+                getCollectionRef('enquiries').add(enquiryData).then(() => {
+                    showCustomAlert("Thank you! Your quotation enquiry has been sent safely. We will contact you soon.", "Submission Successful", "🎉");
+                }).catch(err => {
+                    showToast("Enquiry failed to save in Cloud Firestore.", "error");
+                });
+            } else {
+                state.enquiries.unshift(enquiryData);
+                showCustomAlert("Thank you! Your quotation enquiry has been registered in local-memory. We will contact you soon.", "Submission Successful", "🎉");
+            }
+        }
+
+        // Update operational status
+        function updateEnquiryStatusData(enquiryId, currentStatus) {
+            if (!state.adminLoggedIn) {
+                showToast("Security Block: Unauthorized action.", "error");
+                return;
+            }
+            const nextStatus = currentStatus === 'Contacted' ? 'Pending' : 'Contacted';
+            if (isFirebaseActive && db && state.user) {
+                getCollectionRef('enquiries').doc(enquiryId).update({ status: nextStatus }).catch(err => {
+                    showToast("Failed to modify record status", "error");
+                });
+            } else {
+                state.enquiries = state.enquiries.map(e => e.id === enquiryId ? { ...e, status: nextStatus } : e);
+                renderAdminDashboard();
+            }
+            showToast(`Status updated to: ${nextStatus}`, "success");
+        }
+
+        function deleteEnquiryData(enquiryId) {
+            if (!state.adminLoggedIn) {
+                showToast("Security Block: Unauthorized action.", "error");
+                return;
+            }
+            if (isFirebaseActive && db && state.user) {
+                getCollectionRef('enquiries').doc(enquiryId).delete().catch(err => {
+                    showToast("Failed to delete record on Firestore", "error");
+                });
+            } else {
+                state.enquiries = state.enquiries.filter(e => e.id !== enquiryId);
+                renderAdminDashboard();
+            }
+            showToast("Enquiry record deleted", "info");
+        }
+
+        // Dialog Overlays Replacement Alert Module
         function showCustomAlert(message, title = "Notice", icon = "🔔", showCancel = false) {
             document.getElementById('custom-alert-title').innerText = title;
             document.getElementById('custom-alert-message').innerText = message;
@@ -1181,11 +1376,10 @@
             }
         }
 
-        // Language Translation Handler
+        // Theme and Multi-lingual Switch Controllers
         function updateLanguageDOM() {
             const dictionary = TRANSLATIONS[state.lang];
             
-            // Translate static elements marked with data-t
             document.querySelectorAll('[data-t]').forEach(element => {
                 const key = element.getAttribute('data-t');
                 if (dictionary[key]) {
@@ -1193,11 +1387,9 @@
                 }
             });
 
-            // Update selectors
             document.getElementById('language-switcher').value = state.lang;
             document.getElementById('language-switcher-mobile').value = state.lang;
 
-            // Re-render items to apply translated categories dynamically
             renderCategoryChips();
             renderProductsCatalog();
         }
@@ -1209,7 +1401,6 @@
             showToast("Language changed / భాష మార్చబడింది / भाषा बदल दी गई है", "info");
         }
 
-        // Theme (Dark / Light Mode) Switches
         function applyThemeDOM() {
             const html = document.documentElement;
             if (state.theme === 'dark') {
@@ -1223,6 +1414,7 @@
             }
         }
 
+        // Keep visual toggles in localStorage
         function toggleTheme() {
             state.theme = state.theme === 'light' ? 'dark' : 'light';
             localStorage.setItem('sri_balaji_theme', state.theme);
@@ -1230,42 +1422,53 @@
             showToast(state.theme === 'dark' ? 'Dark Mode Activated' : 'Light Mode Activated', 'info');
         }
 
-        // Navigation system
+        // Secure navigation tabs toggle (Doesn't hide tabs now, but prevents state loopholes)
+        function updateNavigationVisibility() {
+            const publicNav = document.getElementById('public-nav-links');
+            const publicMobileNav = document.getElementById('public-mobile-nav-links');
+            
+            // WE REMOVED THE AUTO-HIDE OF BUTTONS TO KEEP THEM RESPONSIVE AT ALL TIMES.
+            // When Admin is logged in, they can browse normally with Admin tools active.
+            if (publicNav) {
+                publicNav.classList.remove('hidden');
+            }
+            if (publicMobileNav) {
+                publicMobileNav.classList.remove('hidden');
+            }
+        }
+
         function navigateTo(pageId) {
+            // Security Navigation Guard: No longer blocking standard pages!
+            // Instead, we let the admin view all pages normally in real-time.
             state.currentPage = pageId;
             
-            // Hide all pages
             document.querySelectorAll('.page-section').forEach(section => {
                 section.classList.add('hidden');
             });
 
-            // Show selected page
             const target = document.getElementById(`page-${pageId}`);
             if (target) target.classList.remove('hidden');
 
-            // Update header navigation button classes
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 const btnPage = btn.getAttribute('data-page');
                 if (btnPage === pageId) {
-                    btn.className = "nav-btn px-4 py-2 rounded-lg font-bold text-sm transition-all bg-orange-500 text-white shadow-md shadow-orange-500/20";
+                    btn.className = "nav-btn px-3 py-2 rounded-lg font-bold text-sm transition-all bg-orange-500 text-white shadow-md shadow-orange-500/20";
                 } else {
-                    btn.className = "nav-btn px-4 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800";
+                    btn.className = "nav-btn px-3 py-2 rounded-lg font-semibold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800";
                 }
             });
 
-            // Admin button specific highlight styling
             const adminBtn = document.getElementById('nav-admin-btn');
             if (adminBtn) {
                 if (state.currentPage === 'admin') {
-                    adminBtn.className = "nav-btn flex items-center space-x-1.5 px-4 py-2 rounded-lg font-semibold text-sm bg-blue-600 text-white border-blue-500";
+                    adminBtn.className = "nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg font-semibold text-sm bg-blue-600 text-white border-blue-500";
                 } else if (state.adminLoggedIn) {
-                    adminBtn.className = "nav-btn flex items-center space-x-1.5 px-4 py-2 rounded-lg font-semibold text-sm border border-emerald-500 text-emerald-400 hover:bg-emerald-950/30";
+                    adminBtn.className = "nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg font-semibold text-sm border border-emerald-500 text-emerald-400 hover:bg-emerald-950/30";
                 } else {
-                    adminBtn.className = "nav-btn flex items-center space-x-1.5 px-4 py-2 rounded-lg font-semibold text-sm border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800";
+                    adminBtn.className = "nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg font-semibold text-sm border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800";
                 }
             }
 
-            // Dynamic view loading triggers
             if (pageId === 'home') renderFeaturedProducts();
             if (pageId === 'products') {
                 renderCategoryChips();
@@ -1274,7 +1477,6 @@
             if (pageId === 'gallery') renderGalleryGrid();
             if (pageId === 'admin') renderAdminDashboard();
 
-            // Window automatic scroll up
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1288,18 +1490,16 @@
             }
         }
 
-        // Toast Messages injector
+        // Toast Alerts system
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toastId = 'toast-' + Date.now();
             
             const toastHtml = `
                 <div id="${toastId}" class="p-4 rounded-xl shadow-2xl border flex items-start space-x-3 transition-all duration-300 animate-fadeIn ${
-                    type === 'success' 
-                        ? 'bg-emerald-900 text-emerald-100 border-emerald-700/50' 
-                        : type === 'error'
-                        ? 'bg-rose-900 text-rose-100 border-rose-700/50'
-                        : 'bg-slate-900 text-slate-100 border-slate-700'
+                    type === 'success' ? 'bg-emerald-900 text-emerald-100 border-emerald-700/50' : 
+                    type === 'error' ? 'bg-rose-900 text-rose-100 border-rose-700/50' : 
+                    'bg-slate-900 text-slate-100 border-slate-700'
                 }">
                     <div class="flex-grow text-xs font-bold leading-relaxed">${message}</div>
                     <button onclick="dismissToast('${toastId}')" class="text-white/70 hover:text-white shrink-0">✕</button>
@@ -1307,9 +1507,7 @@
             `;
             
             container.insertAdjacentHTML('beforeend', toastHtml);
-            setTimeout(() => {
-                dismissToast(toastId);
-            }, 4000);
+            setTimeout(() => { dismissToast(toastId); }, 4000);
         }
 
         function dismissToast(id) {
@@ -1320,7 +1518,7 @@
             }
         }
 
-        // Dynamic Home Featured list previewer
+        // Home featured list preview
         function renderFeaturedProducts() {
             const container = document.getElementById('featured-products-container');
             if (!container) return;
@@ -1329,18 +1527,18 @@
             state.products.slice(0, 4).forEach(p => {
                 const html = `
                     <div class="bg-white dark:bg-slate-900 rounded-xl shadow-md border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col group hover:shadow-xl hover:border-slate-200 transition-all duration-300">
-                        <div class="relative aspect-video bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'">
-                            <span class="absolute top-2.5 left-2.5 px-2 py-1 bg-slate-900/80 text-white font-medium text-[10px] rounded-md tracking-wider uppercase">${p.category}</span>
+                        <div class="relative aspect-video bg-slate-100 dark:bg-slate-850 overflow-hidden">
+                            <img src="${p.image || 'image_d57726.png'}" alt="${p.name || 'Product'}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='image_d57726.png'">
+                            <span class="absolute top-2.5 left-2.5 px-2 py-1 bg-slate-900/80 text-white font-medium text-[10px] rounded-md tracking-wider uppercase">${p.category || 'Category'}</span>
                         </div>
                         <div class="p-4 flex-grow flex flex-col justify-between">
                             <div>
-                                <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-1 transition-colors">${p.name}</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1.5 leading-relaxed">${p.description}</p>
+                                <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-1 transition-colors">${p.name || 'Product Item'}</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1.5 leading-relaxed">${p.description || 'No description available.'}</p>
                             </div>
                             <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                                <span class="text-lg font-extrabold text-slate-900 dark:text-white">₹${p.price}</span>
-                                <button onclick="triggerDirectEnquiry('${p.name}')" class="px-3 py-1.5 bg-slate-100 hover:bg-orange-500 dark:bg-slate-800 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold rounded-lg transition-colors">Enquire</button>
+                                <span class="text-lg font-extrabold text-slate-900 dark:text-white">₹${p.price || 0}</span>
+                                <button onclick="triggerDirectEnquiry('${p.name || 'Product Item'}')" class="px-3 py-1.5 bg-slate-100 hover:bg-orange-500 dark:bg-slate-800 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold rounded-lg transition-colors">Enquire</button>
                             </div>
                         </div>
                     </div>
@@ -1349,13 +1547,12 @@
             });
         }
 
-        // Catalog categories rendering
+        // Category Chips filter
         function renderCategoryChips() {
             const container = document.getElementById('category-chips-container');
             if (!container) return;
             container.innerHTML = '';
             
-            // "All" button element
             const allCount = state.products.length;
             const allActiveStyle = state.selectedCategory === 'All' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200';
             container.insertAdjacentHTML('beforeend', `
@@ -1364,7 +1561,6 @@
                 </button>
             `);
 
-            // Category list elements
             CATEGORIES.forEach(cat => {
                 const count = state.products.filter(p => p.category === cat).length;
                 const activeStyle = state.selectedCategory === cat ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200';
@@ -1376,16 +1572,21 @@
             });
         }
 
-        // Catalog products list rendering
+        // Dynamic Product catalog list (Reinforced with anti-crash defensive properties)
         function renderProductsCatalog() {
             const container = document.getElementById('products-catalog-grid');
             if (!container) return;
             container.innerHTML = '';
 
             const filtered = state.products.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(state.productSearch.toLowerCase()) ||
-                                      p.description.toLowerCase().includes(state.productSearch.toLowerCase()) ||
-                                      p.category.toLowerCase().includes(state.productSearch.toLowerCase());
+                const name = p.name ? String(p.name).toLowerCase() : "";
+                const description = p.description ? String(p.description).toLowerCase() : "";
+                const category = p.category ? String(p.category).toLowerCase() : "";
+                const search = state.productSearch ? state.productSearch.toLowerCase() : "";
+                
+                const matchesSearch = name.includes(search) ||
+                                      description.includes(search) ||
+                                      category.includes(search);
                 const matchesCategory = state.selectedCategory === 'All' || p.category === state.selectedCategory;
                 return matchesSearch && matchesCategory;
             });
@@ -1397,7 +1598,7 @@
                 const stockBadgeClass = isOutOfStock ? 'bg-rose-100 text-rose-800' : 'bg-emerald-100 text-emerald-800';
                 
                 let actionArea = `
-                    <button onclick="triggerDirectEnquiry('${p.name}')" ${isOutOfStock ? 'disabled' : ''} class="w-full py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-2 transition-all ${isOutOfStock ? 'bg-slate-150 text-slate-400 cursor-not-allowed dark:bg-slate-800' : 'bg-orange-500 hover:bg-orange-600 text-white shadow-sm'}">
+                    <button onclick="triggerDirectEnquiry('${p.name || 'Product Item'}')" ${isOutOfStock ? 'disabled' : ''} class="w-full py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-2 transition-all ${isOutOfStock ? 'bg-slate-150 text-slate-400 cursor-not-allowed dark:bg-slate-800' : 'bg-orange-500 hover:bg-orange-600 text-white shadow-sm'}">
                         <span>${isOutOfStock ? 'Unavailable' : 'Enquire via Form'}</span>
                     </button>
                 `;
@@ -1407,7 +1608,7 @@
                         <div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800">
                           <button onclick="openProductModal('edit', '${p.id}')" class="bg-amber-100 text-amber-800 p-2 rounded-lg flex items-center justify-center hover:bg-amber-200" title="Edit Product Info">✍️</button>
                           <button onclick="toggleProductStock('${p.id}')" class="bg-blue-100 text-blue-800 text-[10px] font-bold p-2 rounded-lg flex items-center justify-center hover:bg-blue-200" title="Toggle Stock">Stock</button>
-                          <button onclick="deleteProduct('${p.id}')" class="bg-red-100 text-red-800 p-2 rounded-lg flex items-center justify-center hover:bg-red-200" title="Delete Product">🗑️</button>
+                          <button onclick="deleteProduct('${p.id}')" class="bg-red-100 text-red-850 p-2 rounded-lg flex items-center justify-center hover:bg-red-200" title="Delete Product">🗑️</button>
                         </div>
                     `;
                 }
@@ -1415,21 +1616,21 @@
                 const html = `
                     <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group hover:shadow-xl hover:border-blue-300/50 transition-all duration-300 relative">
                         <div class="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
-                            <span class="px-2.5 py-1 bg-slate-900/80 text-white font-bold text-[9px] rounded-md uppercase tracking-wider backdrop-blur-xs">${p.category}</span>
-                            <span class="px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider text-center ${stockBadgeClass}">${p.availability}</span>
+                            <span class="px-2.5 py-1 bg-slate-900/80 text-white font-bold text-[9px] rounded-md uppercase tracking-wider backdrop-blur-xs">${p.category || 'Other'}</span>
+                            <span class="px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider text-center ${stockBadgeClass}">${p.availability || 'In Stock'}</span>
                         </div>
                         <div class="relative aspect-square bg-slate-50 dark:bg-slate-850 overflow-hidden border-b border-slate-100 dark:border-slate-800">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='image_d57726.png'">
+                            <img src="${p.image || 'image_d57726.png'}" alt="${p.name || 'Product'}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='image_d57726.png'">
                         </div>
                         <div class="p-4 flex-grow flex flex-col justify-between bg-white dark:bg-slate-900">
                             <div class="space-y-1">
-                                <h3 class="font-extrabold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 text-base leading-tight line-clamp-2 transition-colors">${p.name}</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${p.description}</p>
+                                <h3 class="font-extrabold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 text-base leading-tight line-clamp-2 transition-colors">${p.name || 'Product Item'}</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${p.description || 'No description available.'}</p>
                             </div>
                             <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
                                 <div class="flex items-baseline space-x-1 justify-between mb-3">
                                     <span class="text-slate-400 text-xs">Best Retail Price:</span>
-                                    <span class="text-xl font-black text-slate-900 dark:text-white">₹${p.price}</span>
+                                    <span class="text-xl font-black text-slate-900 dark:text-white">₹${p.price || 0}</span>
                                 </div>
                                 ${actionArea}
                             </div>
@@ -1440,7 +1641,7 @@
             });
         }
 
-        // Showcase photo grid rendering
+        // Photo gallery layout grid rendering
         function renderGalleryGrid() {
             const container = document.getElementById('gallery-grid-container');
             if (!container) return;
@@ -1460,7 +1661,7 @@
                 const html = `
                     <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300">
                         <div class="relative aspect-square overflow-hidden bg-slate-900">
-                            <img src="${g.image}" alt="${g.caption}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" onerror="this.src='image_d576ee.jpg'">
+                            <img src="${g.image || 'image_d576ee.jpg'}" alt="${g.caption || 'Gallery Showcase'}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" onerror="this.src='image_d576ee.jpg'">
                         </div>
                         <div class="p-4 flex-grow flex items-center justify-between bg-white dark:bg-slate-900">
                             <p class="text-xs text-slate-600 dark:text-slate-300 font-medium italic leading-relaxed pr-4">${g.caption || "Balaji Electrical Area"}</p>
@@ -1472,7 +1673,6 @@
             });
         }
 
-        // Admin workspace rendering
         function renderAdminDashboard() {
             if (!state.adminLoggedIn) {
                 document.getElementById('admin-login-card').classList.remove('hidden');
@@ -1483,7 +1683,6 @@
             document.getElementById('admin-login-card').classList.add('hidden');
             document.getElementById('admin-dashboard-panel').classList.remove('hidden');
 
-            // Set statistics
             document.getElementById('stat-products-count').innerText = state.products.length;
             document.getElementById('stat-gallery-count').innerText = state.gallery.length;
             document.getElementById('stat-enquiries-count').innerText = state.enquiries.length;
@@ -1491,7 +1690,6 @@
             const pendingCount = state.enquiries.filter(e => e.status !== 'Contacted').length;
             document.getElementById('stat-pending-count').innerText = `${pendingCount} Pending`;
 
-            // Setup inbox requests management table
             const tableBody = document.getElementById('enquiries-table-body');
             tableBody.innerHTML = '';
             
@@ -1504,24 +1702,24 @@
                     const tr = `
                         <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
                             <td class="p-4">
-                                <p class="font-black text-slate-900 dark:text-white">${enq.name}</p>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">📞 ${enq.mobile}</p>
+                                <p class="font-black text-slate-900 dark:text-white">${enq.name || 'Anonymous'}</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">📞 ${enq.mobile || ''}</p>
                                 ${enq.location ? `<p class="text-[10px] text-slate-400">📍 ${enq.location}</p>` : ''}
                             </td>
                             <td class="p-4">
-                                <span class="inline-block px-2.5 py-1 bg-blue-50 dark:bg-slate-800 text-blue-750 dark:text-blue-300 rounded-md text-xs font-bold leading-tight">${enq.subject}</span>
+                                <span class="inline-block px-2.5 py-1 bg-blue-50 dark:bg-slate-800 text-blue-750 dark:text-blue-300 rounded-md text-xs font-bold leading-tight">${enq.subject || 'Enquiry'}</span>
                             </td>
                             <td class="p-4 max-w-xs">
-                                <p class="text-xs text-slate-600 dark:text-slate-350 line-clamp-2" title="${enq.message}">${enq.message || "No description details."}</p>
+                                <p class="text-xs text-slate-600 dark:text-slate-350 line-clamp-2" title="${enq.message || ''}">${enq.message || "No description details."}</p>
                             </td>
-                            <td class="p-4 text-slate-500 dark:text-slate-450 text-xs">${enq.date}</td>
+                            <td class="p-4 text-slate-500 dark:text-slate-455 text-xs">${enq.date || ''}</td>
                             <td class="p-4 text-center">
-                                <button onclick="toggleEnquiryStatus('${enq.id}')" class="px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider inline-flex items-center space-x-1 ${statusClass}">
+                                <button onclick="toggleEnquiryStatus('${enq.id}', '${enq.status}')" class="px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider inline-flex items-center space-x-1 ${statusClass}">
                                     <span>${enq.status || 'Pending'}</span>
                                 </button>
                             </td>
                             <td class="p-4 text-right">
-                                <button onclick="deleteEnquiry('${enq.id}')" class="text-rose-600 hover:text-rose-800 p-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors">🗑️</button>
+                                <button onclick="deleteEnquiry('${enq.id}')" class="text-rose-600 hover:text-rose-800 p-2 hover:bg-rose-50 dark:hover:bg-rose-955/40 rounded-lg transition-colors">🗑️</button>
                             </td>
                         </tr>
                     `;
@@ -1532,20 +1730,24 @@
 
         // Global shop settings updates
         function updateShopBrandingDOM() {
-            const s = state.settings;
+            const s = state.settings || DEFAULT_SETTINGS;
             
-            // Text adjustments
-            document.querySelectorAll('.id-shop-name').forEach(el => el.innerText = s.shopName);
-            document.getElementById('nav-shop-name').innerText = s.shopName;
-            document.querySelectorAll('.id-phone-text').forEach(el => el.innerText = s.phone);
-            document.getElementById('footer-copyright-name').innerText = s.shopName;
+            document.querySelectorAll('.id-shop-name').forEach(el => el.innerText = s.shopName || DEFAULT_SETTINGS.shopName);
+            const navShopName = document.getElementById('nav-shop-name');
+            if (navShopName) navShopName.innerText = s.shopName || DEFAULT_SETTINGS.shopName;
+            document.querySelectorAll('.id-phone-text').forEach(el => el.innerText = s.phone || DEFAULT_SETTINGS.phone);
+            const footerCopyrightName = document.getElementById('footer-copyright-name');
+            if (footerCopyrightName) footerCopyrightName.innerText = s.shopName || DEFAULT_SETTINGS.shopName;
 
-            document.getElementById('contact-address-text').innerText = s.address;
-            document.getElementById('contact-hours-text').innerText = s.hours;
-            document.getElementById('footer-address').innerText = s.address;
-            document.getElementById('footer-hours').innerText = s.hours;
+            const contactAddressText = document.getElementById('contact-address-text');
+            if (contactAddressText) contactAddressText.innerText = s.address || DEFAULT_SETTINGS.address;
+            const contactHoursText = document.getElementById('contact-hours-text');
+            if (contactHoursText) contactHoursText.innerText = s.hours || DEFAULT_SETTINGS.hours;
+            const footerAddress = document.getElementById('footer-address');
+            if (footerAddress) footerAddress.innerText = s.address || DEFAULT_SETTINGS.address;
+            const footerHours = document.getElementById('footer-hours');
+            if (footerHours) footerHours.innerText = s.hours || DEFAULT_SETTINGS.hours;
 
-            // Hyperlinks setup
             document.getElementById('nav-mobile-call').href = `tel:${s.phone}`;
             document.getElementById('hero-call-btn').href = `tel:${s.phone}`;
             document.getElementById('hero-whatsapp-btn').href = `https://wa.me/91${s.whatsapp}`;
@@ -1557,17 +1759,24 @@
             document.getElementById('floating-whatsapp-btn').href = `https://wa.me/91${s.whatsapp}?text=Hello%20Balaji%20Electricals`;
             document.getElementById('footer-tel').href = `tel:${s.phone}`;
 
-            // Banner setting
             const heroBanner = document.getElementById('hero-banner');
             if (heroBanner) {
-                heroBanner.src = s.heroBannerUrl;
+                heroBanner.src = s.heroBannerUrl || DEFAULT_SETTINGS.heroBannerUrl;
             }
         }
 
-        // Crud products modallers
+        // CRUD Modallers
         function openProductModal(mode, productId = null) {
+            if (!state.adminLoggedIn) {
+                showToast("Unauthorized! Admin login is required.", "error");
+                return;
+            }
             const modal = document.getElementById('product-modal');
             const title = document.getElementById('product-modal-title');
+            
+            // Clean up the upload file selection
+            document.getElementById('modal-product-file').value = '';
+            document.getElementById('product-upload-progress').classList.add('hidden');
             
             const categorySelect = document.getElementById('modal-product-category');
             categorySelect.innerHTML = '';
@@ -1606,57 +1815,76 @@
             modal.classList.remove('flex');
         }
 
-        function saveProductForm(e) {
+        async function saveProductForm(e) {
             e.preventDefault();
+            if (!state.adminLoggedIn) {
+                showToast("Security Block: Unauthorized action.", "error");
+                return;
+            }
             const id = document.getElementById('modal-product-id').value;
             const name = document.getElementById('modal-product-name').value;
             const category = document.getElementById('modal-product-category').value;
             const price = parseFloat(document.getElementById('modal-product-price').value);
             const description = document.getElementById('modal-product-description').value;
             const availability = document.getElementById('modal-product-availability').value;
-            const image = document.getElementById('modal-product-image').value || "image_d57726.png";
-
-            if (id) {
-                state.products = state.products.map(p => p.id === id ? { id, name, category, price, description, availability, image } : p);
-                showToast("Product updated successfully!");
-            } else {
-                const newId = 'prod-' + Date.now();
-                state.products.push({ id: newId, name, category, price, description, availability, image });
-                showToast("New product catalogued successfully!");
+            
+            let image = document.getElementById('modal-product-image').value || "image_d57726.png";
+            const fileInput = document.getElementById('modal-product-file');
+            
+            // Check if local file upload should take priority
+            if (fileInput.files.length > 0 && isFirebaseActive) {
+                try {
+                    showToast("Uploading product image to Firebase Storage...", "info");
+                    const uploadedURL = await uploadToFirebaseStorage(
+                        fileInput.files[0], 
+                        'products', 
+                        'product-upload-progress', 
+                        'product-upload-progress-bar'
+                    );
+                    image = uploadedURL;
+                    showToast("Product image uploaded successfully!", "success");
+                } catch (uploadError) {
+                    console.error("Storage upload failure:", uploadError);
+                    showToast("Image upload failed. Saved document with standard link instead.", "error");
+                }
             }
 
-            localStorage.setItem('sri_balaji_products', JSON.stringify(state.products));
+            const productData = { name, category, price, description, availability, image };
+            writeProductsData(id || null, productData);
+
+            showToast(id ? "Product updated successfully!" : "New product catalogued successfully!");
             closeProductModal();
-            renderProductsCatalog();
         }
 
         function toggleProductStock(id) {
-            state.products = state.products.map(p => {
-                if (p.id === id) {
-                    const next = p.availability === 'In Stock' ? 'Out of Stock' : 'In Stock';
-                    showToast(`Updated stock status for ${p.name}`, "success");
-                    return { ...p, availability: next };
-                }
-                return p;
-            });
-            localStorage.setItem('sri_balaji_products', JSON.stringify(state.products));
-            renderProductsCatalog();
+            const p = state.products.find(item => item.id === id);
+            if (p) {
+                const nextStatus = p.availability === 'In Stock' ? 'Out of Stock' : 'In Stock';
+                writeProductsData(id, { ...p, availability: nextStatus });
+                showToast(`Updated stock status to: ${nextStatus}`, "success");
+            }
         }
 
         async function deleteProduct(id) {
             const confirm = await showCustomAlert("Are you sure you want to remove this product?", "Confirmation required", "❓", true);
             if (confirm) {
-                state.products = state.products.filter(p => p.id !== id);
-                localStorage.setItem('sri_balaji_products', JSON.stringify(state.products));
+                deleteProductData(id);
                 showToast("Product deleted from system", "info");
-                renderProductsCatalog();
             }
         }
 
-        // Showcase pictures upload modallers
+        // Showcase picture upload modallers
         function openGalleryModal(mode, galleryId = null) {
+            if (!state.adminLoggedIn) {
+                showToast("Unauthorized! Admin login is required.", "error");
+                return;
+            }
             const modal = document.getElementById('gallery-modal');
             const title = document.getElementById('gallery-modal-title');
+            
+            // Clean up files selector
+            document.getElementById('modal-gallery-file').value = '';
+            document.getElementById('gallery-upload-progress').classList.add('hidden');
             
             if (mode === 'add') {
                 title.innerText = 'Add Photo to Gallery';
@@ -1682,38 +1910,57 @@
             modal.classList.remove('flex');
         }
 
-        function saveGalleryForm(e) {
+        async function saveGalleryForm(e) {
             e.preventDefault();
+            if (!state.adminLoggedIn) {
+                showToast("Security Block: Unauthorized action.", "error");
+                return;
+            }
             const id = document.getElementById('modal-gallery-id').value;
             const caption = document.getElementById('modal-gallery-caption').value;
-            const image = document.getElementById('modal-gallery-image').value || "image_d576ee.jpg";
-
-            if (id) {
-                state.gallery = state.gallery.map(g => g.id === id ? { id, caption, image } : g);
-                showToast("Gallery caption modified successfully!");
-            } else {
-                const newId = 'gal-' + Date.now();
-                state.gallery.push({ id: newId, caption, image });
-                showToast("Photo added to gallery showcase!");
+            
+            let image = document.getElementById('modal-gallery-image').value || "image_d576ee.jpg";
+            const fileInput = document.getElementById('modal-gallery-file');
+            
+            // Check if local file upload should take priority
+            if (fileInput.files.length > 0 && isFirebaseActive) {
+                try {
+                    showToast("Uploading showcase image to Firebase Storage...", "info");
+                    const uploadedURL = await uploadToFirebaseStorage(
+                        fileInput.files[0], 
+                        'gallery', 
+                        'gallery-upload-progress', 
+                        'gallery-upload-progress-bar'
+                    );
+                    image = uploadedURL;
+                    showToast("Gallery image uploaded successfully!", "success");
+                } catch (uploadError) {
+                    console.error("Storage upload failure:", uploadError);
+                    showToast("Image upload failed. Saved with default backup url instead.", "error");
+                }
             }
 
-            localStorage.setItem('sri_balaji_gallery', JSON.stringify(state.gallery));
+            const galleryData = { caption, image };
+            writeGalleryData(id || null, galleryData);
+
+            showToast(id ? "Gallery caption modified successfully!" : "Photo added to gallery showcase!");
             closeGalleryModal();
-            renderGalleryGrid();
         }
 
         async function deleteGalleryItem(id) {
             const confirm = await showCustomAlert("Are you sure you want to remove this image from the showcase?", "Confirmation required", "❓", true);
             if (confirm) {
-                state.gallery = state.gallery.filter(g => g.id !== id);
-                localStorage.setItem('sri_balaji_gallery', JSON.stringify(state.gallery));
+                deleteGalleryData(id);
                 showToast("Image removed from gallery", "info");
-                renderGalleryGrid();
             }
         }
 
-        // Global brand settings modallers
+        // Global settings modifications
         function openSettingsModal() {
+            if (!state.adminLoggedIn) {
+                showToast("Unauthorized! Admin login is required.", "error");
+                return;
+            }
             const modal = document.getElementById('settings-modal');
             const s = state.settings;
             
@@ -1736,6 +1983,10 @@
 
         function saveSettingsForm(e) {
             e.preventDefault();
+            if (!state.adminLoggedIn) {
+                showToast("Security Block: Unauthorized action.", "error");
+                return;
+            }
             const shopName = document.getElementById('setting-shop-name').value;
             const phone = document.getElementById('setting-phone').value;
             const whatsapp = document.getElementById('setting-whatsapp').value;
@@ -1743,16 +1994,14 @@
             const address = document.getElementById('setting-address').value;
             const hours = document.getElementById('setting-hours').value;
 
-            state.settings = { ...state.settings, shopName, phone, whatsapp, heroBannerUrl, address, hours };
-            localStorage.setItem('sri_balaji_settings', JSON.stringify(state.settings));
+            const updatedSettings = { ...state.settings, shopName, phone, whatsapp, heroBannerUrl, address, hours };
+            writeSettingsData(updatedSettings);
             
             showToast("Global shop configurations saved!", "success");
             closeSettingsModal();
-            updateShopBrandingDOM();
-            renderAdminDashboard();
         }
 
-        // Customer request submissions handler
+        // Customer Enquiry triggers and handlers
         function submitEnquiry(e) {
             e.preventDefault();
             const name = document.getElementById('enq-name').value;
@@ -1763,23 +2012,17 @@
 
             const newEnquiry = {
                 id: 'enq-' + Date.now(),
-                name,
-                mobile,
-                location,
-                subject,
-                message,
+                name, mobile, location, subject, message,
                 date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString(),
                 status: 'Pending'
             };
 
-            state.enquiries.unshift(newEnquiry);
-            localStorage.setItem('sri_balaji_enquiries', JSON.stringify(state.enquiries));
-            
-            showCustomAlert("Thank you! Your quotation enquiry has been sent safely. Our team will contact you soon.", "Submission Successful", "🎉");
+            submitEnquiryData(newEnquiry);
             resetEnquiryForm();
             navigateTo('home');
         }
 
+        // Enquiry directly from product page
         function triggerDirectEnquiry(productName) {
             document.getElementById('enq-subject').value = `Enquiry about: ${productName}`;
             document.getElementById('enq-message').value = `Hello Balaji Electrical Shop, I want to inquire about availability, price, and logistics for "${productName}". Please let me know.`;
@@ -1790,26 +2033,14 @@
             document.getElementById('enquiry-form').reset();
         }
 
-        function toggleEnquiryStatus(id) {
-            state.enquiries = state.enquiries.map(e => {
-                if (e.id === id) {
-                    const next = e.status === 'Contacted' ? 'Pending' : 'Contacted';
-                    showToast(`Enquiry status updated to: ${next}`, "success");
-                    return { ...e, status: next };
-                }
-                return e;
-            });
-            localStorage.setItem('sri_balaji_enquiries', JSON.stringify(state.enquiries));
-            renderAdminDashboard();
+        function toggleEnquiryStatus(id, currentStatus) {
+            updateEnquiryStatusData(id, currentStatus);
         }
 
         async function deleteEnquiry(id) {
             const confirm = await showCustomAlert("Permanently delete this customer request?", "Confirmation required", "❓", true);
             if (confirm) {
-                state.enquiries = state.enquiries.filter(e => e.id !== id);
-                localStorage.setItem('sri_balaji_enquiries', JSON.stringify(state.enquiries));
-                showToast("Request details removed from inbox database", "info");
-                renderAdminDashboard();
+                deleteEnquiryData(id);
             }
         }
 
@@ -1821,41 +2052,44 @@
 
             if (input === correctPassword) {
                 state.adminLoggedIn = true;
-                localStorage.setItem('sri_balaji_admin_auth', 'true');
+                sessionStorage.setItem('sri_balaji_admin_auth', 'true');
                 showToast("Administrative access validated!", "success");
                 document.getElementById('admin-password-input').value = '';
                 
-                // Show operation items
+                // Expose Admin Controls
                 document.getElementById('admin-add-product-btn').classList.remove('hidden');
                 document.getElementById('admin-add-gallery-btn').classList.remove('hidden');
+                document.getElementById('nav-admin-icon').innerText = "🔒";
                 document.getElementById('nav-admin-text').innerText = "Dashboard";
                 document.getElementById('nav-mobile-admin').innerText = "🔒 Admin Dashboard";
                 
-                // Force re-render of catalog & gallery to instantly show admin UI actions
+                updateNavigationVisibility();
                 renderProductsCatalog();
                 renderGalleryGrid();
-                
                 renderAdminDashboard();
             } else {
                 showToast("Security keys do not match. Try again.", "error");
             }
         }
 
+        // SECURE ADMIN LOGOUT LOGIC (Required secure route restriction)
         function handleAdminLogout() {
             state.adminLoggedIn = false;
-            localStorage.removeItem('sri_balaji_admin_auth');
+            sessionStorage.removeItem('sri_balaji_admin_auth');
             showToast("Dashboard secure session finished.", "info");
             
-            // Hide admin operations triggers
+            // Lock Admin UI controls instantly
             document.getElementById('admin-add-product-btn').classList.add('hidden');
             document.getElementById('admin-add-gallery-btn').classList.add('hidden');
+            document.getElementById('nav-admin-icon').innerText = "🔑";
             document.getElementById('nav-admin-text').innerText = "Admin";
             document.getElementById('nav-mobile-admin').innerText = "🔑 Admin Login";
             
-            // Force re-render of catalog & gallery to instantly hide admin UI actions
+            updateNavigationVisibility();
             renderProductsCatalog();
             renderGalleryGrid();
             
+            // Return securely back home. Force login key prompts.
             navigateTo('home');
         }
 
@@ -1866,8 +2100,10 @@
                 showToast("Password must be at least 4 characters", "error");
                 return;
             }
+            
             state.settings.adminPassword = val;
-            localStorage.setItem('sri_balaji_settings', JSON.stringify(state.settings));
+            writeSettingsData(state.settings);
+            
             document.getElementById('new-admin-password-field').value = '';
             showToast("Admin passcode changed successfully!", "success");
         }
@@ -1884,46 +2120,38 @@
             renderProductsCatalog();
         }
 
-        // System bootloader initialization
+        // Bootstrapping the application
         window.onload = function() {
-            // Apply theme configuration
+            // Apply visual preferences
             applyThemeDOM();
 
-            // Setup proper UI view according to admin logged state
+            // Initialize Firebase Authenticated App Mode Safely
+            runAuthAndInitialize();
+
+            // Handle Header state UI setups according to Admin access credentials
             if (state.adminLoggedIn) {
                 document.getElementById('admin-add-product-btn').classList.remove('hidden');
                 document.getElementById('admin-add-gallery-btn').classList.remove('hidden');
+                document.getElementById('nav-admin-icon').innerText = "🔒";
                 document.getElementById('nav-admin-text').innerText = "Dashboard";
                 document.getElementById('nav-mobile-admin').innerText = "🔒 Admin Dashboard";
             } else {
                 document.getElementById('admin-add-product-btn').classList.add('hidden');
                 document.getElementById('admin-add-gallery-btn').classList.add('hidden');
+                document.getElementById('nav-admin-icon').innerText = "🔑";
                 document.getElementById('nav-admin-text').innerText = "Admin";
                 document.getElementById('nav-mobile-admin').innerText = "🔑 Admin Login";
             }
 
-            // Apply shop configuration settings
-            updateShopBrandingDOM();
+            // Sync navigation tabs visibility with actual login state
+            updateNavigationVisibility();
 
-            // Update language values
+            // Bind language localization dictionary
             updateLanguageDOM();
 
-            // Default home route redirection
+            // Route standard default redirect
             navigateTo('home');
         };
-
-        // Standard categories configuration list
-        const CATEGORIES = [
-            "Electrical Items",
-            "Switches",
-            "Wires",
-            "LED Lights",
-            "Fans",
-            "PVC Pipes",
-            "Plumbing Items",
-            "Hardware Items",
-            "Other Products"
-        ];
     </script>
 </body>
 </html>
