@@ -834,7 +834,7 @@
                   <textarea id="modal-product-description" rows="3" placeholder="Explain manufacturer parameters, brand tags..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></textarea>
                 </div>
 
-                <!-- NEW DIRECT IMAGE FILE UPLOADER FOR PRODUCTS -->
+                <!-- DIRECT IMAGE FILE UPLOADER FOR PRODUCTS -->
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Product Image (Device File Upload)</label>
                     <div id="product-upload-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-orange-500 dark:hover:border-orange-500 rounded-xl p-6 text-center cursor-pointer transition-colors relative bg-slate-50 dark:bg-slate-800/40" onclick="document.getElementById('modal-product-file').click()">
@@ -895,7 +895,7 @@
                     <input type="text" id="modal-gallery-caption" required placeholder="e.g. Safety wire displays" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                 </div>
                 
-                <!-- NEW DIRECT IMAGE FILE UPLOADER FOR GALLERY -->
+                <!-- DIRECT IMAGE FILE UPLOADER FOR GALLERY -->
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Gallery Image File (Direct Upload)</label>
                     <div id="gallery-upload-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 rounded-xl p-5 text-center cursor-pointer transition-colors relative bg-slate-50 dark:bg-slate-800/40" onclick="document.getElementById('modal-gallery-file').click()">
@@ -1034,295 +1034,6 @@
             adminPassword: "admin"
         };
 
-        // Multi-lingual Translation Catalog Database
-        const TRANSLATIONS = {
-            en: {
-                nav_home: "Home",
-                nav_products: "Products",
-                nav_gallery: "Gallery",
-                nav_about: "About Us",
-                nav_contact: "Contact",
-                nav_enquiry: "Send Enquiry",
-                nav_admin: "Admin",
-                hero_badge: "⚡ Quality Assured Electrical Solutions",
-                hero_title: "Sri Balaji Electrical Shop",
-                hero_desc: "All Electrical, Plumbing, Hardware & Home Utility Products are Available Under One Roof with Premium Brand Assurance.",
-                call_now: "Call Now",
-                hero_whatsapp: "💬 WhatsApp Us",
-                hero_direct_enq: "Send Direct Online Enquiry",
-                highlight_brands: "Quality Brands",
-                highlight_brands_sub: "Premium electrical products",
-                highlight_pricing: "Best Pricing",
-                highlight_pricing_sub: "Wholesale & retail rates",
-                highlight_service: "Friendly Service",
-                highlight_service_sub: "Guidance for home setups",
-                highlight_support: "Customer Support",
-                highlight_support_sub: "Speedy WhatsApp response",
-                featured_title: "Featured Products",
-                featured_sub: "Our Showcase",
-                featured_view_all: "All Products",
-                catalog_title: "Products Catalogue",
-                catalog_desc: "Sort through our comprehensive list of safety items, plumbing pipes, wires, and household equipment.",
-                filter_label: "Filter by Category",
-                search_placeholder: "Search products by brand, details, category...",
-                gallery_title: "Shop Showcase & Gallery",
-                gallery_desc: "Have a visual tour inside our local showroom. We stock certified wiring supplies, conduit piping layout tools, and light fittings.",
-                about_badge: "About Our Business",
-                about_title: "Sri Balaji Electricals",
-                about_desc: "Your trusted neighborhood location supplying top-quality electrical, plumbing pipelines, and home maintenance devices.",
-                about_p1: "At Sri Balaji Electrical Shop, we pride ourselves on holding a comprehensive inventory of heavy-duty materials required for building development, household repair setups, wiring improvements, and fixture fittings.",
-                about_p2: "Our focus is safety first. Every switch, wire loop, or PVC conduit pipe we sell conforms to official safety indices. We guide household users to get correct current metrics and premium quality plumbing parts.",
-                about_pillars_title: "Four Pillars of Our Commitment",
-                pillar1_title: "Quality Products",
-                pillar1_desc: "Authorized stock from top-tier brands like Havells, Finolex, and Syska to guarantee safety.",
-                pillar2_title: "Best Prices",
-                pillar2_desc: "Honest margins on single utility pieces as well as batch construction blueprints.",
-                pillar3_title: "Friendly Service",
-                pillar3_desc: "Need help deciding on conduit sizing or lighting thresholds? Our team is glad to guide.",
-                pillar4_title: "Customer Support",
-                pillar4_desc: "Call, message, or drop an offline query and get rapid, personalized support sessions.",
-                contact_title: "Contact Sri Balaji Shop",
-                contact_desc: "Visit us locally in Hyderabad or connect via phone/WhatsApp for product orders.",
-                contact_card_title: "Store Location & Details",
-                contact_phone: "Phone Number",
-                contact_wa: "WhatsApp Support",
-                contact_address: "Store Physical Address",
-                contact_hours: "Operational Timing Schedules",
-                contact_hours_val: "Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed",
-                contact_map_title: "Navigation Map Locator",
-                contact_map_btn: "📍 Open in Google Maps",
-                contact_map_desc: "Hyderabad (TS), India",
-                enquiry_title: "Direct Product Enquiry Form",
-                enquiry_sub: "No login required. Submit details and we will review our physical inventory instantly.",
-                form_name: "Full Name *",
-                form_mobile: "Mobile Number *",
-                form_location: "Delivery Location",
-                form_subject: "Subject / Item Group *",
-                form_message: "Detailed Message",
-                form_info: "Our representatives will respond via Call or WhatsApp within 1 - 3 business hours.",
-                form_reset: "Reset Form",
-                form_submit: "Submit Enquiry Form",
-                admin_title: "Authorized Portal",
-                admin_sub: "Management security workspace login",
-                admin_pass_label: "Enter Access Key Password",
-                admin_pass_warning: "Use local default password: admin to unlock control modes instantly.",
-                admin_btn: "Authenticate System",
-                admin_live_console: "Live Console Mode",
-                admin_exit: "Exit Session",
-                admin_settings: "Shop Settings",
-                admin_stat_products: "Products Catalog",
-                admin_stat_gallery: "Gallery Pictures",
-                admin_stat_enquiries: "Guest Enquiries",
-                admin_table_cust: "Customer Details",
-                admin_table_subj: "Context Subject",
-                admin_table_msg: "Message Details",
-                admin_table_date: "Submitted Date",
-                admin_table_status: "Operational Status",
-                admin_table_action: "Action",
-                admin_no_enq: "No enquiries registered yet",
-                admin_no_enq_sub: "Client submissions will instantly populate here in real-time mode.",
-                admin_change_pass: "Change Administrative Password",
-                admin_change_pass_sub: "Modify the system login key passcode used to access this secure admin console.",
-                admin_update_btn: "Update Password",
-                footer_desc: "Certified premium switches, plumbing pipes, wires, fans, distribution boards, and lighting fittings at absolute best retail rates.",
-                footer_support: "Support Hotline:",
-                footer_directions: "Quick Directions",
-                footer_hours_title: "Store Hours & Locations",
-                footer_secure: "Secure Admin Area",
-                all_rights_reserved: "All Rights Reserved."
-            },
-            te: {
-                nav_home: "హోమ్",
-                nav_products: "ఉత్పత్తులు",
-                nav_gallery: "గ్యాలరీ",
-                nav_about: "మా గురించి",
-                nav_contact: "సంప్రదించండి",
-                nav_enquiry: "విచారణ పంపండి",
-                nav_admin: "అడ్మిన్",
-                hero_badge: "⚡ నాణ్యత హామీ ఇవ్వబడిన విద్యుత్ పరిష్కారాలు",
-                hero_title: "శ్రీ బాలాజీ ఎలక్ట్రికల్ షాప్",
-                hero_desc: "అన్ని ఎలక్ట్రికల్, ప్లంబింగ్, హార్డ్‌వేర్ & గృహోపకరణాల ఉత్పత్తులు ఒకే చోట అత్యుత్తమ బ్రాండ్ నాణ్యతతో లభిస్తాయి.",
-                call_now: "ఇప్పుడే కాల్ చేయండి",
-                hero_whatsapp: "💬 వాట్సాప్ చాట్",
-                hero_direct_enq: "ఆన్‌లైన్ విచారణ పంపండి",
-                highlight_brands: "నాణ్యమైన బ్రాండ్లు",
-                highlight_brands_sub: "ప్రీమియం ఎలక్ట్రికల్ ఉత్పత్తులు",
-                highlight_pricing: "ఉత్తమ ధరలు",
-                highlight_pricing_sub: "హోల్‌సేల్ & రిటైల్ రేట్లు",
-                highlight_service: "స్నేహపూర్వక సేవ",
-                highlight_service_sub: "ఇంటి వైరింగ్ సూచనలు",
-                highlight_support: "కస్టమర్ సపోర్ట్",
-                highlight_support_sub: "వేగవంతమైన వాట్సాప్ స్పందన",
-                featured_title: "ముఖ్యమైన ఉత్పత్తులు",
-                featured_sub: "మా ప్రదర్శన",
-                featured_view_all: "అన్ని ఉత్పత్తులు",
-                catalog_title: "ఉత్పత్తుల కేటలాగ్",
-                catalog_desc: "మా భద్రతా పరికరాలు, ప్లంబింగ్ పైపులు, వైర్లు మరియు గృహోపకరణాల సమగ్ర జాబితాను చూడండి.",
-                filter_label: "కేటగిరీ వారీగా ఫిల్టర్",
-                search_placeholder: "పేరు, కేటగిరీ లేదా వివరణతో వెతకండి...",
-                gallery_title: "షాప్ షోకేస్ & గ్యాలరీ",
-                gallery_desc: "మా లోకల్ షోరూమ్ ఒకసారి చూడండి. సర్టిఫైడ్ వైరింగ్ సామాగ్రి, పైపింగ్ పరికరాలు మరియు లైట్లు మా వద్ద ఉన్నాయి.",
-                about_badge: "మా వ్యాపారం గురించి",
-                about_title: "శ్రీ బాలాజీ ఎలక్ట్రికల్స్",
-                about_desc: "ఉత్తమమైన ఎలక్ట్రికల్, ప్లంబింగ్ పైపులు మరియు గృహాల మరమ్మత్తు పరికరాలను అందించే మీ నమ్మకమైన షాప్.",
-                about_p1: "శ్రీ బాలాజీ ఎలక్ట్రికల్ షాప్ వద్ద, గృహ నిర్మాణాలకు, వైరింగ్ మెరుగుదలలకు మరియు ఫిట్టింగ్‌లకు అవసరమైన భారీ సామాగ్రిని మేము నిల్వ ఉంచుతాము.",
-                about_p2: "మా ప్రాధాన్యత ఎల్లప్పుడూ భద్రతకే. మేము విక్రయించే ప్రతి స్విచ్, వైర్ లూప్ లేదా PVC పైపు అధికారిక భద్రతా సూచీలకు లోబడి ఉంటుంది. కస్టమర్లకు సరైన గైడెన్స్ ఇస్తాము.",
-                about_pillars_title: "మా సేవా నిబద్ధత - 4 స్తంభాలు",
-                pillar1_title: "నాణ్యమైన ఉత్పత్తులు",
-                pillar1_desc: "భద్రతకు హామీగా హావెల్స్, ఫినోలెక్స్ మరియు సిస్కా వంటి అగ్ర బ్రాండ్ల నుండి అధికారిక స్టాక్.",
-                pillar2_title: "ఉత్తమ ధరలు",
-                pillar2_desc: "సింగిల్ పీస్ అయినా లేదా బల్క్ కన్స్ట్రక్షన్ సామాగ్రి అయినా సరసమైన హోల్సేల్ ధరలు.",
-                pillar3_title: "స్నేహపూర్వక సేవ",
-                pillar3_desc: "పైపుల సైజులు లేదా లైటింగ్ ఎంపికలో కస్టమర్లకు ఉచిత సలహాలు, సూచనలు ఇస్తాము.",
-                pillar4_title: "కస్టమర్ సపోర్ట్",
-                pillar4_desc: "కాల్, వాట్సాప్ లేదా ఆన్‌లైన్ ఫామ్ ద్వారా వేగవంతమైన మరియు వ్యక్తిగతీకరించిన సపోర్ట్.",
-                contact_title: "బాలాజీ షాప్ సంప్రదించండి",
-                contact_desc: "హైదరాబాద్‌లో మమ్మల్ని నేరుగా సందర్శించండి లేదా ఆర్డర్ల కోసం ఫోన్/వాట్సాప్ ద్వారా సంప్రదించండి.",
-                contact_card_title: "షాప్ స్థానం & వివరాలు",
-                contact_phone: "ఫోన్ నంబర్",
-                contact_wa: "వాట్సాప్ సపోర్ట్",
-                contact_address: "షాప్ చిరునామా",
-                contact_hours: "పని వేళలు",
-                contact_hours_val: "సోమవారం - శనివారం: ఉదయం 9:00 - రాత్రి 9:00, ఆదివారం: సెలవు",
-                contact_map_title: "మ్యాప్ లొకేటర్",
-                contact_map_btn: "📍 గూగుల్ మ్యాప్స్ లో ఓపెన్ చేయండి",
-                contact_map_desc: "హైదరాబాద్ (TS), ఇండియా",
-                enquiry_title: "డైరెక్ట్ ప్రొడక్ట్ ఎంక్వైరీ ఫామ్",
-                enquiry_sub: "లాగిన్ అవసరం లేదు. వివరాలను సబ్మిట్ చేయండి, మేము స్టాక్ చూసి వెంటనే తెలియజేస్తాము.",
-                form_name: "పూర్తి పేరు *",
-                form_mobile: "మొబైల్ నంబర్ *",
-                form_location: "డెలివరీ లొకేషన్",
-                form_subject: "విషయం / ప్రొడక్ట్ గ్రూప్ *",
-                form_message: "సందేశం / వివరాలు",
-                form_info: "మా ప్రతినిధులు 1 - 3 గంటల్లోపు కాల్ లేదా వాట్సాప్ ద్వారా మిమ్మల్ని సంప్రదిస్తారు.",
-                form_reset: "ఫామ్ రీసెట్",
-                form_submit: "ఎంక్వైరీ సబ్మిట్ చేయండి",
-                admin_title: "అడ్మిన్ పోర్టల్",
-                admin_sub: "మేనేజ్‌మెంట్ లాగిన్ ఏరియా",
-                admin_pass_label: "యాక్సెస్ కీ పాస్‌వర్డ్ ఎంటర్ చేయండి",
-                admin_pass_warning: "లాగిన్ కావడానికి డిఫాల్ట్ పాస్‌వర్డ్ 'admin' వాడండి.",
-                admin_btn: "లాగిన్ అవ్వండి",
-                admin_live_console: "లైవ్ అడ్మిన్ కన్సోల్",
-                admin_exit: "సెషన్ ముగించు",
-                admin_settings: "షాప్ సెట్టింగ్స్",
-                admin_stat_products: "మొత్తం ఉత్పత్తులు",
-                admin_stat_gallery: "గ్యాలరీ చిత్రాలు",
-                admin_stat_enquiries: "మొత్తం విచారణలు",
-                admin_table_cust: "కస్టమర్ వివరాలు",
-                admin_table_subj: "విషయం",
-                admin_table_msg: "సందేశం",
-                admin_table_date: "తేదీ",
-                admin_table_status: "స్థితి",
-                admin_table_action: "చర్య",
-                admin_no_enq: "ఇంకా విచారణలు రాలేదు",
-                admin_no_enq_sub: "కస్టమర్ సబ్మిట్ చేసిన వెంటనే ఇక్కడ ప్రత్యక్షమవుతాయి.",
-                admin_change_pass: "అడ్మిన్ పాస్‌వర్డ్ మార్చండి",
-                admin_change_pass_sub: "ఈ అడ్మిన్ ప్యానెల్ యాక్సెస్ చేయడానికి ఉపయోగించే పాస్‌వర్డ్‌ను అప్‌డేట్ చేయండి.",
-                admin_update_btn: "పాస్‌వర్డ్ అప్‌డేట్",
-                footer_desc: "ధృవీకరించబడిన స్విచ్‌లు, ప్లంబింగ్ పైపులు, వైర్లు, ఫ్యాన్లు మరియు లైటింగ్ ఫిట్టింగ్‌లు అత్యుత్తమ రిటైల్ ధరలకే లభించును.",
-                footer_support: "సపోర్ట్ హాట్‌లైన్:",
-                footer_directions: "త్వరిత మార్గాలు",
-                footer_hours_title: "పనివేళలు & స్థానాలు",
-                footer_secure: "సెక్యూర్ అడ్మిన్ లాగిన్",
-                all_rights_reserved: "సర్వ హక్కులూ ప్రత్యేకించబడినవి."
-            },
-            hi: {
-                nav_home: "होम",
-                nav_products: "उत्पाद",
-                nav_gallery: "गैलरी",
-                nav_about: "हमारे बारे में",
-                nav_contact: "संपर्क",
-                nav_enquiry: "पूछताछ भेजें",
-                nav_admin: "एडमिन",
-                hero_badge: "⚡ गुणवत्ता सुनिश्चित इलेक्ट्रिकल समाधान",
-                hero_title: "श्री बालाजी इलेक्ट्रिकल शॉप",
-                hero_desc: "सभी इलेक्ट्रिकल, प्लंबिंग, हार्डवेयर और घरेलू उपयोग के उत्पाद एक ही छत के नीचे प्रीमियम ब्रांड आश्वासन के साथ उपलब्ध हैं।",
-                call_now: "अभी कॉल करें",
-                hero_whatsapp: "💬 व्हाट्सएप करें",
-                hero_direct_enq: "सीधे ऑनलाइन पूछताछ भेजें",
-                highlight_brands: "गुणवत्ता वाले ब्रांड",
-                highlight_brands_sub: "प्रीमियम इलेक्ट्रिकल उत्पाद",
-                highlight_pricing: "सर्वोत्तम मूल्य",
-                highlight_pricing_sub: "थोक और खुदरा दरें",
-                highlight_service: "मैत्रीपूर्ण सेवा",
-                highlight_service_sub: "घर की वायरिंग के लिए मार्गदर्शन",
-                highlight_support: "कस्टमर सपोर्ट",
-                highlight_support_sub: "त्वरित व्हाट्सएप प्रतिक्रिया",
-                featured_title: "विशेष रुप से प्रदर्शित उत्पाद",
-                featured_sub: "हमारा शोकेस",
-                featured_view_all: "सभी उत्पाद",
-                catalog_title: "उत्पाद कैटलॉग",
-                catalog_desc: "सुरक्षा उपकरणों, प्लंबिंग पाइपों, तारों और घरेलू उपकरणों की हमारी सूची देखें।",
-                filter_label: "श्रेणी के अनुसार फ़िल्टर करें",
-                search_placeholder: "शीर्षक, श्रेणी या विवरण द्वारा उत्पाद खोजें...",
-                gallery_title: "दुकान शोकेस और गैलरी",
-                gallery_desc: "हमारे शोरूम का एक दृश्य दौरा करें। हमारे पास प्रमाणित वायरिंग आपूर्ति, पाइपिंग उपकरण और लाइटें हैं।",
-                about_badge: "हमारे व्यवसाय के बारे में",
-                about_title: "श्री बालाजी इलेक्ट्रिकल्स",
-                about_desc: "शीर्ष गुणवत्ता वाले इलेक्ट्रिकल, प्लंबिंग पाइपलाइन और घरेलू रखरखाव उपकरण की आपूर्ति करने वाली आपकी भरोसेमंद दुकान।",
-                about_p1: "श्री बालाजी इलेक्ट्रिकल शॉप में, हम घरेलू मरम्मत, वायरिंग सुधार और फिटिंग के लिए आवश्यक भारी सामग्री का एक व्यापक स्टॉक रखते हैं।",
-                about_p2: "हमारी प्राथमिकता हमेशा सुरक्षा है। हमारे द्वारा बेचे जाने वाले हर स्विच, वायर लूप या पीवीसी पाइप आधिकारिक सुरक्षा मानकों के अनुरूप होते हैं।",
-                about_pillars_title: "हमारी प्रतिबद्धता के चार स्तंभ",
-                pillar1_title: "गुणवत्ता उत्पाद",
-                pillar1_desc: "सुरक्षा की गारंटी के लिए हैवेल्स, फिनोलेक्स और सिस्का जैसे सरल ब्रांडों से आधिकारिक स्टॉक।",
-                pillar2_title: "सर्वोत्तम मूल्य",
-                pillar2_desc: "एकल घरेलू टुकड़ों के साथ-साथ थोक निर्माण ब्लूप्रिंट पर भी उचित थोक मार्जिन।",
-                pillar3_title: "मैत्रीपूर्ण सेवा",
-                pillar3_desc: "पाइप के आकार या लाइटिंग विकल्पों के चयन में हमारी टीम आपकी सहायता के लिए सदैव उपलब्ध है।",
-                pillar4_title: "ग्राहक सहायता",
-                pillar4_desc: "कॉल, व्हाट्सएप या ऑनलाइन पूछताछ द्वारा व्यक्तिगत और त्वरित सहायता प्राप्त करें।",
-                contact_title: "बालाजी शॉप से संपर्क करें",
-                contact_desc: "हैदाबाद में स्थानीय स्तर पर हमसे मिलें या उत्पाद ऑर्डर के लिए फोन/व्हाट्सएप के माध्यम से जुड़ें।",
-                contact_card_title: "स्टोर का स्थान और विवरण",
-                contact_phone: "फ़ोन नंबर",
-                contact_wa: "व्हाट्सएप सपोर्ट",
-                contact_address: "स्टोर का पता",
-                contact_hours: "संचालन का समय",
-                contact_hours_val: "सोमवार - शनिवार: सुबह 9:00 - रात 9:00, रविवार: बंद",
-                contact_map_title: "नेविगेशन मानचित्र लोकेटर",
-                contact_map_btn: "📍 गूगल मैप्स में खोलें",
-                contact_map_desc: "हैदराबाद (TS), भारत",
-                enquiry_title: "प्रत्यक्ष उत्पाद पूछताछ फॉर्म",
-                enquiry_sub: "कोई लॉगिन आवश्यक नहीं है। विवरण सबमिट करें और हम तुरंत स्टॉक की जांच करेंगे।",
-                form_name: "पूरा नाम *",
-                form_mobile: "मोबाइल नंबर *",
-                form_location: "वितरण स्थान",
-                form_subject: "विषय / उत्पाद समूह *",
-                form_message: "विस्तृत संदेश",
-                form_info: "हमारे प्रतिनिधि 1 - 3 व्यावसायिक घंटों के भीतर कॉल या व्हाट्सएप के माध्यम से प्रतिक्रिया देंगे।",
-                form_reset: "फ़ॉर्म रीसेट करें",
-                form_submit: "पूछताछ फॉर्म सबमिट करें",
-                admin_title: "अधिकृत पोर्टल",
-                admin_sub: "प्रबंधन सुरक्षा लॉगिन",
-                admin_pass_label: "एक्सेस कुंजी पासवर्ड दर्ज करें",
-                admin_pass_warning: "कंट्रोल मोड को अनलॉक करने के लिए डिफ़ॉल्ट पासवर्ड 'admin' का उपयोग करें।",
-                admin_btn: "प्रमाणित करें",
-                admin_live_console: "लाइव एडमिन कनसोेल",
-                admin_exit: "सत्र समाप्त करें",
-                admin_settings: "दुकान सेटिंग्स",
-                admin_stat_products: "उत्पाद सूची",
-                admin_stat_gallery: "गैलरी के चित्र",
-                admin_stat_enquiries: "कुल पूछताछ",
-                admin_table_cust: "ग्राहक का विवरण",
-                admin_table_subj: "विषय",
-                admin_table_msg: "संदेश विवरण",
-                admin_table_date: "जमा करने की तिथि",
-                admin_table_status: "ऑपरेशनल स्थिति",
-                admin_table_action: "कार्रवाई",
-                admin_no_enq: "अभी तक कोई पूछताछ दर्ज नहीं की गई है",
-                admin_no_enq_sub: "ग्राहक सबमिशन वास्तविक समय में तुरंत यहां दिखाई देंगे।",
-                admin_change_pass: "प्रसारणिक पासवर्ड बदलें",
-                admin_change_pass_sub: "इस सुरक्षित एडमिन कंसोल तक पहुंचने के लिए उपयोग किए जाने वाले सिस्टम पासवर्ड को अपडेट करें।",
-                admin_update_btn: "पासवर्ड अपडेट करें",
-                footer_desc: "प्रमाणित स्विच, प्लंबिंग पाइप, तार, पंखे और लाइटिंग फिटिंग बिल्कुल सर्वोत्तम दरों पर उपलब्ध हैं।",
-                footer_support: "सपोर्ट हॉटलाइन:",
-                footer_directions: "त्वरित मार्ग",
-                footer_hours_title: "स्टोर का समय और स्थान",
-                footer_secure: "सुरक्षित एडमिन क्षेत्र",
-                all_rights_reserved: "सर्वाधिकार सुरक्षित।"
-            }
-        };
-
         // ================= CLIENT APP INITIAL SYSTEM STATE =================
         let state = {
             currentPage: 'home',
@@ -1378,6 +1089,40 @@
             if (customAlertPromiseResolver) {
                 customAlertPromiseResolver(value);
                 customAlertPromiseResolver = null;
+            }
+        }
+
+        // Real-time beautiful Toast Messages injector
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toastId = 'toast-' + Date.now();
+            
+            const toastHtml = `
+                <div id="${toastId}" class="p-4 rounded-xl shadow-2xl border flex items-start space-x-3 transition-all duration-300 animate-fadeIn ${
+                    type === 'success' 
+                        ? 'bg-emerald-950 text-emerald-100 border-emerald-800/60' 
+                        : type === 'error'
+                        ? 'bg-rose-950 text-rose-100 border-rose-800/60'
+                        : 'bg-slate-900 text-slate-100 border-slate-700'
+                }">
+                    <div class="flex-grow text-xs font-bold leading-relaxed">${message}</div>
+                    <button onclick="dismissToast('${toastId}')" class="text-white/70 hover:text-white shrink-0 font-bold">✕</button>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', toastHtml);
+            setTimeout(() => {
+                dismissToast(toastId);
+            }, 4500);
+        }
+
+        function dismissToast(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(-10px)';
+                setTimeout(() => element.remove(), 300);
             }
         }
 
@@ -1713,11 +1458,14 @@
                 uploadedProductImageBase64 = e.target.result;
                 
                 // Show visual feedback preview box instantly inside user's viewport
-                document.getElementById('product-image-preview').src = uploadedProductImageBase64;
-                document.getElementById('product-image-preview-container').classList.remove('hidden');
+                const previewImg = document.getElementById('product-image-preview');
+                const previewContainer = document.getElementById('product-image-preview-container');
+                if (previewImg) previewImg.src = uploadedProductImageBase64;
+                if (previewContainer) previewContainer.classList.remove('hidden');
                 
                 // Reset legacy URL textbox to avoid collisions
-                document.getElementById('modal-product-image').value = "";
+                const legacyInput = document.getElementById('modal-product-image');
+                if (legacyInput) legacyInput.value = "";
                 showToast("Direct product photo loaded successfully!", "success");
             };
             reader.readAsDataURL(file);
@@ -1725,8 +1473,10 @@
 
         function clearProductUpload() {
             uploadedProductImageBase64 = "";
-            document.getElementById('modal-product-file').value = "";
-            document.getElementById('product-image-preview-container').classList.add('hidden');
+            const fileInput = document.getElementById('modal-product-file');
+            if (fileInput) fileInput.value = "";
+            const container = document.getElementById('product-image-preview-container');
+            if (container) container.classList.add('hidden');
             showToast("Product file attachment cleared.", "info");
         }
 
@@ -1744,9 +1494,13 @@
             reader.onload = function(e) {
                 uploadedGalleryImageBase64 = e.target.result;
                 
-                document.getElementById('gallery-image-preview').src = uploadedGalleryImageBase64;
-                document.getElementById('gallery-image-preview-container').classList.remove('hidden');
-                document.getElementById('modal-gallery-image').value = "";
+                const previewImg = document.getElementById('gallery-image-preview');
+                const previewContainer = document.getElementById('gallery-image-preview-container');
+                if (previewImg) previewImg.src = uploadedGalleryImageBase64;
+                if (previewContainer) previewContainer.classList.remove('hidden');
+                
+                const legacyInput = document.getElementById('modal-gallery-image');
+                if (legacyInput) legacyInput.value = "";
                 showToast("Direct gallery picture loaded successfully!", "success");
             };
             reader.readAsDataURL(file);
@@ -1754,8 +1508,10 @@
 
         function clearGalleryUpload() {
             uploadedGalleryImageBase64 = "";
-            document.getElementById('modal-gallery-file').value = "";
-            document.getElementById('gallery-image-preview-container').classList.add('hidden');
+            const fileInput = document.getElementById('modal-gallery-file');
+            if (fileInput) fileInput.value = "";
+            const container = document.getElementById('gallery-image-preview-container');
+            if (container) container.classList.add('hidden');
             showToast("Gallery file attachment cleared.", "info");
         }
 
@@ -2003,7 +1759,7 @@
                             <div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80">
                                 <button onclick="openProductModal('edit', '${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold transition-all border border-amber-300 dark:border-amber-800/40" title="Edit Product Info">✍️ Edit</button>
                                 <button onclick="toggleProductStock('${p.id}')" class="bg-blue-150 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold transition-all border border-blue-300 dark:border-blue-800/40" title="Toggle Stock">Stock</button>
-                                <button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-650 dark:text-rose-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold transition-all border border-rose-300 dark:border-rose-800/40" title="Delete Product">🗑️ Delete</button>
+                                <button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-650 dark:text-rose-450 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold transition-all border border-rose-300 dark:border-rose-800/40" title="Delete Product">🗑️ Delete</button>
                             </div>
                         </div>
                     </div>
@@ -2194,8 +1950,10 @@
                     // Show preview if it's already an uploaded file (Base64) or fallback URL
                     if (p.image && p.image.startsWith('data:image')) {
                         uploadedProductImageBase64 = p.image;
-                        document.getElementById('product-image-preview').src = p.image;
-                        document.getElementById('product-image-preview-container').classList.remove('hidden');
+                        const previewImg = document.getElementById('product-image-preview');
+                        const container = document.getElementById('product-image-preview-container');
+                        if (previewImg) previewImg.src = p.image;
+                        if (container) container.classList.remove('hidden');
                         document.getElementById('modal-product-image').value = "";
                     } else {
                         document.getElementById('modal-product-image').value = p.image || "";
@@ -2303,8 +2061,10 @@
                     
                     if (g.image && g.image.startsWith('data:image')) {
                         uploadedGalleryImageBase64 = g.image;
-                        document.getElementById('gallery-image-preview').src = g.image;
-                        document.getElementById('gallery-image-preview-container').classList.remove('hidden');
+                        const previewImg = document.getElementById('gallery-image-preview');
+                        const container = document.getElementById('gallery-image-preview-container');
+                        if (previewImg) previewImg.src = g.image;
+                        if (container) container.classList.remove('hidden');
                         document.getElementById('modal-gallery-image').value = "";
                     } else {
                         document.getElementById('modal-gallery-image').value = g.image || "";
