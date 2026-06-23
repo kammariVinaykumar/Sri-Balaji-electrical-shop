@@ -1,0 +1,2222 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { initializeApp } from 'firebase/app';
+import { 
+  getAuth, 
+  signInWithCustomToken, 
+  signInAnonymously, 
+  onAuthStateChanged 
+} from 'firebase/auth';
+import { 
+  getFirestore, 
+  doc, 
+  setDoc, 
+  getDoc, 
+  collection, 
+  onSnapshot, 
+  addDoc, 
+  updateDoc, 
+  deleteDoc 
+} from 'firebase/firestore';
+import { 
+  Phone, 
+  MessageSquare, 
+  Search, 
+  Filter, 
+  MapPin, 
+  Clock, 
+  Plus, 
+  Edit, 
+  Trash2, 
+  CheckCircle, 
+  X, 
+  Lock, 
+  LogOut, 
+  ChevronRight, 
+  Sparkles, 
+  Settings, 
+  Database, 
+  Menu, 
+  Send,
+  Grid,
+  FileText,
+  Eye,
+  Info,
+  Sliders,
+  Check,
+  AlertTriangle,
+  ArrowRight
+} from 'lucide-react';
+
+// ==========================================================
+// FIREBASE INITIALIZATION & SAFETY GUARDS
+// ==========================================================
+const firebaseConfig = typeof __firebase_config !== 'undefined' 
+  ? JSON.parse(__firebase_config) 
+  : {
+      apiKey: "",
+      authDomain: "mock-project.firebaseapp.com",
+      projectId: "mock-project",
+      storageBucket: "mock-project.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:1234567890"
+    };
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'sri-balaji-electrical';
+
+// ==========================================================
+// DEFAULT DATA PROVIDERS FOR INSTANT PREVIEW
+// ==========================================================
+const DEFAULT_PRODUCTS = [
+  {
+    id: "prod-1",
+    name: "Anchor Roma Classic Modular Switches",
+    description: "Premium high-durability modular electrical switches, sleek white design, fire-retardant material.",
+    category: "Switches",
+    price: 45,
+    availability: "In Stock",
+    image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80"
+  },
+  {
+    id: "prod-2",
+    name: "Finolex 1.5 Sqmm Copper Wire (90m Bundle)",
+    description: "Flame Retardant (FR) multi-strand copper cables ideal for premium residential wiring and distribution boards.",
+    category: "Wires",
+    price: 1540,
+    availability: "In Stock",
+    image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=500&q=80"
+  },
+  {
+    id: "prod-3",
+    name: "Syska 9W LED Bright Bulbs (Cool Day Light)",
+    description: "Energy-saving LED bulbs, B22 cap, long life up to 15 years, zero flickering and ultra-bright output.",
+    category: "LED Lights",
+    price: 110,
+    availability: "In Stock",
+    image: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80"
+  },
+  {
+    id: "prod-4",
+    name: "Crompton Hill Briz 1200mm Ceiling Fan",
+    description: "High speed durable electric ceiling fan with powerful copper motor and heavy-duty double ball bearings.",
+    category: "Fans",
+    price: 2350,
+    availability: "In Stock",
+    image: "https://images.unsplash.com/photo-1618944847023-38aa001235f0?auto=format&fit=crop&w=500&q=80"
+  },
+  {
+    id: "prod-5",
+    name: "Sudhakar PVC Conduit Pipe (1 inch, 3m)",
+    description: "Heavy-duty fire-retardant PVC electrical pipes designed for easy under-wall wiring and protection.",
+    category: "PVC Pipes",
+    price: 95,
+    availability: "In Stock",
+    image: "https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80"
+  },
+  {
+    id: "prod-6",
+    name: "Jaquar Wall-Mounted Brass Shower Faucet",
+    description: "Premium rust-free chrome finished brass shower mixture with responsive flow control and modern design.",
+    category: "Plumbing Items",
+    price: 1850,
+    availability: "In Stock",
+    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80"
+  },
+  {
+    id: "prod-7",
+    name: "Link Heavy Duty Brass Padlock (70mm)",
+    description: "Ultimate security padlocks with hardened steel shackle and smart anti-drill brass core technology.",
+    category: "Hardware Items",
+    price: 480,
+    availability: "In Stock",
+    image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=500&q=80"
+  }
+];
+
+const DEFAULT_GALLERY = [
+  {
+    id: "gal-1",
+    caption: "Our Main Display Shop Front & Product Rows",
+    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "gal-2",
+    caption: "Fully Stocked Electrical Wire Reels & Pipes",
+    image: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "gal-3",
+    caption: "Premium Switches, Sockets & Distribution Boards",
+    image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "gal-4",
+    caption: "Branded LED Light Bulbs and Ceiling Accessories",
+    image: "https://images.unsplash.com/photo-1565814636199-ae8133055c1c?auto=format&fit=crop&w=800&q=80"
+  }
+];
+
+const DEFAULT_SETTINGS = {
+  shopName: "Sri Balaji Electrical Shop",
+  phone: "9515168300",
+  whatsapp: "9515168300",
+  logoUrl: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=150&h=150&q=80",
+  heroBannerUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&h=500&q=80",
+  address: "D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India",
+  hours: "Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed",
+  adminPassword: "admin"
+};
+
+const CATEGORIES = [
+  "Electrical Items",
+  "Switches",
+  "Wires",
+  "LED Lights",
+  "Fans",
+  "PVC Pipes",
+  "Plumbing Items",
+  "Hardware Items",
+  "Other Products"
+];
+
+export default function App() {
+  // Navigation & Core States
+  const [currentPage, setCurrentPage] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  
+  // Real-time Database state
+  const [products, setProducts] = useState([]);
+  const [gallery, setGallery] = useState([]);
+  const [enquiries, setEnquiries] = useState([]);
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+
+  // Administrative Access States
+  const [adminPasswordInput, setAdminPasswordInput] = useState('');
+  const [adminLoggedIn, setAdminLoggedIn] = useState(() => {
+    return localStorage.getItem('sri_balaji_admin_auth') === 'true';
+  });
+
+  // Search & Filter state for Public/Admin
+  const [productSearch, setProductSearch] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  
+  // Pre-fill enquiry helper
+  const [prefilledEnquiry, setPrefilledEnquiry] = useState(null);
+
+  // Modals and Forms State
+  const [productForm, setProductForm] = useState(null); // { mode: 'add'|'edit', data: ... }
+  const [galleryForm, setGalleryForm] = useState(null); // { mode: 'add', data: ... }
+  const [settingsForm, setSettingsForm] = useState(null); // Settings state
+
+  // Toast System
+  const [toasts, setToasts] = useState([]);
+  const addToast = (message, type = 'success') => {
+    const id = Date.now() + Math.random().toString(36).substr(2, 5);
+    setToasts((prev) => [...prev, { id, message, type }]);
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 4000);
+  };
+
+  // ==========================================================
+  // FIREBASE SECURITY AUTHENTICATION ON MOUNT
+  // ==========================================================
+  useEffect(() => {
+    const runAuthAndFetch = async () => {
+      try {
+        // Rule 3 Priority Token -> Anonymous fallback
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+      } catch (e) {
+        console.error("Firebase authentication failure:", e);
+        addToast("Connected to offline secure local storage.", "info");
+      }
+    };
+    runAuthAndFetch();
+
+    const unsubscribeAuth = onAuthStateChanged(auth, (usr) => {
+      setUser(usr);
+    });
+
+    return () => unsubscribeAuth();
+  }, []);
+
+  // ==========================================================
+  // SYNC FIRESTORE DATA (FOLLOWS RULE 1, 2, AND 3)
+  // ==========================================================
+  useEffect(() => {
+    if (!user) return; // Prevent querying before auth state ready
+
+    // Real-time listener for Settings
+    const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
+    const unsubSettings = onSnapshot(settingsDocRef, (snap) => {
+      if (snap.exists()) {
+        setSettings(snap.data());
+      } else {
+        // Initialize Default Settings in Cloud
+        setDoc(settingsDocRef, DEFAULT_SETTINGS).then(() => {
+          setSettings(DEFAULT_SETTINGS);
+        }).catch(e => console.error("Error setting default settings doc: ", e));
+      }
+    }, (error) => {
+      console.warn("Firestore settings listen error (using local state):", error);
+    });
+
+    // Real-time listener for Products
+    const productsCollRef = collection(db, 'artifacts', appId, 'public', 'data', 'products');
+    const unsubProducts = onSnapshot(productsCollRef, (snap) => {
+      const items = [];
+      snap.forEach((doc) => {
+        items.push({ id: doc.id, ...doc.data() });
+      });
+      if (items.length > 0) {
+        setProducts(items);
+      } else {
+        // Seed default products to let the shop look lively on load
+        DEFAULT_PRODUCTS.forEach(async (p) => {
+          await setDoc(doc(productsCollRef, p.id), p);
+        });
+        setProducts(DEFAULT_PRODUCTS);
+      }
+    }, (error) => {
+      console.warn("Firestore products listen error:", error);
+      setProducts(DEFAULT_PRODUCTS);
+    });
+
+    // Real-time listener for Gallery
+    const galleryCollRef = collection(db, 'artifacts', appId, 'public', 'data', 'gallery');
+    const unsubGallery = onSnapshot(galleryCollRef, (snap) => {
+      const items = [];
+      snap.forEach((doc) => {
+        items.push({ id: doc.id, ...doc.data() });
+      });
+      if (items.length > 0) {
+        setGallery(items);
+      } else {
+        // Seed default gallery items
+        DEFAULT_GALLERY.forEach(async (g) => {
+          await setDoc(doc(galleryCollRef, g.id), g);
+        });
+        setGallery(DEFAULT_GALLERY);
+      }
+    }, (error) => {
+      console.warn("Firestore gallery listen error:", error);
+      setGallery(DEFAULT_GALLERY);
+    });
+
+    // Real-time listener for Enquiries
+    const enquiriesCollRef = collection(db, 'artifacts', appId, 'public', 'data', 'enquiries');
+    const unsubEnquiries = onSnapshot(enquiriesCollRef, (snap) => {
+      const items = [];
+      snap.forEach((doc) => {
+        items.push({ id: doc.id, ...doc.data() });
+      });
+      setEnquiries(items);
+    }, (error) => {
+      console.warn("Firestore enquiries listen error:", error);
+    });
+
+    return () => {
+      unsubSettings();
+      unsubProducts();
+      unsubGallery();
+      unsubEnquiries();
+    };
+  }, [user]);
+
+  // Handle Admin Log in
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+    const correctPassword = settings.adminPassword || "admin";
+    if (adminPasswordInput === correctPassword) {
+      setAdminLoggedIn(true);
+      localStorage.setItem('sri_balaji_admin_auth', 'true');
+      addToast("Successfully authenticated as Administrator", "success");
+      setAdminPasswordInput('');
+    } else {
+      addToast("Incorrect password. Please try again.", "error");
+    }
+  };
+
+  const handleAdminLogout = () => {
+    setAdminLoggedIn(false);
+    localStorage.removeItem('sri_balaji_admin_auth');
+    addToast("Logged out from Admin Dashboard", "info");
+    setCurrentPage('home');
+  };
+
+  // Change Admin Password
+  const handlePasswordChange = async (newPassword) => {
+    if (!newPassword || newPassword.trim().length < 4) {
+      addToast("Password must be at least 4 characters long", "error");
+      return;
+    }
+    try {
+      const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
+      await updateDoc(settingsDocRef, { adminPassword: newPassword });
+      addToast("Admin Password updated successfully!", "success");
+    } catch (e) {
+      addToast("Failed to update password in Firestore.", "error");
+    }
+  };
+
+  // Save Settings Changes
+  const handleUpdateSettings = async (updatedFields) => {
+    try {
+      const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
+      await updateDoc(settingsDocRef, updatedFields);
+      addToast("Shop settings updated instantly", "success");
+      setSettingsForm(null);
+    } catch (e) {
+      addToast("Failed to write settings to database", "error");
+    }
+  };
+
+  // Add or Edit Product Document
+  const handleSaveProduct = async (productData) => {
+    try {
+      const productsCollRef = collection(db, 'artifacts', appId, 'public', 'data', 'products');
+      if (productForm.mode === 'edit') {
+        const docRef = doc(productsCollRef, productForm.data.id);
+        await updateDoc(docRef, productData);
+        addToast("Product updated successfully", "success");
+      } else {
+        await addDoc(productsCollRef, productData);
+        addToast("New product added to inventory", "success");
+      }
+      setProductForm(null);
+    } catch (e) {
+      addToast("Failed to save product in database.", "error");
+    }
+  };
+
+  // Delete Product Document
+  const handleDeleteProduct = async (id) => {
+    if (window.confirm("Are you sure you want to remove this product?")) {
+      try {
+        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'products', id);
+        await deleteDoc(docRef);
+        addToast("Product deleted from system", "info");
+      } catch (e) {
+        addToast("Error deleting product document.", "error");
+      }
+    }
+  };
+
+  // Quick Inline Toggle Stock
+  const handleToggleStock = async (p) => {
+    try {
+      const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'products', p.id);
+      const newStatus = p.availability === 'In Stock' ? 'Out of Stock' : 'In Stock';
+      await updateDoc(docRef, { availability: newStatus });
+      addToast(`Updated stock status for ${p.name}`, "success");
+    } catch (e) {
+      addToast("Failed to update stock", "error");
+    }
+  };
+
+  // Add or Edit Gallery Image
+  const handleSaveGalleryItem = async (galleryData) => {
+    try {
+      const galleryCollRef = collection(db, 'artifacts', appId, 'public', 'data', 'gallery');
+      if (galleryForm.mode === 'edit') {
+        const docRef = doc(galleryCollRef, galleryForm.data.id);
+        await updateDoc(docRef, galleryData);
+        addToast("Gallery item modified", "success");
+      } else {
+        await addDoc(galleryCollRef, galleryData);
+        addToast("Image added to gallery", "success");
+      }
+      setGalleryForm(null);
+    } catch (e) {
+      addToast("Could not save gallery item.", "error");
+    }
+  };
+
+  // Delete Gallery Image Document
+  const handleDeleteGalleryItem = async (id) => {
+    if (window.confirm("Are you sure you want to remove this image from the gallery?")) {
+      try {
+        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'gallery', id);
+        await deleteDoc(docRef);
+        addToast("Image removed from gallery grid", "info");
+      } catch (e) {
+        addToast("Error removing gallery document.", "error");
+      }
+    }
+  };
+
+  // Add Enquiry
+  const handleAddEnquiry = async (enquiryData) => {
+    try {
+      const enquiriesCollRef = collection(db, 'artifacts', appId, 'public', 'data', 'enquiries');
+      await addDoc(enquiriesCollRef, {
+        ...enquiryData,
+        date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString(),
+        status: "Pending"
+      });
+      addToast("Thank you! Your enquiry has been received. We will contact you shortly.", "success");
+      setPrefilledEnquiry(null);
+      setCurrentPage('home');
+    } catch (e) {
+      addToast("Failed to submit enquiry form. Please call us directly.", "error");
+    }
+  };
+
+  // Mark Enquiry as Contacted
+  const handleToggleEnquiryStatus = async (id, currentStatus) => {
+    try {
+      const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'enquiries', id);
+      const nextStatus = currentStatus === "Contacted" ? "Pending" : "Contacted";
+      await updateDoc(docRef, { status: nextStatus });
+      addToast(`Enquiry marked as ${nextStatus}`, "success");
+    } catch (e) {
+      addToast("Failed to update enquiry status", "error");
+    }
+  };
+
+  // Delete Enquiry
+  const handleDeleteEnquiry = async (id) => {
+    if (window.confirm("Permanently delete this enquiry record?")) {
+      try {
+        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'enquiries', id);
+        await deleteDoc(docRef);
+        addToast("Enquiry record deleted", "info");
+      } catch (e) {
+        addToast("Failed to delete enquiry", "error");
+      }
+    }
+  };
+
+  // Redirect client to Enquiry Page with Autofill context
+  const triggerPrefillEnquiry = (productName) => {
+    setPrefilledEnquiry({
+      subject: `Enquiry about: ${productName}`,
+      message: `Hello Balaji Electrical Shop, I want to inquire about availability, price, and logistics for "${productName}". Please let me know.`
+    });
+    setCurrentPage('enquiry');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Javascript Client Filters (Follows RULE 2 - No complex firestore queries)
+  const filteredProducts = useMemo(() => {
+    return products.filter((p) => {
+      const matchesSearch = p.name?.toLowerCase().includes(productSearch.toLowerCase()) ||
+                            p.description?.toLowerCase().includes(productSearch.toLowerCase()) ||
+                            p.category?.toLowerCase().includes(productSearch.toLowerCase());
+      const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [products, productSearch, selectedCategory]);
+
+  return (
+    <div className="min-h-screen flex flex-col font-sans bg-slate-50 text-slate-800 selection:bg-orange-500 selection:text-white">
+      
+      {/* ==========================================================
+          HEADER SECTION (RESPONSIVE & DYNAMIC)
+         ========================================================== */}
+      <header className="sticky top-0 z-40 bg-slate-900 text-white shadow-xl border-b border-orange-500/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            
+            {/* Brand Logo & Name */}
+            <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setCurrentPage('home')}>
+              <div className="bg-gradient-to-br from-orange-500 to-amber-400 p-2.5 rounded-xl shadow-lg ring-2 ring-white/10 hover:scale-105 transition-transform">
+                <svg className="w-7 h-7 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-orange-400 via-amber-200 to-white bg-clip-text text-transparent">
+                  {settings.shopName}
+                </h1>
+                <p className="text-[10px] sm:text-xs text-orange-400 font-medium tracking-widest uppercase">
+                  Electrical • Plumbing • Hardware
+                </p>
+              </div>
+            </div>
+
+            {/* Desktop Navigation Link Tabs */}
+            <nav className="hidden md:flex items-center space-x-1">
+              {[
+                { id: 'home', label: 'Home' },
+                { id: 'products', label: 'Products' },
+                { id: 'gallery', label: 'Gallery' },
+                { id: 'about', label: 'About Us' },
+                { id: 'contact', label: 'Contact' },
+                { id: 'enquiry', label: 'Send Enquiry' },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setCurrentPage(tab.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                    currentPage === tab.id
+                      ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+
+              <span className="h-6 w-px bg-slate-700 mx-2"></span>
+
+              {/* Admin Panel Entry/Status */}
+              <button
+                onClick={() => {
+                  setCurrentPage('admin');
+                  setMobileMenuOpen(false);
+                }}
+                className={`flex items-center space-x-1.5 px-4 py-2 rounded-lg font-semibold text-sm border transition-all duration-200 ${
+                  currentPage === 'admin'
+                    ? 'bg-blue-600 text-white border-blue-500'
+                    : adminLoggedIn
+                    ? 'border-emerald-500 text-emerald-400 hover:bg-emerald-950/30'
+                    : 'border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800'
+                }`}
+              >
+                <Lock className="w-3.5 h-3.5" />
+                <span>{adminLoggedIn ? 'Dashboard' : 'Admin'}</span>
+              </button>
+            </nav>
+
+            {/* Mobile Navigation Toggle Button */}
+            <div className="md:hidden flex items-center space-x-2">
+              <a 
+                href={`tel:${settings.phone}`}
+                className="p-2.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-white"
+                title="Call Shop Now"
+              >
+                <Phone className="w-4 h-4" />
+              </a>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2.5 bg-slate-800 text-slate-200 hover:text-white rounded-lg focus:outline-none"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Mobile Navigation Panel */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-slate-900 border-t border-slate-800 shadow-2xl">
+            <div className="px-2 pt-2 pb-4 space-y-1">
+              {[
+                { id: 'home', label: 'Home Page' },
+                { id: 'products', label: 'Products Catalog' },
+                { id: 'gallery', label: 'Shop Gallery' },
+                { id: 'about', label: 'About Us' },
+                { id: 'contact', label: 'Contact Shop' },
+                { id: 'enquiry', label: 'Submit Enquiry' },
+                { id: 'admin', label: adminLoggedIn ? '🔒 Admin Dashboard' : '🔑 Admin Security Log-in' },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setCurrentPage(tab.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-3 rounded-lg text-base font-semibold ${
+                    currentPage === tab.id
+                      ? 'bg-orange-500 text-white'
+                      : 'text-slate-300 hover:bg-slate-800'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* ==========================================================
+          MAIN BODY PAGE SWITCH ROUTER
+         ========================================================== */}
+      <main className="flex-grow">
+        
+        {/* PAGE 1: HOME PAGE */}
+        {currentPage === 'home' && (
+          <div className="animate-fadeIn">
+            {/* Rich Hero Header Banner Section */}
+            <div className="relative bg-slate-950 text-white overflow-hidden min-h-[500px] flex items-center">
+              <div className="absolute inset-0 z-0">
+                <img 
+                  src={settings.heroBannerUrl} 
+                  alt="Shop Banner" 
+                  className="w-full h-full object-cover object-center opacity-30 transform scale-105 hover:scale-100 transition-transform duration-1000"
+                  onError={(e) => {
+                    e.target.src = DEFAULT_SETTINGS.heroBannerUrl;
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent"></div>
+              </div>
+
+              <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+                <div className="max-w-2xl">
+                  <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30 text-xs font-semibold tracking-wider uppercase mb-6">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Your Complete Shop for Power & Flow</span>
+                  </span>
+                  
+                  <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-none text-white">
+                    {settings.shopName}
+                  </h1>
+                  
+                  <p className="mt-4 text-lg sm:text-xl text-slate-300 font-medium">
+                    All Electrical, Plumbing, Hardware & Home Utility Products are Available Under One Roof with Premium Brand Assurance.
+                  </p>
+
+                  <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                    <a 
+                      href={`tel:${settings.phone}`}
+                      className="inline-flex items-center justify-center space-x-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-blue-600/30 hover:scale-105 transform active:scale-95 transition-all text-center"
+                    >
+                      <Phone className="w-5 h-5" />
+                      <span>Call Now: {settings.phone}</span>
+                    </a>
+                    
+                    <a 
+                      href={`https://wa.me/91${settings.whatsapp}?text=Hello,%20I%20have%20an%20electrical/plumbing%20requirement%20for%20my%20home.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center space-x-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-600/30 hover:scale-105 transform active:scale-95 transition-all text-center"
+                    >
+                      <MessageSquare className="w-5 h-5" />
+                      <span>WhatsApp Us</span>
+                    </a>
+                  </div>
+
+                  <div className="mt-6">
+                    <button
+                      onClick={() => {
+                        setPrefilledEnquiry({
+                          subject: "General Business Enquiry",
+                          message: "Hello! Please send me information about wholesale electrical items availability."
+                        });
+                        setCurrentPage('enquiry');
+                      }}
+                      className="inline-flex items-center space-x-2 text-orange-400 hover:text-orange-300 font-semibold text-sm group"
+                    >
+                      <span>Send Direct Online Enquiry</span>
+                      <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Core Values Section */}
+            <div className="py-12 bg-white border-y border-slate-200">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  {[
+                    { title: "Quality Brands", desc: "Premium handpicked electrical products", color: "text-blue-600", bg: "bg-blue-50" },
+                    { title: "Best Pricing", desc: "Wholesale & Retail competitive prices", color: "text-orange-600", bg: "bg-orange-50" },
+                    { title: "Friendly Staff", desc: "Knowledgeable guidance for home needs", color: "text-emerald-600", bg: "bg-emerald-50" },
+                    { title: "Instant Support", desc: "Call or WhatsApp for speedy response", color: "text-purple-600", bg: "bg-purple-50" },
+                  ].map((val, idx) => (
+                    <div key={idx} className="flex flex-col items-center text-center p-4 rounded-xl hover:shadow-md transition-shadow">
+                      <div className={`p-3 rounded-xl mb-3 ${val.bg} ${val.color}`}>
+                        <CheckCircle className="w-6 h-6" />
+                      </div>
+                      <h4 className="font-bold text-slate-900">{val.title}</h4>
+                      <p className="text-xs text-slate-500 mt-1">{val.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Featured Products Sneak-peek */}
+            <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10">
+                <div>
+                  <span className="text-xs font-bold text-blue-600 uppercase tracking-widest block mb-1">Our Inventory Highlights</span>
+                  <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Featured Products</h2>
+                </div>
+                <button
+                  onClick={() => {
+                    setSelectedCategory('All');
+                    setCurrentPage('products');
+                  }}
+                  className="mt-4 sm:mt-0 inline-flex items-center space-x-1.5 text-blue-600 hover:text-blue-500 font-bold group"
+                >
+                  <span>Explore Full Catalog ({products.length})</span>
+                  <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {products.slice(0, 4).map((p) => (
+                  <div key={p.id} className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col group hover:shadow-xl hover:border-slate-200 transition-all duration-300">
+                    <div className="relative aspect-video bg-slate-100 overflow-hidden">
+                      <img 
+                        src={p.image} 
+                        alt={p.name} 
+                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.target.src = "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80";
+                        }}
+                      />
+                      <span className="absolute top-2.5 left-2.5 px-2 py-1 bg-slate-900/80 text-white font-medium text-[10px] rounded-md tracking-wider uppercase backdrop-blur-xs">
+                        {p.category}
+                      </span>
+                    </div>
+                    <div className="p-4 flex-grow flex flex-col justify-between">
+                      <div>
+                        <h3 className="font-bold text-slate-900 group-hover:text-blue-600 line-clamp-1 transition-colors">
+                          {p.name}
+                        </h3>
+                        <p className="text-xs text-slate-500 line-clamp-2 mt-1.5 leading-relaxed">
+                          {p.description}
+                        </p>
+                      </div>
+                      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <span className="text-lg font-extrabold text-slate-900">₹{p.price}</span>
+                        <button
+                          onClick={() => triggerPrefillEnquiry(p.name)}
+                          className="px-3 py-1.5 bg-slate-100 hover:bg-orange-500 hover:text-white text-slate-700 text-xs font-bold rounded-lg transition-colors"
+                        >
+                          Send Enquiry
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Quick Gallery Grid Preview */}
+            <section className="bg-slate-900 py-16 text-white">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10">
+                  <div>
+                    <span className="text-xs font-bold text-orange-400 uppercase tracking-widest block mb-1">Visual Preview</span>
+                    <h2 className="text-3xl font-extrabold tracking-tight">Our Physical Store</h2>
+                  </div>
+                  <button
+                    onClick={() => setCurrentPage('gallery')}
+                    className="mt-4 sm:mt-0 text-orange-400 hover:text-orange-300 font-bold flex items-center space-x-1 group"
+                  >
+                    <span>View Interactive Gallery</span>
+                    <ChevronRight className="w-4.5 h-4.5 transform group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {gallery.slice(0, 4).map((g) => (
+                    <div key={g.id} className="group relative rounded-xl overflow-hidden aspect-square shadow-xl bg-slate-800">
+                      <img 
+                        src={g.image} 
+                        alt="Gallery preview" 
+                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent opacity-90"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-4">
+                        <p className="text-xs text-slate-300 font-medium tracking-wide">
+                          {g.caption || "Sri Balaji Electrical Shop Area"}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Direct Enquiry Call to Action Banner */}
+            <section className="bg-gradient-to-r from-orange-500 to-amber-500 py-16 text-slate-950">
+              <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h3 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
+                  Do You Have a Special Order or Wiring Plan?
+                </h3>
+                <p className="text-slate-900 max-w-2xl mx-auto font-medium text-lg leading-relaxed mb-8">
+                  Get custom pricing details for major electrical layout wires, piping materials, and home fixtures by submitting a formal design inquiry.
+                </p>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <button 
+                    onClick={() => {
+                      setPrefilledEnquiry({
+                        subject: "Bulk Project Construction Requirement",
+                        message: "Hello Balaji Store, we have a layout construction project coming up and want to request a wholesale quotation."
+                      });
+                      setCurrentPage('enquiry');
+                    }}
+                    className="bg-slate-950 text-white font-bold px-8 py-4 rounded-xl hover:bg-slate-800 transition-colors shadow-lg shadow-slate-950/30"
+                  >
+                    Submit Quotation Inquiry
+                  </button>
+                  <a 
+                    href={`tel:${settings.phone}`}
+                    className="bg-white text-slate-950 font-bold px-8 py-4 rounded-xl hover:bg-slate-100 transition-colors shadow-md"
+                  >
+                    Discuss on Call
+                  </a>
+                </div>
+              </div>
+            </section>
+          </div>
+        )}
+
+        {/* PAGE 2: PRODUCTS PAGE */}
+        {currentPage === 'products' && (
+          <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn">
+            
+            {/* Header Area */}
+            <div className="text-center mb-10">
+              <h1 className="text-4xl font-black text-slate-900 tracking-tight">
+                Products Catalogue
+              </h1>
+              <p className="text-slate-500 mt-2 max-w-2xl mx-auto">
+                Search and sort quality materials. We supply trusted brands with solid electrical safety standards and warranty plans.
+              </p>
+            </div>
+
+            {/* Controls panel: Search and Category Pills */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-8 space-y-6">
+              
+              {/* Search Bar */}
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+                <input 
+                  type="text"
+                  placeholder="Search products by brand, keyword, category, description..."
+                  value={productSearch}
+                  onChange={(e) => setProductSearch(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3.5 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm"
+                />
+                {productSearch && (
+                  <button 
+                    onClick={() => setProductSearch('')}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 font-semibold"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+
+              {/* Responsive Horizontal Category Pills */}
+              <div>
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-3">
+                  Filter by Product Category
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => setSelectedCategory('All')}
+                    className={`px-4 py-2 rounded-lg text-xs font-bold tracking-wide transition-all ${
+                      selectedCategory === 'All'
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    All Items ({products.length})
+                  </button>
+                  {CATEGORIES.map((cat) => {
+                    const count = products.filter(p => p.category === cat).length;
+                    return (
+                      <button
+                        key={cat}
+                        onClick={() => setSelectedCategory(cat)}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold tracking-wide transition-all ${
+                          selectedCategory === cat
+                            ? 'bg-blue-600 text-white shadow-md'
+                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        }`}
+                      >
+                        {cat} {count > 0 && `(${count})`}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Results Counters */}
+            <div className="flex justify-between items-center mb-6">
+              <p className="text-slate-500 text-sm">
+                Found <span className="font-bold text-slate-800">{filteredProducts.length}</span> products
+                {selectedCategory !== 'All' && <span> under <span className="text-blue-600 font-medium">"{selectedCategory}"</span></span>}
+              </p>
+              {adminLoggedIn && (
+                <button
+                  onClick={() => setProductForm({ mode: 'add', data: {} })}
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2 rounded-lg flex items-center space-x-1 shadow-md shadow-blue-600/10"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Product</span>
+                </button>
+              )}
+            </div>
+
+            {/* Empty State */}
+            {filteredProducts.length === 0 && (
+              <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center max-w-md mx-auto my-8">
+                <Sliders className="w-12 h-12 text-slate-300 mx-auto mb-4 animate-pulse" />
+                <h3 className="font-bold text-slate-800 text-lg">No products found</h3>
+                <p className="text-slate-500 text-sm mt-1">
+                  We couldn't find items matches your criteria. Try switching categories or clearing search text.
+                </p>
+                <button
+                  onClick={() => {
+                    setProductSearch('');
+                    setSelectedCategory('All');
+                  }}
+                  className="mt-4 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            )}
+
+            {/* Products Main Grid List */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredProducts.map((p) => (
+                <div 
+                  key={p.id} 
+                  className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col group hover:shadow-xl hover:border-blue-300/50 transition-all duration-300 relative"
+                >
+                  {/* Status Badges */}
+                  <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
+                    <span className="px-2.5 py-1 bg-slate-900/80 text-white font-bold text-[9px] rounded-md uppercase tracking-wider backdrop-blur-xs shadow-xs">
+                      {p.category}
+                    </span>
+                    <span className={`px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider text-center shadow-xs ${
+                      p.availability === 'In Stock' 
+                        ? 'bg-emerald-100 text-emerald-800' 
+                        : 'bg-rose-100 text-rose-800'
+                    }`}>
+                      {p.availability}
+                    </span>
+                  </div>
+
+                  {/* Product Display Image */}
+                  <div className="relative aspect-square bg-slate-50 overflow-hidden border-b border-slate-100">
+                    <img 
+                      src={p.image} 
+                      alt={p.name} 
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.target.src = "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80";
+                      }}
+                    />
+                  </div>
+
+                  {/* Body Specs */}
+                  <div className="p-4 flex-grow flex flex-col justify-between bg-white">
+                    <div className="space-y-1">
+                      <h3 className="font-extrabold text-slate-900 group-hover:text-blue-600 text-base leading-tight line-clamp-2 transition-colors">
+                        {p.name}
+                      </h3>
+                      <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                        {p.description}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-slate-100">
+                      <div className="flex items-baseline space-x-1 justify-between mb-3">
+                        <span className="text-slate-400 text-xs">Best Retail Price:</span>
+                        <span className="text-xl font-black text-slate-900">₹{p.price}</span>
+                      </div>
+
+                      {/* Admin Controls Panel Inline */}
+                      {adminLoggedIn ? (
+                        <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-slate-100">
+                          <button
+                            onClick={() => setProductForm({ mode: 'edit', data: p })}
+                            className="bg-amber-100 text-amber-800 p-2 rounded-lg flex items-center justify-center hover:bg-amber-200"
+                            title="Edit Product Info"
+                          >
+                            <Edit className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleToggleStock(p)}
+                            className="bg-blue-100 text-blue-800 text-[10px] font-bold p-2 rounded-lg flex items-center justify-center hover:bg-blue-200"
+                            title="Toggle In/Out of Stock"
+                          >
+                            Stock
+                          </button>
+                          <button
+                            onClick={() => handleDeleteProduct(p.id)}
+                            className="bg-red-100 text-red-800 p-2 rounded-lg flex items-center justify-center hover:bg-red-200"
+                            title="Delete Product"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => triggerPrefillEnquiry(p.name)}
+                          disabled={p.availability === 'Out of Stock'}
+                          className={`w-full py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center space-x-2 transition-all ${
+                            p.availability === 'Out of Stock'
+                              ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                              : 'bg-orange-500 hover:bg-orange-600 text-white shadow-sm'
+                          }`}
+                        >
+                          <MessageSquare className="w-3.5 h-3.5" />
+                          <span>{p.availability === 'Out of Stock' ? 'Unavailable' : 'Enquire via Form'}</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        )}
+
+        {/* PAGE 3: GALLERY PAGE */}
+        {currentPage === 'gallery' && (
+          <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn">
+            
+            <div className="text-center mb-10">
+              <h1 className="text-4xl font-black text-slate-900 tracking-tight">
+                Shop Showcase & Gallery
+              </h1>
+              <p className="text-slate-500 mt-2 max-w-2xl mx-auto">
+                Take a look inside Sri Balaji Electrical Shop. We carry premium grade distribution pipelines, tools, switches, and high quality household electrical accessories.
+              </p>
+            </div>
+
+            {/* Admin Upload controls triggers */}
+            {adminLoggedIn && (
+              <div className="flex justify-end mb-6">
+                <button
+                  onClick={() => setGalleryForm({ mode: 'add', data: {} })}
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center space-x-1 shadow-md"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Gallery Image</span>
+                </button>
+              </div>
+            )}
+
+            {/* Gallery Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {gallery.map((g) => (
+                <div key={g.id} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300">
+                  <div className="relative aspect-square overflow-hidden bg-slate-900">
+                    <img 
+                      src={g.image} 
+                      alt="Gallery Item" 
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-4 flex-grow flex items-center justify-between bg-white">
+                    <p className="text-xs text-slate-600 font-medium leading-relaxed italic pr-4">
+                      {g.caption || "Sri Balaji Electrical Area"}
+                    </p>
+                    
+                    {adminLoggedIn && (
+                      <div className="flex space-x-1">
+                        <button
+                          onClick={() => setGalleryForm({ mode: 'edit', data: g })}
+                          className="bg-slate-100 hover:bg-slate-200 text-slate-700 p-2 rounded-md"
+                          title="Edit Caption"
+                        >
+                          <Edit className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteGalleryItem(g.id)}
+                          className="bg-rose-50 hover:bg-rose-100 text-rose-600 p-2 rounded-md"
+                          title="Delete from Gallery"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        )}
+
+        {/* PAGE 4: ABOUT US PAGE */}
+        {currentPage === 'about' && (
+          <div className="py-16 bg-slate-50 animate-fadeIn">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              
+              {/* Main Heading block */}
+              <div className="text-center mb-16">
+                <span className="text-xs font-bold text-orange-500 uppercase tracking-widest">ESTABLISHED TRUST</span>
+                <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight mt-1">
+                  About Sri Balaji Electricals
+                </h1>
+                <p className="text-slate-500 mt-4 max-w-2xl mx-auto text-base">
+                  We are a leading neighborhood destination providing top-grade, reliable electrical wiring products, robust plumbing pipes, and essential home improvement equipment.
+                </p>
+              </div>
+
+              {/* Grid content */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+                <div>
+                  <h3 className="text-2xl font-bold text-slate-900 tracking-tight">
+                    One-Stop Electrical & Plumbing Solutions
+                  </h3>
+                  <p className="text-slate-600 mt-4 leading-relaxed">
+                    At Sri Balaji Electrical Shop, we pride ourselves on holding a comprehensive inventory of heavy-duty materials required for building development, household repair setups, wiring improvements, and fixture fittings.
+                  </p>
+                  <p className="text-slate-600 mt-4 leading-relaxed">
+                    Our focus is safety first. Every switch, wire loop, or PVC conduit pipe we sell conforms to official safety indices. We guide household users to get correct current metrics and premium quality plumbing parts.
+                  </p>
+
+                  <div className="mt-8 grid grid-cols-2 gap-4">
+                    <div className="bg-white p-4 rounded-xl border border-slate-150">
+                      <span className="text-2xl font-black text-blue-600">100%</span>
+                      <p className="text-xs text-slate-500 font-semibold mt-1">Safety Certified Gear</p>
+                    </div>
+                    <div className="bg-white p-4 rounded-xl border border-slate-150">
+                      <span className="text-2xl font-black text-orange-500">Fast</span>
+                      <p className="text-xs text-slate-500 font-semibold mt-1">Order Quotations</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-500 rounded-3xl transform rotate-3 scale-102 opacity-10"></div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80"
+                    alt="Electrical shop work"
+                    className="relative z-10 rounded-2xl shadow-xl border border-slate-200"
+                  />
+                </div>
+              </div>
+
+              {/* Highlighting values */}
+              <div className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-center tracking-tight mb-10">
+                  Four Pillars of Our Shop's Commitment
+                </h3>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                  {[
+                    {
+                      title: "Quality Products",
+                      desc: "We prioritize stock from authorized brands like Havells, Finolex, Anchor, and Syska to eliminate short-circuit risks."
+                    },
+                    {
+                      title: "Best Prices",
+                      desc: "Honest margins. Whether you need a singular fuse point or complex plumbing layout batches, you get consistent wholesale price levels."
+                    },
+                    {
+                      title: "Friendly Service",
+                      desc: "Stuck with technical questions? We describe sizing models, pipeline diameters, and fuse thresholds for clear choices."
+                    },
+                    {
+                      title: "Customer Support",
+                      desc: "Our active support continues beyond sales. Need wiring directions or replacement support? Give us a direct buzz."
+                    }
+                  ].map((pillar, i) => (
+                    <div key={i} className="space-y-2">
+                      <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center font-bold text-slate-950 text-sm">
+                        {i + 1}
+                      </div>
+                      <h4 className="font-extrabold text-white text-lg">{pillar.title}</h4>
+                      <p className="text-slate-400 text-xs leading-relaxed">{pillar.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* PAGE 5: CONTACT PAGE */}
+        {currentPage === 'contact' && (
+          <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn">
+            
+            <div className="text-center mb-12">
+              <h1 className="text-4xl font-black text-slate-900 tracking-tight">
+                Contact Sri Balaji Shop
+              </h1>
+              <p className="text-slate-500 mt-2 max-w-2xl mx-auto text-sm">
+                Visit our showroom or make a telephone request. We accept bulk orders, construction site piping distribution maps, and home electrical replacements.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+              
+              {/* Detailed Shop Details */}
+              <div className="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-8 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-2xl font-black text-slate-900 tracking-tight mb-6">
+                    Store Details
+                  </h3>
+
+                  <div className="space-y-6">
+                    
+                    {/* Phone Block */}
+                    <div className="flex items-start space-x-4">
+                      <div className="p-3 bg-blue-50 text-blue-600 rounded-xl">
+                        <Phone className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Phone Number</span>
+                        <a href={`tel:${settings.phone}`} className="text-lg font-black text-slate-900 hover:text-blue-600">
+                          +91 {settings.phone}
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* WhatsApp Block */}
+                    <div className="flex items-start space-x-4">
+                      <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
+                        <MessageSquare className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">WhatsApp Support</span>
+                        <a 
+                          href={`https://wa.me/91${settings.whatsapp}?text=Hello%20Balaji%20Electricals`} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-lg font-black text-emerald-600 hover:underline"
+                        >
+                          +91 {settings.whatsapp}
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Address Block */}
+                    <div className="flex items-start space-x-4">
+                      <div className="p-3 bg-orange-50 text-orange-600 rounded-xl">
+                        <MapPin className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Store Location Address</span>
+                        <p className="text-slate-700 text-sm font-semibold leading-relaxed">
+                          {settings.address}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Hours Block */}
+                    <div className="flex items-start space-x-4">
+                      <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl">
+                        <Clock className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Business Timing Hours</span>
+                        <p className="text-slate-700 text-sm font-semibold">
+                          {settings.hours}
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+                  <a 
+                    href={`tel:${settings.phone}`}
+                    className="flex-grow inline-flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-all text-sm"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span>Call Store</span>
+                  </a>
+                  <a 
+                    href={`https://wa.me/91${settings.whatsapp}`}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex-grow inline-flex items-center justify-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-all text-sm"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    <span>Chat on WhatsApp</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Google Maps Embed Frame */}
+              <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col">
+                <div className="bg-slate-900 px-6 py-4 flex justify-between items-center text-white">
+                  <span className="text-xs font-bold uppercase tracking-wider text-orange-400">Navigation Pointer</span>
+                  <span className="text-xs font-semibold text-slate-300">Hyderabad (TS), India</span>
+                </div>
+                <div className="flex-grow relative min-h-[350px]">
+                  {/* Google Map Embedded Iframe */}
+                  <iframe 
+                    title="Sri Balaji Electrical Shop Map Location"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15228.40822694119!2d78.474668!3d17.385044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb978a6e1a939f%3A0xbc1d6c82439c29d0!2sHyderabad%2C%20Telangana%2C%20India!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                    className="absolute inset-0 w-full h-full border-0"
+                    allowFullScreen="" 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        )}
+
+        {/* PAGE 6: ENQUIRY PAGE */}
+        {currentPage === 'enquiry' && (
+          <div className="py-12 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn">
+            
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
+              <div className="bg-gradient-to-r from-orange-500 to-amber-500 p-8 text-white">
+                <h1 className="text-3xl font-black tracking-tight">
+                  Product Enquiry Form
+                </h1>
+                <p className="text-slate-900 mt-2 font-medium text-sm leading-relaxed">
+                  No account setup required. Complete this simple direct message block and we will crosscheck pricing & stocks immediately.
+                </p>
+              </div>
+
+              {/* Form implementation */}
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target);
+                  const data = {
+                    name: formData.get('name'),
+                    mobile: formData.get('mobile'),
+                    location: formData.get('location'),
+                    subject: formData.get('subject'),
+                    message: formData.get('message')
+                  };
+                  
+                  if (!data.name || !data.mobile || !data.subject) {
+                    addToast("Please fill in Name, Mobile Number and Subject.", "error");
+                    return;
+                  }
+                  handleAddEnquiry(data);
+                }}
+                className="p-8 space-y-6"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  
+                  {/* Name Input */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Full Name *
+                    </label>
+                    <input 
+                      type="text" 
+                      name="name"
+                      required
+                      placeholder="e.g. Ramesh Kumar"
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm"
+                    />
+                  </div>
+
+                  {/* Mobile Number Input */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Mobile Number *
+                    </label>
+                    <input 
+                      type="tel" 
+                      name="mobile"
+                      required
+                      placeholder="10 digit phone number"
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm"
+                    />
+                  </div>
+
+                </div>
+
+                {/* Location Input */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Delivery/Your Location
+                  </label>
+                  <input 
+                    type="text" 
+                    name="location"
+                    placeholder="e.g. Kukatpally, Hyderabad"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm"
+                  />
+                </div>
+
+                {/* Subject Input */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Subject / Product Category *
+                  </label>
+                  <input 
+                    type="text" 
+                    name="subject"
+                    required
+                    defaultValue={prefilledEnquiry ? prefilledEnquiry.subject : ""}
+                    placeholder="e.g. Price for 1.5mm wire, modular switch stock request"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm"
+                  />
+                </div>
+
+                {/* Message Input */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Detailed Requirement Message
+                  </label>
+                  <textarea 
+                    name="message"
+                    rows="5"
+                    defaultValue={prefilledEnquiry ? prefilledEnquiry.message : ""}
+                    placeholder="Write detailed specifications like quantities, lengths, pipe diameters or special current voltages you require."
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm"
+                  ></textarea>
+                </div>
+
+                <div className="flex items-center space-x-2 pt-2 text-xs text-slate-500">
+                  <Info className="w-4 h-4 text-orange-500 shrink-0" />
+                  <p>Our team replies back via call or WhatsApp within 1 - 3 business hours.</p>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100 flex justify-end space-x-3">
+                  {prefilledEnquiry && (
+                    <button 
+                      type="button" 
+                      onClick={() => setPrefilledEnquiry(null)}
+                      className="px-4 py-3 border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-100 text-sm font-semibold"
+                    >
+                      Reset Form Context
+                    </button>
+                  )}
+                  <button 
+                    type="submit"
+                    className="inline-flex items-center space-x-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg hover:scale-102 transition-transform text-sm"
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>Submit Enquiry</span>
+                  </button>
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+        )}
+
+        {/* PAGE 7 & 8: ADMIN SECURE AREA */}
+        {currentPage === 'admin' && (
+          <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn">
+            
+            {/* If NOT LOGGED IN: Show Login screen */}
+            {!adminLoggedIn ? (
+              <div className="max-w-md mx-auto bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden mt-6">
+                <div className="bg-slate-900 p-8 text-center text-white">
+                  <div className="w-12 h-12 rounded-2xl bg-orange-500 text-slate-950 flex items-center justify-center mx-auto mb-3 shadow-lg">
+                    <Lock className="w-6 h-6" />
+                  </div>
+                  <h2 className="text-2xl font-black tracking-tight">Admin Portal</h2>
+                  <p className="text-slate-400 text-xs mt-1">Authorized access only for Sri Balaji Shop Management</p>
+                </div>
+
+                <form onSubmit={handleAdminLogin} className="p-8 space-y-6">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Enter Security Access Key / Password
+                    </label>
+                    <input 
+                      type="password"
+                      value={adminPasswordInput}
+                      onChange={(e) => setAdminPasswordInput(e.target.value)}
+                      placeholder="Password"
+                      required
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                    />
+                  </div>
+
+                  <div className="p-3 bg-amber-50 rounded-lg text-xs text-amber-800 border border-amber-200/50 flex items-start space-x-2">
+                    <AlertTriangle className="w-4 h-4 shrink-0 text-amber-600" />
+                    <span>Use local default password: <strong className="font-extrabold uppercase">admin</strong> to preview custom dashboard instantly.</span>
+                  </div>
+
+                  <button 
+                    type="submit"
+                    className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-colors flex items-center justify-center space-x-2"
+                  >
+                    <span>Authenticate Console</span>
+                  </button>
+                </form>
+              </div>
+            ) : (
+              
+              /* ADMIN DASHBOARD WORKSPACE */
+              <div className="space-y-8">
+                
+                {/* Header Row */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-900 p-6 rounded-2xl text-white shadow-xl">
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
+                      <span className="text-xs font-bold tracking-widest text-emerald-400 uppercase">Live Operations Room</span>
+                    </div>
+                    <h2 className="text-3xl font-black tracking-tight mt-1">Admin Dashboard</h2>
+                  </div>
+                  <div className="mt-4 sm:mt-0 flex gap-2">
+                    <button
+                      onClick={() => setSettingsForm(settings)}
+                      className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5"
+                    >
+                      <Settings className="w-4 h-4" />
+                      <span>Adjust Shop Settings</span>
+                    </button>
+                    <button
+                      onClick={handleAdminLogout}
+                      className="bg-rose-900/40 hover:bg-rose-900 text-rose-300 font-semibold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Exit Session</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Statistics Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                  
+                  {/* Total Products Stat */}
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+                    <div>
+                      <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Products Inventory</span>
+                      <span className="text-3xl font-black text-slate-900 block mt-1">{products.length}</span>
+                      <button 
+                        onClick={() => setCurrentPage('products')}
+                        className="text-xs text-blue-600 hover:underline font-semibold mt-2 block"
+                      >
+                        Manage Store Items →
+                      </button>
+                    </div>
+                    <div className="p-4 bg-blue-50 text-blue-600 rounded-2xl">
+                      <Grid className="w-6 h-6" />
+                    </div>
+                  </div>
+
+                  {/* Total Images Stat */}
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+                    <div>
+                      <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Gallery Pictures</span>
+                      <span className="text-3xl font-black text-slate-900 block mt-1">{gallery.length}</span>
+                      <button 
+                        onClick={() => setCurrentPage('gallery')}
+                        className="text-xs text-orange-600 hover:underline font-semibold mt-2 block"
+                      >
+                        Manage Photo Grid →
+                      </button>
+                    </div>
+                    <div className="p-4 bg-orange-50 text-orange-600 rounded-2xl">
+                      <Sparkles className="w-6 h-6" />
+                    </div>
+                  </div>
+
+                  {/* Total Enquiries Stat */}
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+                    <div>
+                      <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Guest Enquiries</span>
+                      <span className="text-3xl font-black text-slate-900 block mt-1">{enquiries.length}</span>
+                      <span className="text-xs text-slate-500 font-semibold block mt-2">
+                        {enquiries.filter(e => e.status !== "Contacted").length} Pending Review
+                      </span>
+                    </div>
+                    <div className="p-4 bg-purple-50 text-purple-600 rounded-2xl">
+                      <FileText className="w-6 h-6" />
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Sub-section: Enquiry Operations Panel */}
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+                  <div className="bg-slate-100 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+                    <div className="flex items-center space-x-2">
+                      <FileText className="w-5 h-5 text-slate-500" />
+                      <h3 className="font-extrabold text-slate-900 text-lg">Inbox Enquiries Management</h3>
+                    </div>
+                    <span className="px-3 py-1 bg-slate-200 text-slate-700 font-extrabold text-[10px] rounded-full uppercase tracking-wider">
+                      {enquiries.length} records
+                    </span>
+                  </div>
+
+                  {enquiries.length === 0 ? (
+                    <div className="p-12 text-center text-slate-400">
+                      <FileText className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                      <p className="font-bold">No enquiries registered yet</p>
+                      <p className="text-xs mt-1">New user submissions will instantly flash here in real-time.</p>
+                    </div>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse text-sm">
+                        <thead>
+                          <tr className="bg-slate-50 border-b border-slate-200 text-slate-400 font-bold text-xs uppercase tracking-wider">
+                            <th className="p-4">Customer Details</th>
+                            <th className="p-4">Context Subject</th>
+                            <th className="p-4">Message</th>
+                            <th className="p-4">Submitted Date</th>
+                            <th className="p-4 text-center">Operational Status</th>
+                            <th className="p-4 text-right">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 font-medium">
+                          {enquiries.map((enq) => (
+                            <tr key={enq.id} className="hover:bg-slate-50/50">
+                              <td className="p-4">
+                                <p className="font-black text-slate-900">{enq.name}</p>
+                                <p className="text-xs text-slate-500 mt-0.5">📞 {enq.mobile}</p>
+                                {enq.location && (
+                                  <p className="text-[10px] text-slate-400">📍 {enq.location}</p>
+                                )}
+                              </td>
+                              <td className="p-4">
+                                <span className="inline-block px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-xs font-bold leading-tight">
+                                  {enq.subject}
+                                </span>
+                              </td>
+                              <td className="p-4 max-w-xs">
+                                <p className="text-xs text-slate-600 line-clamp-2" title={enq.message}>
+                                  {enq.message || "No custom message description."}
+                                </p>
+                              </td>
+                              <td className="p-4 text-slate-500 text-xs">
+                                {enq.date}
+                              </td>
+                              <td className="p-4 text-center">
+                                <button
+                                  onClick={() => handleToggleEnquiryStatus(enq.id, enq.status)}
+                                  className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider inline-flex items-center space-x-1 ${
+                                    enq.status === "Contacted"
+                                      ? "bg-emerald-100 text-emerald-800"
+                                      : "bg-amber-100 text-amber-800"
+                                  }`}
+                                >
+                                  <span>{enq.status || "Pending"}</span>
+                                </button>
+                              </td>
+                              <td className="p-4 text-right">
+                                <button
+                                  onClick={() => handleDeleteEnquiry(enq.id)}
+                                  className="text-rose-600 hover:text-rose-800 p-2 hover:bg-rose-50 rounded-lg transition-colors"
+                                  title="Delete Enquiry"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+
+                {/* Sub-section: Security Settings (Change Password) */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-6">
+                  <h3 className="font-extrabold text-slate-900 text-lg mb-2">Change Administrative Key</h3>
+                  <p className="text-xs text-slate-500 mb-4">Modify the login credentials password used to access this console dashboard.</p>
+                  
+                  <form 
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const pass = e.target.new_admin_password.value;
+                      handlePasswordChange(pass);
+                      e.target.reset();
+                    }}
+                    className="flex flex-col sm:flex-row gap-3 max-w-md"
+                  >
+                    <input 
+                      type="text" 
+                      name="new_admin_password" 
+                      placeholder="Enter safe new password"
+                      required
+                      className="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs flex-grow"
+                    />
+                    <button 
+                      type="submit"
+                      className="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-lg shrink-0"
+                    >
+                      Update Password Key
+                    </button>
+                  </form>
+                </div>
+
+              </div>
+            )}
+
+          </div>
+        )}
+
+      </main>
+
+      {/* ==========================================================
+          FOOTER & QUICK UTILITY ACTIONS
+         ========================================================== */}
+      <footer className="bg-slate-950 text-slate-400 pt-16 pb-8 border-t-2 border-orange-500/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-900">
+            
+            {/* Column 1: Brand details */}
+            <div className="md:col-span-5 space-y-4">
+              <div className="flex items-center space-x-2">
+                <div className="bg-orange-500 p-2 rounded-lg text-slate-950 font-bold">
+                  ⚡
+                </div>
+                <h4 className="text-xl font-extrabold text-white tracking-tight">
+                  {settings.shopName}
+                </h4>
+              </div>
+              <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
+                Certified quality switches, heavy duty conduits, modular sockets, fans, safety wires and hardware fittings at absolute budget-friendly retail rates.
+              </p>
+              <div className="text-xs font-bold text-orange-400">
+                Call/WhatsApp Support: <a href={`tel:${settings.phone}`} className="hover:underline text-white font-extrabold">{settings.phone}</a>
+              </div>
+            </div>
+
+            {/* Column 2: Navigation Links */}
+            <div className="md:col-span-3 space-y-3">
+              <h5 className="text-xs font-black uppercase text-slate-200 tracking-widest">
+                Quick Directions
+              </h5>
+              <div className="flex flex-col space-y-2 text-xs">
+                <button onClick={() => { setCurrentPage('home'); window.scrollTo({top:0}); }} className="text-left hover:text-orange-400 transition-colors">⚡ Return Home</button>
+                <button onClick={() => { setCurrentPage('products'); window.scrollTo({top:0}); }} className="text-left hover:text-orange-400 transition-colors">📦 Explore Products Catalog</button>
+                <button onClick={() => { setCurrentPage('gallery'); window.scrollTo({top:0}); }} className="text-left hover:text-orange-400 transition-colors">🖼️ View Showroom Photos</button>
+                <button onClick={() => { setCurrentPage('enquiry'); window.scrollTo({top:0}); }} className="text-left hover:text-orange-400 transition-colors">✉️ Send Quotation Enquiry</button>
+              </div>
+            </div>
+
+            {/* Column 3: Category quick navigation */}
+            <div className="md:col-span-4 space-y-3">
+              <h5 className="text-xs font-black uppercase text-slate-200 tracking-widest">
+                Product Categories
+              </h5>
+              <div className="grid grid-cols-2 gap-x-2 gap-y-1.5 text-xs text-slate-400">
+                {CATEGORIES.slice(0, 8).map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => {
+                      setSelectedCategory(cat);
+                      setCurrentPage('products');
+                      window.scrollTo({ top: 0 });
+                    }}
+                    className="text-left hover:text-orange-400 line-clamp-1 transition-colors"
+                  >
+                    • {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          <div className="pt-8 text-center text-xs flex flex-col sm:flex-row justify-between items-center text-slate-500 gap-4">
+            <p>© 2026 {settings.shopName}. All Rights Reserved.</p>
+            <div className="flex space-x-4">
+              <button 
+                onClick={() => {
+                  setCurrentPage('admin');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }} 
+                className="hover:text-white flex items-center space-x-1"
+              >
+                <Lock className="w-3.5 h-3.5 text-orange-500" />
+                <span>Admin Login Gate</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* ==========================================================
+          FLOATING ACTION QUICK-TRIGGERS (CALL & WHATSAPP)
+         ========================================================== */}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col space-y-3">
+        
+        {/* Call Floating Badge */}
+        <a 
+          href={`tel:${settings.phone}`}
+          className="bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center group relative"
+          title="Direct Dial Shop"
+        >
+          <Phone className="w-5 h-5" />
+          <span className="absolute right-14 bg-slate-900 text-white text-[10px] font-bold py-1 px-2.5 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Call Shop: {settings.phone}
+          </span>
+        </a>
+
+        {/* WhatsApp Floating Badge with Pulsing State */}
+        <a 
+          href={`https://wa.me/91${settings.whatsapp}?text=Hello%20Balaji%20Electricals%20Shop`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-emerald-600 hover:bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center group relative"
+          title="WhatsApp Support Chat"
+        >
+          <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border border-white animate-pulse"></span>
+          <MessageSquare className="w-5 h-5" />
+          <span className="absolute right-14 bg-slate-900 text-white text-[10px] font-bold py-1 px-2.5 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            WhatsApp Live Support
+          </span>
+        </a>
+
+      </div>
+
+      {/* ==========================================================
+          TOAST NOTIFICATION COMPONENT
+         ========================================================== */}
+      <div className="fixed top-5 right-5 z-50 flex flex-col space-y-2 max-w-sm w-full">
+        {toasts.map((toast) => (
+          <div 
+            key={toast.id}
+            className={`p-4 rounded-xl shadow-2xl border flex items-start space-x-3 transition-all duration-300 animate-slideIn ${
+              toast.type === 'success' 
+                ? 'bg-emerald-900 text-emerald-100 border-emerald-700/50' 
+                : toast.type === 'error'
+                ? 'bg-rose-900 text-rose-100 border-rose-700/50'
+                : 'bg-slate-900 text-slate-100 border-slate-700'
+            }`}
+          >
+            <div className="flex-grow text-xs font-bold leading-relaxed">{toast.message}</div>
+            <button 
+              onClick={() => setToasts((prev) => prev.filter((t) => t.id !== toast.id))}
+              className="text-white/70 hover:text-white shrink-0"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* ==========================================================
+          CRUD MODALS (PRODUCT ADD/EDIT MODAL)
+         ========================================================== */}
+      {productForm && (
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden border border-slate-200 shadow-2xl animate-scaleUp">
+            
+            <div className="bg-slate-900 p-6 text-white flex justify-between items-center">
+              <h3 className="text-xl font-bold">
+                {productForm.mode === 'edit' ? 'Edit Existing Product' : 'Add New Product to Inventory'}
+              </h3>
+              <button 
+                onClick={() => setProductForm(null)}
+                className="p-1.5 hover:bg-slate-800 rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                const form = new FormData(e.target);
+                const data = {
+                  name: form.get('name'),
+                  description: form.get('description'),
+                  category: form.get('category'),
+                  price: parseFloat(form.get('price')),
+                  availability: form.get('availability'),
+                  image: form.get('image') || "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80"
+                };
+                handleSaveProduct(data);
+              }}
+              className="p-6 space-y-4 max-h-[75vh] overflow-y-auto"
+            >
+              {/* Product Name */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Product Title / Brand Name *</label>
+                <input 
+                  type="text" 
+                  name="name" 
+                  required
+                  defaultValue={productForm.data.name || ''}
+                  placeholder="e.g. Havells 3-Pin Modular Plug"
+                  className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                />
+              </div>
+
+              {/* Product Category & Price Row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Category Group *</label>
+                  <select 
+                    name="category"
+                    defaultValue={productForm.data.category || CATEGORIES[0]}
+                    className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm font-semibold"
+                  >
+                    {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Price (₹ INR) *</label>
+                  <input 
+                    type="number" 
+                    name="price" 
+                    required
+                    defaultValue={productForm.data.price || ''}
+                    placeholder="e.g. 150"
+                    className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                  />
+                </div>
+
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Short Specifications/Details</label>
+                <textarea 
+                  name="description" 
+                  rows="3"
+                  defaultValue={productForm.data.description || ''}
+                  placeholder="Include manufacturer brand warranty details or voltage capabilities..."
+                  className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                ></textarea>
+              </div>
+
+              {/* Availability & Image URL */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Stock Availability Status *</label>
+                  <select 
+                    name="availability"
+                    defaultValue={productForm.data.availability || 'In Stock'}
+                    className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm font-semibold"
+                  >
+                    <option value="In Stock">In Stock</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Image URL Address</label>
+                  <input 
+                    type="url" 
+                    name="image" 
+                    defaultValue={productForm.data.image || ''}
+                    placeholder="https://images.unsplash.com/..."
+                    className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                  />
+                </div>
+
+              </div>
+
+              <div className="pt-4 border-t flex justify-end space-x-2">
+                <button 
+                  type="button" 
+                  onClick={() => setProductForm(null)}
+                  className="px-4 py-2 border rounded-lg text-slate-600 hover:bg-slate-100 text-sm"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md"
+                >
+                  Save Product Configuration
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* GALLERY ADD/EDIT MODAL */}
+      {galleryForm && (
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden border border-slate-200 shadow-2xl animate-scaleUp">
+            
+            <div className="bg-slate-900 p-6 text-white flex justify-between items-center">
+              <h3 className="text-xl font-bold">
+                {galleryForm.mode === 'edit' ? 'Modify Showcase Details' : 'Add Photo to Gallery'}
+              </h3>
+              <button onClick={() => setGalleryForm(null)} className="p-1.5 hover:bg-slate-800 rounded-lg">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                const form = new FormData(e.target);
+                const data = {
+                  caption: form.get('caption'),
+                  image: form.get('image') || "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80"
+                };
+                handleSaveGalleryItem(data);
+              }}
+              className="p-6 space-y-4"
+            >
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Image Caption Label</label>
+                <input 
+                  type="text" 
+                  name="caption" 
+                  required
+                  defaultValue={galleryForm.data.caption || ''}
+                  placeholder="e.g. Main pipeline displays section"
+                  className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Image URL Address</label>
+                <input 
+                  type="url" 
+                  name="image" 
+                  defaultValue={galleryForm.data.image || ''}
+                  placeholder="https://images.unsplash.com/..."
+                  className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                />
+              </div>
+
+              <div className="pt-4 border-t flex justify-end space-x-2">
+                <button 
+                  type="button" 
+                  onClick={() => setGalleryForm(null)}
+                  className="px-4 py-2 border rounded-lg text-slate-600 hover:bg-slate-100 text-sm"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-sm"
+                >
+                  Save Gallery Element
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* SHOP SETTINGS ADJUSTMENT MODAL */}
+      {settingsForm && (
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-lg overflow-hidden border border-slate-200 shadow-2xl animate-scaleUp">
+            
+            <div className="bg-slate-900 p-6 text-white flex justify-between items-center">
+              <h3 className="text-xl font-bold flex items-center space-x-2">
+                <Settings className="w-5 h-5 text-orange-500" />
+                <span>Adjust Shop Configuration Settings</span>
+              </h3>
+              <button onClick={() => setSettingsForm(null)} className="p-1.5 hover:bg-slate-800 rounded-lg">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                const form = new FormData(e.target);
+                const data = {
+                  shopName: form.get('shopName'),
+                  phone: form.get('phone'),
+                  whatsapp: form.get('whatsapp'),
+                  logoUrl: form.get('logoUrl'),
+                  heroBannerUrl: form.get('heroBannerUrl'),
+                  address: form.get('address'),
+                  hours: form.get('hours')
+                };
+                handleUpdateSettings(data);
+              }}
+              className="p-6 space-y-4 max-h-[70vh] overflow-y-auto"
+            >
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Shop Name Title</label>
+                <input 
+                  type="text" 
+                  name="shopName" 
+                  required
+                  defaultValue={settingsForm.shopName}
+                  className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm font-semibold"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Phone Number</label>
+                  <input 
+                    type="text" 
+                    name="phone" 
+                    required
+                    defaultValue={settingsForm.phone}
+                    className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp Support</label>
+                  <input 
+                    type="text" 
+                    name="whatsapp" 
+                    required
+                    defaultValue={settingsForm.whatsapp}
+                    className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Hero Banner URL</label>
+                <input 
+                  type="url" 
+                  name="heroBannerUrl" 
+                  defaultValue={settingsForm.heroBannerUrl}
+                  className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Store Physical Address</label>
+                <input 
+                  type="text" 
+                  name="address" 
+                  defaultValue={settingsForm.address}
+                  className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Business timing schedules</label>
+                <input 
+                  type="text" 
+                  name="hours" 
+                  defaultValue={settingsForm.hours}
+                  className="w-full px-3 py-2 bg-slate-50 border rounded-lg text-sm"
+                />
+              </div>
+
+              <div className="pt-4 border-t flex justify-end space-x-2">
+                <button 
+                  type="button" 
+                  onClick={() => setSettingsForm(null)}
+                  className="px-4 py-2 border rounded-lg text-slate-600 hover:bg-slate-100 text-sm"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm"
+                >
+                  Save Global Configuration
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
