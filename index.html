@@ -834,18 +834,41 @@
                   <textarea id="modal-product-description" rows="3" placeholder="Explain manufacturer parameters, brand tags..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></textarea>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- NEW DIRECT IMAGE FILE UPLOADER FOR PRODUCTS -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Product Image (Device File Upload)</label>
+                    <div id="product-upload-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-orange-500 dark:hover:border-orange-500 rounded-xl p-6 text-center cursor-pointer transition-colors relative bg-slate-50 dark:bg-slate-800/40" onclick="document.getElementById('modal-product-file').click()">
+                        <input type="file" id="modal-product-file" accept="image/*" class="hidden" onchange="handleProductFileSelect(event)">
+                        <div class="flex flex-col items-center space-y-1">
+                            <span class="text-3xl">📸</span>
+                            <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Click to Browse device files or Drag & Drop here</span>
+                            <span class="text-[10px] text-slate-400">Supports JPG, PNG, WEBP (Max 2MB)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Live Image Preview Container -->
+                    <div id="product-image-preview-container" class="hidden relative rounded-xl border border-slate-200 dark:border-slate-800 p-2 max-w-xs bg-slate-50 dark:bg-slate-900 flex items-center space-x-3">
+                        <img id="product-image-preview" src="#" alt="Preview" class="w-16 h-16 object-cover rounded-lg">
+                        <div class="flex-grow min-w-0">
+                            <p class="text-xs font-bold text-slate-900 dark:text-white truncate">Image Uploaded Successfully!</p>
+                            <button type="button" onclick="clearProductUpload()" class="text-[11px] text-rose-500 font-bold hover:underline">Clear / Delete File</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backup Fallback Text/URL Input option -->
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                  <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Or paste an Image URL (Optional)</label>
+                  <input type="text" id="modal-product-image" placeholder="https://example.com/image.jpg" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 gap-4">
                   <div>
                     <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Stock Availability Status *</label>
                     <select id="modal-product-availability" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none">
                       <option value="In Stock">In Stock</option>
                       <option value="Out of Stock">Out of Stock</option>
                     </select>
-                  </div>
-
-                  <div>
-                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Image URL Address / Local Name</label>
-                    <input type="text" id="modal-product-image" placeholder="image_d57726.png or URL" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                   </div>
                 </div>
 
@@ -871,10 +894,33 @@
                     <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Image Caption Label *</label>
                     <input type="text" id="modal-gallery-caption" required placeholder="e.g. Safety wire displays" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Image URL / Local File Name</label>
+                
+                <!-- NEW DIRECT IMAGE FILE UPLOADER FOR GALLERY -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Gallery Image File (Direct Upload)</label>
+                    <div id="gallery-upload-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 rounded-xl p-5 text-center cursor-pointer transition-colors relative bg-slate-50 dark:bg-slate-800/40" onclick="document.getElementById('modal-gallery-file').click()">
+                        <input type="file" id="modal-gallery-file" accept="image/*" class="hidden" onchange="handleGalleryFileSelect(event)">
+                        <div class="flex flex-col items-center space-y-1">
+                            <span class="text-2xl">🖼️</span>
+                            <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Browse Image File or Drag here</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Live Preview -->
+                    <div id="gallery-image-preview-container" class="hidden relative rounded-xl border border-slate-200 dark:border-slate-800 p-2 max-w-xs bg-slate-50 dark:bg-slate-900 flex items-center space-x-3">
+                        <img id="gallery-image-preview" src="#" alt="Preview" class="w-14 h-14 object-cover rounded-lg">
+                        <div class="flex-grow min-w-0">
+                            <p class="text-xs font-bold text-slate-900 dark:text-white truncate">Image loaded!</p>
+                            <button type="button" onclick="clearGalleryUpload()" class="text-[10px] text-rose-500 font-bold hover:underline">Clear / Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Or paste online image URL (Optional)</label>
                     <input type="text" id="modal-gallery-image" placeholder="image_d576ee.jpg or URL" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
                 </div>
+
                 <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2">
                     <button type="button" onclick="closeGalleryModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button>
                     <button type="submit" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-sm">Save Element</button>
@@ -947,7 +993,7 @@
 
     <!-- ================= CORE JAVASCRIPT LOGIC ================= -->
     <script>
-        // ================= CONFIG & STATIC DATA DECLARATIONS (Avoid Hoisting ReferenceErrors) =================
+        // ================= CONFIG & STATIC DATA DECLARATIONS =================
         const CATEGORIES = [
             "Electrical Items",
             "Switches",
@@ -1218,7 +1264,7 @@
                 about_p2: "हमारी प्राथमिकता हमेशा सुरक्षा है। हमारे द्वारा बेचे जाने वाले हर स्विच, वायर लूप या पीवीसी पाइप आधिकारिक सुरक्षा मानकों के अनुरूप होते हैं।",
                 about_pillars_title: "हमारी प्रतिबद्धता के चार स्तंभ",
                 pillar1_title: "गुणवत्ता उत्पाद",
-                pillar1_desc: "सुरक्षा की गारंटी के लिए हैवेल्स, फिनोलेक्स और सिस्का जैसे शीर्ष ब्रांडों से आधिकारिक स्टॉक।",
+                pillar1_desc: "सुरक्षा की गारंटी के लिए हैवेल्स, फिनोलेक्स और सिस्का जैसे सरल ब्रांडों से आधिकारिक स्टॉक।",
                 pillar2_title: "सर्वोत्तम मूल्य",
                 pillar2_desc: "एकल घरेलू टुकड़ों के साथ-साथ थोक निर्माण ब्लूप्रिंट पर भी उचित थोक मार्जिन।",
                 pillar3_title: "मैत्रीपूर्ण सेवा",
@@ -1265,7 +1311,7 @@
                 admin_table_action: "कार्रवाई",
                 admin_no_enq: "अभी तक कोई पूछताछ दर्ज नहीं की गई है",
                 admin_no_enq_sub: "ग्राहक सबमिशन वास्तविक समय में तुरंत यहां दिखाई देंगे।",
-                admin_change_pass: "प्रशासनिक पासवर्ड बदलें",
+                admin_change_pass: "प्रसारणिक पासवर्ड बदलें",
                 admin_change_pass_sub: "इस सुरक्षित एडमिन कंसोल तक पहुंचने के लिए उपयोग किए जाने वाले सिस्टम पासवर्ड को अपडेट करें।",
                 admin_update_btn: "पासवर्ड अपडेट करें",
                 footer_desc: "प्रमाणित स्विच, प्लंबिंग पाइप, तार, पंखे और लाइटिंग फिटिंग बिल्कुल सर्वोत्तम दरों पर उपलब्ध हैं।",
@@ -1295,6 +1341,10 @@
             adminActiveTab: 'inbox',
             quoteCart: JSON.parse(localStorage.getItem('sri_balaji_quotecart')) || []
         };
+
+        // Storage anchors for dynamic base64 uploads
+        let uploadedProductImageBase64 = "";
+        let uploadedGalleryImageBase64 = "";
 
         // Custom modal alerts promise anchor
         let customAlertPromiseResolver = null;
@@ -1331,6 +1381,7 @@
             }
         }
 
+        // Lock Public Navigation Links if Admin Mode is strictly active
         function syncNavVisibility() {
             const userDesktopLinks = document.getElementById('desktop-user-links');
             const userMobileLinks = document.getElementById('mobile-user-links');
@@ -1343,7 +1394,7 @@
             } else {
                 if (userDesktopLinks) userDesktopLinks.classList.remove('hidden');
                 if (userMobileLinks) userMobileLinks.classList.remove('hidden');
-                updateCartBadges(); // Restores floating cart visibility if items are present
+                updateCartBadges();
             }
         }
 
@@ -1351,7 +1402,6 @@
         function updateLanguageDOM() {
             const dictionary = TRANSLATIONS[state.lang] || TRANSLATIONS['en'];
             
-            // Translate static elements marked with data-t attribute
             document.querySelectorAll('[data-t]').forEach(element => {
                 const key = element.getAttribute('data-t');
                 if (dictionary[key]) {
@@ -1359,11 +1409,9 @@
                 }
             });
 
-            // Update selectors
             document.getElementById('language-switcher').value = state.lang;
             document.getElementById('language-switcher-mobile').value = state.lang;
 
-            // Re-render categories layout safely
             renderCategoryChips();
             renderProductsCatalog();
             if (state.adminLoggedIn) {
@@ -1410,16 +1458,13 @@
 
             state.currentPage = pageId;
             
-            // Hide all views
             document.querySelectorAll('.page-section').forEach(section => {
                 section.classList.add('hidden');
             });
 
-            // Show selected view
             const target = document.getElementById(`page-${pageId}`);
             if (target) target.classList.remove('hidden');
 
-            // Update desktop header button styling classes
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 const btnPage = btn.getAttribute('data-page');
                 if (btnPage === pageId) {
@@ -1429,7 +1474,6 @@
                 }
             });
 
-            // Admin button highlight configuration checks
             const adminBtn = document.getElementById('nav-admin-btn');
             if (adminBtn) {
                 if (state.currentPage === 'admin') {
@@ -1441,7 +1485,6 @@
                 }
             }
 
-            // Route dynamic initializers
             if (pageId === 'home') renderFeaturedProducts();
             if (pageId === 'products') {
                 renderCategoryChips();
@@ -1451,7 +1494,6 @@
             if (pageId === 'admin') renderAdminDashboard();
             if (pageId === 'enquiry') renderQuoteCartUI();
 
-            // Auto Scroll view directly to top smooth
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1481,40 +1523,7 @@
             }
         }
 
-        // Toast Messages Generator
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
-            const toastId = 'toast-' + Date.now();
-            
-            const toastHtml = `
-                <div id="${toastId}" class="p-4 rounded-xl shadow-2xl border flex items-start space-x-3 transition-all duration-300 animate-fadeIn ${
-                    type === 'success' 
-                        ? 'bg-emerald-950 text-emerald-100 border-emerald-800/60' 
-                        : type === 'error'
-                        ? 'bg-rose-950 text-rose-100 border-rose-800/60'
-                        : 'bg-slate-900 text-slate-100 border-slate-700'
-                }">
-                    <div class="flex-grow text-xs font-bold leading-relaxed">${message}</div>
-                    <button onclick="dismissToast('${toastId}')" class="text-white/70 hover:text-white shrink-0 font-bold">✕</button>
-                </div>
-            `;
-            
-            container.insertAdjacentHTML('beforeend', toastHtml);
-            setTimeout(() => {
-                dismissToast(toastId);
-            }, 4500);
-        }
-
-        function dismissToast(id) {
-            const element = document.getElementById(id);
-            if (element) {
-                element.style.opacity = '0';
-                element.style.transform = 'translateY(-10px)';
-                setTimeout(() => element.remove(), 300);
-            }
-        }
-
-        // Render Home Showcase Featured cards
+        // Dynamic Home Featured list previewer
         function renderFeaturedProducts() {
             const container = document.getElementById('featured-products-container');
             if (!container) return;
@@ -1688,6 +1697,68 @@
             });
         }
 
+        // Handle Direct Device file uploads for Products
+        function handleProductFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Enforce safe 2MB limits to protect local database allocations
+            if (file.size > 2 * 1024 * 1024) {
+                showToast("File is too large! Maximum limit is 2MB.", "error");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedProductImageBase64 = e.target.result;
+                
+                // Show visual feedback preview box instantly inside user's viewport
+                document.getElementById('product-image-preview').src = uploadedProductImageBase64;
+                document.getElementById('product-image-preview-container').classList.remove('hidden');
+                
+                // Reset legacy URL textbox to avoid collisions
+                document.getElementById('modal-product-image').value = "";
+                showToast("Direct product photo loaded successfully!", "success");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearProductUpload() {
+            uploadedProductImageBase64 = "";
+            document.getElementById('modal-product-file').value = "";
+            document.getElementById('product-image-preview-container').classList.add('hidden');
+            showToast("Product file attachment cleared.", "info");
+        }
+
+        // Handle Direct Device file uploads for Gallery Displays
+        function handleGalleryFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 2 * 1024 * 1024) {
+                showToast("File size is too large! Maximum limit is 2MB.", "error");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedGalleryImageBase64 = e.target.result;
+                
+                document.getElementById('gallery-image-preview').src = uploadedGalleryImageBase64;
+                document.getElementById('gallery-image-preview-container').classList.remove('hidden');
+                document.getElementById('modal-gallery-image').value = "";
+                showToast("Direct gallery picture loaded successfully!", "success");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearGalleryUpload() {
+            uploadedGalleryImageBase64 = "";
+            document.getElementById('modal-gallery-file').value = "";
+            document.getElementById('gallery-image-preview-container').classList.add('hidden');
+            showToast("Gallery file attachment cleared.", "info");
+        }
+
         // Quote Cart Management System Logic
         function addToQuoteCart(productId) {
             const product = state.products.find(p => p.id === productId);
@@ -1708,7 +1779,6 @@
             saveCartState();
             showToast(`Added "${product.name}" to quotation cart`, "success");
             
-            // Re-render relevant view components
             if (state.currentPage === 'products') renderProductsCatalog();
             renderQuoteCartUI();
         }
@@ -1753,7 +1823,6 @@
         function updateCartBadges() {
             const count = state.quoteCart.reduce((acc, item) => acc + item.qty, 0);
             
-            // Update Navbar widgets
             const badges = ['cart-nav-badge', 'cart-nav-badge-mobile', 'floating-cart-badge'];
             badges.forEach(id => {
                 const badge = document.getElementById(id);
@@ -1767,13 +1836,11 @@
                 }
             });
 
-            // Mobile menu indicator drawer badge text
             const drawerBadge = document.getElementById('cart-mobile-drawer-badge');
             if (drawerBadge) {
                 drawerBadge.innerText = `${count} item(s)`;
             }
 
-            // Floating indicator action button appearance
             const floatBtn = document.getElementById('floating-cart-btn');
             if (floatBtn) {
                 if (count > 0) {
@@ -1850,8 +1917,7 @@
             }
         }
 
-        // ================= NEW SECURE WORKSPACE RENDERING CODE =================
-        // Render secure Admin products inside Dashboard Tab 2
+        // ================= SECURE WORKSPACE RENDERING CODE =================
         function renderAdminCategoryChips() {
             const container = document.getElementById('admin-category-chips');
             if (!container) return;
@@ -1935,9 +2001,9 @@
                                 <p class="text-sm font-black text-slate-900 dark:text-white pt-1">₹${p.price}</p>
                             </div>
                             <div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80">
-                                <button onclick="openProductModal('edit', '${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold transition-all" title="Edit Product Info">✍️ Edit</button>
-                                <button onclick="toggleProductStock('${p.id}')" class="bg-blue-150 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold transition-all" title="Toggle Stock">Stock</button>
-                                <button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-650 dark:text-rose-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold transition-all" title="Delete Product">🗑️ Delete</button>
+                                <button onclick="openProductModal('edit', '${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold transition-all border border-amber-300 dark:border-amber-800/40" title="Edit Product Info">✍️ Edit</button>
+                                <button onclick="toggleProductStock('${p.id}')" class="bg-blue-150 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold transition-all border border-blue-300 dark:border-blue-800/40" title="Toggle Stock">Stock</button>
+                                <button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-650 dark:text-rose-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold transition-all border border-rose-300 dark:border-rose-800/40" title="Delete Product">🗑️ Delete</button>
                             </div>
                         </div>
                     </div>
@@ -1946,7 +2012,6 @@
             });
         }
 
-        // Render secure Admin gallery inside Dashboard Tab 3
         function renderAdminGallery() {
             const container = document.getElementById('admin-gallery-grid');
             if (!container) return;
@@ -1961,8 +2026,8 @@
                         <div class="p-3 flex-grow flex items-center justify-between bg-white dark:bg-slate-900 gap-2">
                             <p class="text-xs text-slate-600 dark:text-slate-300 font-medium italic leading-relaxed line-clamp-2">${g.caption || "Showroom Display View"}</p>
                             <div class="flex space-x-1 shrink-0">
-                                <button onclick="openGalleryModal('edit', '${g.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 p-2 rounded-lg hover:bg-amber-200 text-xs transition-all">✍️</button>
-                                <button onclick="deleteGalleryItem('${g.id}')" class="bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-450 p-2 rounded-lg hover:bg-rose-100 text-xs transition-all">🗑️</button>
+                                <button onclick="openGalleryModal('edit', '${g.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 p-2 rounded-lg hover:bg-amber-200 text-xs transition-all border border-amber-300 dark:border-amber-800/40">✍️</button>
+                                <button onclick="deleteGalleryItem('${g.id}')" class="bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-450 p-2 rounded-lg hover:bg-rose-100 text-xs transition-all border border-rose-300 dark:border-rose-800/40">🗑️</button>
                             </div>
                         </div>
                     </div>
@@ -1970,8 +2035,6 @@
                 container.insertAdjacentHTML('beforeend', html);
             });
         }
-
-        // ================= END SECURE WORKSPACE TAB INTEGRATIONS =================
 
         // Render Admin Dashboard stats & request tables
         function renderAdminDashboard() {
@@ -1984,7 +2047,6 @@
             document.getElementById('admin-login-card').classList.add('hidden');
             document.getElementById('admin-dashboard-panel').classList.remove('hidden');
 
-            // Set statistics metrics
             document.getElementById('stat-products-count').innerText = state.products.length;
             document.getElementById('stat-gallery-count').innerText = state.gallery.length;
             document.getElementById('stat-enquiries-count').innerText = state.enquiries.length;
@@ -1992,11 +2054,9 @@
             const pendingCount = state.enquiries.filter(e => e.status !== 'Contacted').length;
             document.getElementById('stat-pending-count').innerText = `${pendingCount} Pending`;
 
-            // Display global settings values instantly inside admin display dashboard card
             document.getElementById('admin-display-address').innerText = state.settings.address;
             document.getElementById('admin-display-hours').innerText = state.settings.hours;
 
-            // Setup inbox table lists
             const tableBody = document.getElementById('enquiries-table-body');
             tableBody.innerHTML = '';
             
@@ -2044,7 +2104,6 @@
                 });
             }
 
-            // Sync Tab views correctly
             setAdminTab(state.adminActiveTab);
         }
 
@@ -2078,7 +2137,6 @@
             document.getElementById('footer-address').innerText = s.address;
             document.getElementById('footer-hours').innerText = s.hours;
 
-            // Hyperlinks adjustments
             document.getElementById('nav-mobile-call').href = `tel:${s.phone}`;
             document.getElementById('hero-call-btn').href = `tel:${s.phone}`;
             document.getElementById('hero-whatsapp-btn').href = `https://wa.me/91${s.whatsapp}`;
@@ -2090,16 +2148,14 @@
             document.getElementById('floating-whatsapp-btn').href = `https://wa.me/91${s.whatsapp}?text=Hello%20Balaji%20Electricals`;
             document.getElementById('footer-tel').href = `tel:${s.phone}`;
 
-            // Background hero banner assignment
             const heroBanner = document.getElementById('hero-banner');
             if (heroBanner) {
                 heroBanner.src = s.heroBannerUrl;
             }
         }
 
-        // Product add/edit configurations inside popup panels
+        // Product configuration popup logic
         function openProductModal(mode, productId = null) {
-            // Strict Admin validation check
             if (!state.adminLoggedIn) {
                 showCustomAlert("Only administrators can configure products.", "Access Denied", "🚫");
                 return;
@@ -2112,6 +2168,9 @@
             CATEGORIES.forEach(cat => {
                 categorySelect.insertAdjacentHTML('beforeend', `<option value="${cat}">${cat}</option>`);
             });
+
+            // Clear previous uploads
+            clearProductUpload();
 
             if (mode === 'add') {
                 title.innerText = 'Add New Product to Inventory';
@@ -2131,7 +2190,16 @@
                     document.getElementById('modal-product-price').value = p.price;
                     document.getElementById('modal-product-description').value = p.description;
                     document.getElementById('modal-product-availability').value = p.availability;
-                    document.getElementById('modal-product-image').value = p.image;
+                    
+                    // Show preview if it's already an uploaded file (Base64) or fallback URL
+                    if (p.image && p.image.startsWith('data:image')) {
+                        uploadedProductImageBase64 = p.image;
+                        document.getElementById('product-image-preview').src = p.image;
+                        document.getElementById('product-image-preview-container').classList.remove('hidden');
+                        document.getElementById('modal-product-image').value = "";
+                    } else {
+                        document.getElementById('modal-product-image').value = p.image || "";
+                    }
                 }
             }
             modal.classList.remove('hidden');
@@ -2142,11 +2210,11 @@
             const modal = document.getElementById('product-modal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
+            clearProductUpload();
         }
 
         function saveProductForm(e) {
             e.preventDefault();
-            // Strict Admin validation check on submission
             if (!state.adminLoggedIn) {
                 showCustomAlert("Only administrators can save products.", "Access Denied", "🚫");
                 return;
@@ -2157,7 +2225,11 @@
             const price = parseFloat(document.getElementById('modal-product-price').value);
             const description = document.getElementById('modal-product-description').value;
             const availability = document.getElementById('modal-product-availability').value;
-            const image = document.getElementById('modal-product-image').value || "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80";
+            
+            // Prefer Direct device upload over text URL inputs
+            const image = uploadedProductImageBase64 || 
+                          document.getElementById('modal-product-image').value || 
+                          "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80";
 
             if (id) {
                 state.products = state.products.map(p => p.id === id ? { id, name, category, price, description, availability, image } : p);
@@ -2208,7 +2280,6 @@
 
         // Showcase pictures upload controllers
         function openGalleryModal(mode, galleryId = null) {
-            // Strict Admin validation check
             if (!state.adminLoggedIn) {
                 showCustomAlert("Only administrators can manage the gallery images.", "Access Denied", "🚫");
                 return;
@@ -2216,6 +2287,8 @@
             const modal = document.getElementById('gallery-modal');
             const title = document.getElementById('gallery-modal-title');
             
+            clearGalleryUpload();
+
             if (mode === 'add') {
                 title.innerText = 'Add Photo to Gallery';
                 document.getElementById('modal-gallery-id').value = '';
@@ -2227,7 +2300,15 @@
                 if (g) {
                     document.getElementById('modal-gallery-id').value = g.id;
                     document.getElementById('modal-gallery-caption').value = g.caption;
-                    document.getElementById('modal-gallery-image').value = g.image;
+                    
+                    if (g.image && g.image.startsWith('data:image')) {
+                        uploadedGalleryImageBase64 = g.image;
+                        document.getElementById('gallery-image-preview').src = g.image;
+                        document.getElementById('gallery-image-preview-container').classList.remove('hidden');
+                        document.getElementById('modal-gallery-image').value = "";
+                    } else {
+                        document.getElementById('modal-gallery-image').value = g.image || "";
+                    }
                 }
             }
             modal.classList.remove('hidden');
@@ -2238,18 +2319,21 @@
             const modal = document.getElementById('gallery-modal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
+            clearGalleryUpload();
         }
 
         function saveGalleryForm(e) {
             e.preventDefault();
-            // Strict Admin validation check on submission
             if (!state.adminLoggedIn) {
                 showCustomAlert("Only administrators can upload gallery images.", "Access Denied", "🚫");
                 return;
             }
             const id = document.getElementById('modal-gallery-id').value;
             const caption = document.getElementById('modal-gallery-caption').value;
-            const image = document.getElementById('modal-gallery-image').value || "image_d576ee.jpg";
+            
+            const image = uploadedGalleryImageBase64 || 
+                          document.getElementById('modal-gallery-image').value || 
+                          "image_d576ee.jpg";
 
             if (id) {
                 state.gallery = state.gallery.map(g => g.id === id ? { id, caption, image } : g);
@@ -2370,7 +2454,6 @@
             
             showCustomAlert("Thank you! Your quotation enquiry has been registered safely. Our team will contact you soon on WhatsApp or phone call.", "Submission Successful", "🎉");
             
-            // Wipe out quotation list after successful form submission
             state.quoteCart = [];
             saveCartState();
             
@@ -2420,10 +2503,8 @@
                 document.getElementById('nav-admin-text').innerText = "Dashboard";
                 document.getElementById('nav-mobile-admin').innerText = "🔒 Admin Dashboard";
                 
-                // STRICT RULE: Instantly update visibility and enforce lock
                 syncNavVisibility();
 
-                // Force layout refreshes to instantly adapt actions UI
                 renderProductsCatalog();
                 renderGalleryGrid();
                 renderAdminDashboard();
@@ -2440,7 +2521,6 @@
             document.getElementById('nav-admin-text').innerText = "Admin";
             document.getElementById('nav-mobile-admin').innerText = "🔑 Admin Login";
             
-            // STRICT RULE: Instantly restore navigation permissions
             syncNavVisibility();
 
             renderProductsCatalog();
