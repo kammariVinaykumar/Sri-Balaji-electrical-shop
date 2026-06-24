@@ -1,3 +1,5 @@
+html
+
 <!DOCTYPE html>
 <html lang="en" class="light font-sans antialiased">
 <head>
@@ -20,6 +22,8 @@
         .dark ::-webkit-scrollbar-thumb { background: #334155; } ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         .glass-panel { background: rgba(255,255,255,0.75); backdrop-filter: blur(12px); }
         .dark .glass-panel { background: rgba(15,23,42,0.8); backdrop-filter: blur(12px); }
+        .upload-progress { display:none; }
+        .upload-progress.active { display:flex; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col min-h-screen">
@@ -104,7 +108,7 @@
 <section id="page-home" class="page-section animate-fadeIn">
     <div class="relative bg-slate-950 text-white overflow-hidden min-h-[550px] flex items-center">
         <div class="absolute inset-0 z-0">
-            <img id="hero-banner" src="image_d576ee.jpg" alt="Shop Banner" class="w-full h-full object-cover object-center opacity-30 filter blur-[1px]" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&h=500&q=80'">
+            <img id="hero-banner" src="https://res.cloudinary.com/dp8tp7jah/image/upload/v1782228784/ChatGPT_Image_Jun_22_2026_10_08_37_PM_roydsy.png" class="w-full h-full block object-cover">
             <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
@@ -170,7 +174,7 @@
         <div class="text-center mb-16"><span class="text-xs font-bold text-orange-500 uppercase tracking-widest" data-t="about_badge">About Our Business</span><h2 class="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white mt-1" data-t="about_title">Sri Balaji Electricals</h2><p class="text-slate-500 dark:text-slate-400 mt-4 max-w-2xl mx-auto" data-t="about_desc">Your trusted neighborhood location supplying top-quality electrical, plumbing, and home maintenance devices.</p></div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
             <div><h3 class="text-2xl font-bold text-slate-900 dark:text-white" data-t="about_pillars_title">One-Stop Electrical & Plumbing Solutions</h3><p class="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed" data-t="about_p1">At Sri Balaji Electrical Shop, we pride ourselves on holding a comprehensive inventory of heavy-duty materials for building development, household repairs, wiring improvements, and fixture fittings.</p><p class="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed" data-t="about_p2">Our focus is safety first. Every switch, wire loop, or PVC conduit pipe we sell conforms to official safety indices.</p></div>
-            <div><img src="image_372b9f.jpg" alt="About Shop" class="rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'"></div>
+            <div><img src="https://res.cloudinary.com/dp8tp7jah/image/upload/v1782228784/ChatGPT_Image_Jun_22_2026_10_08_37_PM_roydsy.png" alt="About Shop" class="rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'"></div>
         </div>
         <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 sm:p-12 text-white">
             <h3 class="text-2xl sm:text-3xl font-extrabold text-center mb-10" data-t="about_pillars_title">Four Pillars of Our Commitment</h3>
@@ -261,7 +265,6 @@
         <div class="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
             <button onclick="setAdminTab('inbox')" id="admin-tab-inbox" class="px-6 py-3.5 font-extrabold text-sm border-b-2 border-orange-500 text-orange-500 transition-all shrink-0">📥 Inbox & Settings</button>
             <button onclick="setAdminTab('products')" id="admin-tab-products" class="px-6 py-3.5 font-bold text-sm text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-all shrink-0">📦 Manage Products</button>
-
         </div>
         <div id="admin-panel-inbox" class="space-y-8">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -288,7 +291,6 @@
             <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800"><div class="relative"><svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><input type="text" id="admin-product-search" oninput="handleAdminProductSearch(this.value)" placeholder="Search inventory catalog..." class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500"></div></div>
             <div id="admin-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
         </div>
-
     </div>
 </section>
 </main>
@@ -321,22 +323,58 @@
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Product Title / Brand Name *</label><input type="text" id="modal-product-name" required placeholder="e.g. Anchor Roma Classic Modular Switches" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"></div>
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Category Group *</label><select id="modal-product-category" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none"></select></div>
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Short Specifications</label><textarea id="modal-product-description" rows="3" placeholder="Explain manufacturer parameters, brand tags..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></textarea></div>
-            <div class="space-y-2">
-                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Product Image (File Upload)</label>
+            
+            <!-- CLOUDINARY UPLOAD SECTION - FIXED -->
+            <div class="space-y-3">
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Product Image — Upload to Cloudinary</label>
+                
+                <!-- Upload dropzone -->
                 <div id="product-upload-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-orange-500 rounded-xl p-6 text-center cursor-pointer transition-colors bg-slate-50 dark:bg-slate-800/40" onclick="document.getElementById('modal-product-file').click()">
                     <input type="file" id="modal-product-file" accept="image/*" class="hidden" onchange="handleProductFileSelect(event)">
-                    <div class="flex flex-col items-center space-y-1"><span class="text-3xl">📸</span><span class="text-xs font-bold text-slate-600 dark:text-slate-300">Click to Browse or Drag & Drop</span><span class="text-[10px] text-slate-400">JPG, PNG, WEBP (Max 2MB)</span></div>
+                    <div class="flex flex-col items-center space-y-1">
+                        <span class="text-3xl">📸</span>
+                        <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Click to Browse or Drag & Drop</span>
+                        <span class="text-[10px] text-slate-400">JPG, PNG, WEBP (Max 5MB) — Uploads to Cloudinary</span>
+                    </div>
                 </div>
-                <div id="product-image-preview-container" class="hidden relative rounded-xl border border-slate-200 dark:border-slate-800 p-2 max-w-xs bg-slate-50 dark:bg-slate-900 flex items-center space-x-3"><img id="product-image-preview" src="#" alt="Preview" class="w-16 h-16 object-cover rounded-lg"><div class="flex-grow min-w-0"><p class="text-xs font-bold text-slate-900 dark:text-white truncate">Image Uploaded!</p><button type="button" onclick="clearProductUpload()" class="text-[11px] text-rose-500 font-bold hover:underline">Clear</button></div></div>
+
+                <!-- Upload Progress -->
+                <div id="upload-progress-bar" class="hidden bg-slate-100 dark:bg-slate-800 rounded-xl p-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="animate-spin w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full shrink-0"></div>
+                        <div class="flex-grow">
+                            <p class="text-xs font-bold text-slate-700 dark:text-white">Uploading to Cloudinary...</p>
+                            <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5 mt-1">
+                                <div id="progress-fill" class="bg-orange-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview after upload -->
+                <div id="product-image-preview-container" class="hidden relative rounded-xl border border-emerald-200 dark:border-emerald-800 p-3 bg-emerald-50 dark:bg-emerald-950/30 flex items-center space-x-3">
+                    <img id="product-image-preview" src="#" alt="Preview" class="w-16 h-16 object-cover rounded-lg border border-slate-200">
+                    <div class="flex-grow min-w-0">
+                        <p class="text-xs font-bold text-emerald-700 dark:text-emerald-400">✅ Uploaded to Cloudinary!</p>
+                        <p id="cloudinary-url-display" class="text-[10px] text-slate-500 truncate mt-0.5"></p>
+                        <button type="button" onclick="clearProductUpload()" class="text-[11px] text-rose-500 font-bold hover:underline mt-1">Remove & Upload New</button>
+                    </div>
+                </div>
             </div>
-            <div class="pt-2 border-t border-slate-100 dark:border-slate-800/80"><label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Or paste an Image URL (Optional)</label><input type="text" id="modal-product-image" placeholder="https://example.com/image.jpg" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></div>
+
+            <div class="pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Or paste a Cloudinary/Image URL directly</label>
+                <input type="text" id="modal-product-image" placeholder="https://res.cloudinary.com/dp8tp7jah/..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
+            </div>
+            
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Stock Availability *</label><select id="modal-product-availability" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none"><option value="In Stock">In Stock</option><option value="Out of Stock">Out of Stock</option></select></div>
-            <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2"><button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button><button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md">Save Configuration</button></div>
+            <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2">
+                <button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button>
+                <button type="submit" id="save-product-btn" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md">Save Configuration</button>
+            </div>
         </form>
     </div>
 </div>
-
-
 
 <!-- SETTINGS MODAL -->
 <div id="settings-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4 hidden">
@@ -345,7 +383,7 @@
         <form onsubmit="saveSettingsForm(event)" class="p-6 space-y-4 max-h-[70vh] overflow-y-auto text-slate-800 dark:text-white">
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Shop Name Title</label><input type="text" id="setting-shop-name" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm font-semibold"></div>
             <div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Phone Number</label><input type="text" id="setting-phone" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm"></div><div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">WhatsApp Number</label><input type="text" id="setting-whatsapp" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm"></div></div>
-            <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Hero Banner URL</label><input type="text" id="setting-hero-banner" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm"></div>
+            <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Hero Banner Cloudinary URL</label><input type="text" id="setting-hero-banner" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm" placeholder="https://res.cloudinary.com/dp8tp7jah/..."></div>
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Store Physical Address</label><input type="text" id="setting-address" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm"></div>
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Business Timings</label><input type="text" id="setting-hours" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm"></div>
             <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2"><button type="button" onclick="closeSettingsModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button><button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm">Save Global Settings</button></div>
@@ -368,7 +406,14 @@
 
 <script>
 // =====================================================
-// BUG FIX 1: TRANSLATIONS OBJECT (was completely missing)
+// CLOUDINARY CONFIG
+// =====================================================
+const CLOUDINARY_CLOUD_NAME = 'dp8tp7jah';
+const CLOUDINARY_UPLOAD_PRESET = 'sri_balaji_upload';
+const CLOUDINARY_SHOP_IMAGE = 'https://res.cloudinary.com/dp8tp7jah/image/upload/v1782228784/ChatGPT_Image_Jun_22_2026_10_08_37_PM_roydsy.png';
+
+// =====================================================
+// TRANSLATIONS
 // =====================================================
 const TRANSLATIONS = {
     en: {
@@ -407,7 +452,7 @@ const TRANSLATIONS = {
         admin_title:"Authorized Portal", admin_sub:"Management security workspace login",
         admin_pass_label:"Enter Access Key Password", admin_pass_warning:"Use local default password: admin to unlock.",
         admin_btn:"Authenticate System", admin_live_console:"Live Console Mode", admin_exit:"Exit Session",
-        admin_stat_products:"Products Catalog", admin_stat_gallery:"Gallery Pictures", admin_stat_enquiries:"Guest Enquiries",
+        admin_stat_products:"Products Catalog", admin_stat_enquiries:"Guest Enquiries",
         admin_table_cust:"Customer", admin_table_subj:"Subject", admin_table_msg:"Message",
         admin_table_date:"Date", admin_table_status:"Status", admin_table_action:"Action",
         admin_no_enq:"No enquiries registered yet", admin_no_enq_sub:"Client submissions will instantly populate here.",
@@ -434,33 +479,33 @@ const TRANSLATIONS = {
         about_desc:"అత్యుత్తమ నాణ్యత విద్యుత్ ఉత్పత్తులు అందించే మీ విశ్వసనీయ దుకాణం.",
         about_pillars_title:"ఒకే చోట విద్యుత్ & ప్లంబింగ్ పరిష్కారాలు",
         about_p1:"శ్రీ బాలాజీ ఎలక్ట్రికల్ షాప్‌లో మేము అత్యుత్తమ నాణ్యత ఉత్పత్తులు అందిస్తున్నాము.",
-        about_p2:"భద్రత మాకు ముఖ్యం. మేము అమ్మే ప్రతి ఉత్పత్తి అధికారిక నిరాపత్య ప్రమాణాలకు అనుగుణంగా ఉంటుంది.",
-        pillar1_title:"నాణ్యమైన ఉత్పత్తులు", pillar1_desc:"హావెల్స్, ఫినోలెక్స్, సిస్కా వంటి ప్రముఖ బ్రాండ్ల అధికృత స్టాక్.",
-        pillar2_title:"అత్యుత్తమ ధరలు", pillar2_desc:"నిజాయితీ మార్జిన్లతో టోకు మరియు చిల్లర రేట్లు.",
-        pillar3_title:"స్నేహపూర్వక సేవ", pillar3_desc:"మా బృందం సంతోషంగా మార్గనిర్దేశం చేస్తుంది.",
-        pillar4_title:"కస్టమర్ సపోర్ట్", pillar4_desc:"కాల్ చేయండి, సందేశం పంపండి మరియు త్వరిత సహాయం పొందండి.",
-        contact_title:"శ్రీ బాలాజీ షాప్‌ను సంప్రదించండి", contact_desc:"ఫోన్ లేదా వాట్సాప్ ద్వారా ఆర్డర్ చేయండి.",
+        about_p2:"భద్రత మాకు ముఖ్యం.",
+        pillar1_title:"నాణ్యమైన ఉత్పత్తులు", pillar1_desc:"హావెల్స్, ఫినోలెక్స్, సిస్కా వంటి ప్రముఖ బ్రాండ్లు.",
+        pillar2_title:"అత్యుత్తమ ధరలు", pillar2_desc:"టోకు మరియు చిల్లర రేట్లు.",
+        pillar3_title:"స్నేహపూర్వక సేవ", pillar3_desc:"మా బృందం మార్గనిర్దేశం చేస్తుంది.",
+        pillar4_title:"కస్టమర్ సపోర్ట్", pillar4_desc:"కాల్ చేయండి, త్వరిత సహాయం పొందండి.",
+        contact_title:"శ్రీ బాలాజీ షాప్‌ను సంప్రదించండి", contact_desc:"ఫోన్ లేదా వాట్సాప్ ద్వారా.",
         contact_card_title:"స్టోర్ వివరాలు", contact_phone:"ఫోన్ నంబర్",
         contact_wa:"వాట్సాప్ సపోర్ట్", contact_address:"స్టోర్ చిరునామా",
         contact_hours:"పని వేళలు", contact_hours_val:"సోమవారం - శనివారం: ఉ. 9:00 - రా. 9:00, ఆదివారం: మూసివేత",
         contact_map_title:"మ్యాప్ లొకేటర్", contact_map_desc:"హైదరాబాద్ (TS), భారతదేశం",
         contact_map_btn:"📍 గూగుల్ మ్యాప్స్‌లో తెరవండి",
-        enquiry_title:"ఉత్పత్తి విచారణ ఫారం", enquiry_sub:"లాగిన్ అవసరం లేదు. వివరాలు సమర్పించండి.",
+        enquiry_title:"ఉత్పత్తి విచారణ ఫారం", enquiry_sub:"లాగిన్ అవసరం లేదు.",
         form_name:"పూర్తి పేరు *", form_mobile:"మొబైల్ నంబర్ *", form_location:"డెలివరీ స్థానం",
-        form_subject:"విషయం / వస్తువు సమూహం *", form_message:"వివరణాత్మక సందేశం",
+        form_subject:"విషయం *", form_message:"వివరణాత్మక సందేశం",
         form_info:"మా ప్రతినిధులు 1-3 గంటల్లో ప్రతిస్పందిస్తారు.", form_reset:"ఫారం రీసెట్", form_submit:"విచారణ సమర్పించండి",
         admin_title:"అధికార పోర్టల్", admin_sub:"నిర్వాహక లాగిన్",
         admin_pass_label:"పాస్‌వర్డ్ నమోదు చేయండి", admin_pass_warning:"డిఫాల్ట్ పాస్‌వర్డ్: admin",
         admin_btn:"ప్రమాణీకరించండి", admin_live_console:"లైవ్ కన్సోల్ మోడ్", admin_exit:"సెషన్ నిష్క్రమించండి",
-        admin_stat_products:"ఉత్పత్తుల జాబితా", admin_stat_gallery:"గ్యాలరీ చిత్రాలు", admin_stat_enquiries:"అతిథి విచారణలు",
+        admin_stat_products:"ఉత్పత్తుల జాబితా", admin_stat_enquiries:"అతిథి విచారణలు",
         admin_table_cust:"కస్టమర్", admin_table_subj:"విషయం", admin_table_msg:"సందేశం",
         admin_table_date:"తేదీ", admin_table_status:"స్థితి", admin_table_action:"చర్య",
         admin_no_enq:"ఇంకా విచారణలు లేవు", admin_no_enq_sub:"క్లయింట్ సమర్పణలు ఇక్కడ కనిపిస్తాయి.",
         admin_settings:"షాప్ కాన్ఫిగరేషన్", admin_change_pass:"పాస్‌వర్డ్ మార్చండి",
-        admin_change_pass_sub:"నిర్వాహక కన్సోల్ లాగిన్ కీని సవరించండి.", admin_update_btn:"పాస్‌వర్డ్ నవీకరించండి",
-        footer_desc:"అత్యుత్తమ ధరలలో సర్టిఫైడ్ ప్రీమియం విద్యుత్ ఉత్పత్తులు.",
+        admin_change_pass_sub:"నిర్వాహక కన్సోల్ పాస్‌వర్డ్ సవరించండి.", admin_update_btn:"పాస్‌వర్డ్ నవీకరించండి",
+        footer_desc:"అత్యుత్తమ ధరలలో సర్టిఫైడ్ విద్యుత్ ఉత్పత్తులు.",
         footer_support:"సపోర్ట్ హాట్‌లైన్:", footer_directions:"త్వరిత దిశలు",
-        footer_hours_title:"స్టోర్ వేళలు & స్థానాలు", footer_secure:"🔐 సురక్షిత నిర్వాహక ప్రాంతం",
+        footer_hours_title:"స్టోర్ వేళలు", footer_secure:"🔐 నిర్వాహక ప్రాంతం",
         all_rights_reserved:"అన్ని హక్కులు రిజర్వు చేయబడ్డాయి."
     },
     hi: {
@@ -480,57 +525,67 @@ const TRANSLATIONS = {
         about_desc:"उच्च गुणवत्ता वाले बिजली उत्पाद प्रदान करने वाला आपका विश्वसनीय स्टोर।",
         about_pillars_title:"एक ही जगह बिजली और प्लंबिंग समाधान",
         about_p1:"श्री बालाजी इलेक्ट्रिकल शॉप में हम उच्च गुणवत्ता वाले उत्पाद प्रदान करते हैं।",
-        about_p2:"सुरक्षा हमारी प्राथमिकता है। हम जो भी उत्पाद बेचते हैं वे आधिकारिक सुरक्षा मानकों के अनुरूप हैं।",
-        pillar1_title:"गुणवत्ता उत्पाद", pillar1_desc:"Havells, Finolex, Syska जैसे शीर्ष ब्रांडों का अधिकृत स्टॉक।",
-        pillar2_title:"सर्वोत्तम मूल्य", pillar2_desc:"खुदरा और थोक दरों पर ईमानदार मार्जिन।",
-        pillar3_title:"मित्रवत सेवा", pillar3_desc:"हमारी टीम खुशी से मार्गदर्शन करेगी।",
-        pillar4_title:"ग्राहक सहायता", pillar4_desc:"कॉल करें, संदेश भेजें और त्वरित सहायता पाएं।",
+        about_p2:"सुरक्षा हमारी प्राथमिकता है।",
+        pillar1_title:"गुणवत्ता उत्पाद", pillar1_desc:"Havells, Finolex, Syska जैसे शीर्ष ब्रांड।",
+        pillar2_title:"सर्वोत्तम मूल्य", pillar2_desc:"खुदरा और थोक दरें।",
+        pillar3_title:"मित्रवत सेवा", pillar3_desc:"हमारी टीम मार्गदर्शन करेगी।",
+        pillar4_title:"ग्राहक सहायता", pillar4_desc:"कॉल करें, त्वरित सहायता पाएं।",
         contact_title:"श्री बालाजी शॉप से संपर्क करें", contact_desc:"फोन या WhatsApp से ऑर्डर करें।",
         contact_card_title:"स्टोर विवरण", contact_phone:"फोन नंबर",
         contact_wa:"WhatsApp सहायता", contact_address:"स्टोर का पता",
         contact_hours:"कार्य समय", contact_hours_val:"सोमवार - शनिवार: सुबह 9:00 - रात 9:00, रविवार: बंद",
         contact_map_title:"मैप लोकेटर", contact_map_desc:"हैदराबाद (TS), भारत",
         contact_map_btn:"📍 Google Maps में खोलें",
-        enquiry_title:"उत्पाद पूछताछ फ़ॉर्म", enquiry_sub:"लॉगिन की आवश्यकता नहीं। विवरण जमा करें।",
+        enquiry_title:"उत्पाद पूछताछ फ़ॉर्म", enquiry_sub:"लॉगिन की आवश्यकता नहीं।",
         form_name:"पूरा नाम *", form_mobile:"मोबाइल नंबर *", form_location:"डिलीवरी स्थान",
-        form_subject:"विषय / वस्तु समूह *", form_message:"विस्तृत संदेश",
+        form_subject:"विषय *", form_message:"विस्तृत संदेश",
         form_info:"हमारे प्रतिनिधि 1-3 घंटे में जवाब देंगे।", form_reset:"फ़ॉर्म रीसेट", form_submit:"पूछताछ जमा करें",
         admin_title:"अधिकृत पोर्टल", admin_sub:"प्रशासनिक लॉगिन",
         admin_pass_label:"पासवर्ड दर्ज करें", admin_pass_warning:"डिफ़ॉल्ट पासवर्ड: admin",
         admin_btn:"प्रमाणित करें", admin_live_console:"लाइव कंसोल मोड", admin_exit:"सत्र समाप्त करें",
-        admin_stat_products:"उत्पाद सूची", admin_stat_gallery:"गैलरी चित्र", admin_stat_enquiries:"अतिथि पूछताछ",
+        admin_stat_products:"उत्पाद सूची", admin_stat_enquiries:"अतिथि पूछताछ",
         admin_table_cust:"ग्राहक", admin_table_subj:"विषय", admin_table_msg:"संदेश",
         admin_table_date:"तारीख", admin_table_status:"स्थिति", admin_table_action:"क्रिया",
         admin_no_enq:"अभी तक कोई पूछताछ नहीं", admin_no_enq_sub:"क्लाइंट सबमिशन यहाँ दिखाई देंगे।",
         admin_settings:"शॉप कॉन्फ़िगरेशन", admin_change_pass:"पासवर्ड बदलें",
-        admin_change_pass_sub:"एडमिन कंसोल लॉगिन पासवर्ड बदलें।", admin_update_btn:"पासवर्ड अपडेट करें",
-        footer_desc:"सर्वोत्तम दरों पर प्रमाणित प्रीमियम बिजली उत्पाद।",
+        admin_change_pass_sub:"एडमिन कंसोल पासवर्ड बदलें।", admin_update_btn:"पासवर्ड अपडेट करें",
+        footer_desc:"सर्वोत्तम दरों पर प्रमाणित बिजली उत्पाद।",
         footer_support:"सहायता हॉटलाइन:", footer_directions:"त्वरित निर्देश",
-        footer_hours_title:"स्टोर समय और स्थान", footer_secure:"🔐 सुरक्षित एडमिन क्षेत्र",
+        footer_hours_title:"स्टोर समय", footer_secure:"🔐 एडमिन क्षेत्र",
         all_rights_reserved:"सर्वाधिकार सुरक्षित।"
     }
 };
 
 // =====================================================
-// CONFIG & DEFAULT DATA
+// CONFIG & DEFAULT DATA — All images use Cloudinary
 // =====================================================
 const CATEGORIES = ["Other Products"];
+
 const DEFAULT_PRODUCTS = [
-    { id:"prod-1", name:"Anchor Roma Classic Modular Switches", description:"Premium modular switches, sleek white, fire-retardant material.", category:"Other Products", price:45, availability:"In Stock", image:"image_d57726.png" },
-    { id:"prod-2", name:"Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description:"Flame Retardant multi-strand cables ideal for residential wiring.", category:"Other Products", price:1540, availability:"In Stock", image:"image_d57726.png" },
-    { id:"prod-3", name:"Syska 9W LED Bright Bulbs (Cool Day Light)", description:"Energy-saving LED bulbs, B22 cap, zero flickering.", category:"Other Products", price:110, availability:"In Stock", image:"https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
-    { id:"prod-4", name:"Crompton Hill Briz 1200mm Ceiling Fan", description:"High speed electric ceiling fan with powerful copper motor.", category:"Other Products", price:2350, availability:"In Stock", image:"https://images.unsplash.com/photo-1618944847023-38aa001235f0?auto=format&fit=crop&w=500&q=80" },
-    { id:"prod-5", name:"Sudhakar PVC Conduit Pipe (1 inch, 3m)", description:"Heavy-duty fire-retardant PVC electrical pipes.", category:"Other Products", price:95, availability:"In Stock", image:"https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
-    { id:"prod-6", name:"Jaquar Wall-Mounted Brass Shower Faucet", description:"Premium rust-free chrome finished brass shower mixture.", category:"Other Products", price:1850, availability:"In Stock", image:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" }
+    { id:"prod-1", name:"Anchor Roma Classic Modular Switches", description:"Premium modular switches, sleek white, fire-retardant material.", category:"Other Products", availability:"In Stock", image:"https://res.cloudinary.com/dp8tp7jah/image/upload/v1782228784/ChatGPT_Image_Jun_22_2026_10_08_37_PM_roydsy.png" },
+    { id:"prod-2", name:"Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description:"Flame Retardant multi-strand cables ideal for residential wiring.", category:"Other Products", availability:"In Stock", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=500&q=80" },
+    { id:"prod-3", name:"Syska 9W LED Bright Bulbs (Cool Day Light)", description:"Energy-saving LED bulbs, B22 cap, zero flickering.", category:"Other Products", availability:"In Stock", image:"https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
+    { id:"prod-4", name:"Crompton Hill Briz 1200mm Ceiling Fan", description:"High speed electric ceiling fan with powerful copper motor.", category:"Other Products", availability:"In Stock", image:"https://images.unsplash.com/photo-1618944847023-38aa001235f0?auto=format&fit=crop&w=500&q=80" },
+    { id:"prod-5", name:"Sudhakar PVC Conduit Pipe (1 inch, 3m)", description:"Heavy-duty fire-retardant PVC electrical pipes.", category:"Other Products", availability:"In Stock", image:"https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
+    { id:"prod-6", name:"Jaquar Wall-Mounted Brass Shower Faucet", description:"Premium rust-free chrome finished brass shower mixture.", category:"Other Products", availability:"In Stock", image:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" }
 ];
 
 const DEFAULT_GALLERY = [
-    { id:"gal-1", caption:"Our Main Display Shop Front & Product Rows", image:"image_d576ee.jpg" },
-    { id:"gal-2", caption:"Fully Stocked Electrical Wire Reels & Pipes", image:"image_d57726.png" },
-    { id:"gal-3", caption:"Premium Quality Hardware & Lighting Display Panels", image:"image_372b9f.jpg" },
-    { id:"gal-4", caption:"Branded LED Light Bulbs and Ceiling Accessories", image:"https://images.unsplash.com/photo-1565814636199-ae8133055c1c?auto=format&fit=crop&w=800&q=80" }
+    { id:"gal-1", caption:"Our Main Display Shop Front & Product Rows", image:"https://res.cloudinary.com/dp8tp7jah/image/upload/v1782228784/ChatGPT_Image_Jun_22_2026_10_08_37_PM_roydsy.png" },
+    { id:"gal-2", caption:"Fully Stocked Electrical Wire Reels & Pipes", image:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80" },
+    { id:"gal-3", caption:"Premium Quality Hardware & Lighting Display Panels", image:"https://images.unsplash.com/photo-1565814636199-ae8133055c1c?auto=format&fit=crop&w=800&q=80" },
+    { id:"gal-4", caption:"Branded LED Light Bulbs and Ceiling Accessories", image:"https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=800&q=80" }
 ];
-const DEFAULT_SETTINGS = { shopName:"Sri Balaji Electrical Shop", phone:"9515168300", whatsapp:"9515168300", logoUrl:"image_d576ee.jpg", heroBannerUrl:"image_d576ee.jpg", address:"D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India", hours:"Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed", adminPassword:"admin" };
+
+const DEFAULT_SETTINGS = {
+    shopName:"Sri Balaji Electrical Shop",
+    phone:"9515168300",
+    whatsapp:"9515168300",
+    heroBannerUrl: CLOUDINARY_SHOP_IMAGE,
+    address:"D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India",
+    hours:"Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed",
+    adminPassword:"admin"
+};
 
 // =====================================================
 // STATE
@@ -547,10 +602,108 @@ let state = {
     selectedCategory:'All', productSearch:'', adminProductSearch:'', adminActiveTab:'inbox',
     quoteCart: (()=>{ try{return JSON.parse(localStorage.getItem('sri_balaji_quotecart'))||[];}catch(e){return [];} })()
 };
-let uploadedProductImageBase64="", customAlertPromiseResolver=null;
+
+// Cloudinary uploaded URL stored here
+let uploadedCloudinaryUrl = "";
+let customAlertPromiseResolver = null;
 
 // =====================================================
-// BUG FIX 2: toggleMobileMenu (was completely missing)
+// CLOUDINARY UPLOAD FUNCTION — THE KEY FIX
+// =====================================================
+async function uploadToCloudinary(file) {
+    const progressBar = document.getElementById('upload-progress-bar');
+    const progressFill = document.getElementById('progress-fill');
+    const dropzone = document.getElementById('product-upload-dropzone');
+    const saveBtn = document.getElementById('save-product-btn');
+
+    // Show progress, hide dropzone
+    if(progressBar) progressBar.classList.remove('hidden');
+    if(dropzone) dropzone.classList.add('hidden');
+    if(saveBtn) saveBtn.disabled = true;
+
+    // Animate progress bar
+    let progress = 0;
+    const progressInterval = setInterval(() => {
+        progress = Math.min(progress + 15, 85);
+        if(progressFill) progressFill.style.width = progress + '%';
+    }, 200);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    formData.append('cloud_name', CLOUDINARY_CLOUD_NAME);
+
+    try {
+        const response = await fetch(
+            `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+            { method: 'POST', body: formData }
+        );
+
+        clearInterval(progressInterval);
+
+        if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData.error?.message || 'Upload failed');
+        }
+
+        const data = await response.json();
+        const cloudUrl = data.secure_url;
+
+        // Complete progress
+        if(progressFill) progressFill.style.width = '100%';
+        await new Promise(r => setTimeout(r, 300));
+
+        // Hide progress, show preview
+        if(progressBar) progressBar.classList.add('hidden');
+
+        const preview = document.getElementById('product-image-preview');
+        const previewContainer = document.getElementById('product-image-preview-container');
+        const urlDisplay = document.getElementById('cloudinary-url-display');
+
+        if(preview) preview.src = cloudUrl;
+        if(urlDisplay) urlDisplay.textContent = cloudUrl;
+        if(previewContainer) previewContainer.classList.remove('hidden');
+        if(saveBtn) saveBtn.disabled = false;
+
+        uploadedCloudinaryUrl = cloudUrl;
+        showToast('✅ Image uploaded to Cloudinary successfully!', 'success');
+        return cloudUrl;
+
+    } catch (error) {
+        clearInterval(progressInterval);
+        if(progressBar) progressBar.classList.add('hidden');
+        if(dropzone) dropzone.classList.remove('hidden');
+        if(saveBtn) saveBtn.disabled = false;
+        showToast('Upload failed: ' + error.message, 'error');
+        console.error('Cloudinary upload error:', error);
+        return null;
+    }
+}
+
+async function handleProductFileSelect(ev) {
+    const file = ev.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+        showToast("File too large! Max 5MB.", "error");
+        return;
+    }
+    await uploadToCloudinary(file);
+}
+
+function clearProductUpload() {
+    uploadedCloudinaryUrl = "";
+    const fi = document.getElementById('modal-product-file');
+    if(fi) fi.value = "";
+    const c = document.getElementById('product-image-preview-container');
+    if(c) c.classList.add('hidden');
+    const dz = document.getElementById('product-upload-dropzone');
+    if(dz) dz.classList.remove('hidden');
+    const urlInput = document.getElementById('modal-product-image');
+    if(urlInput) urlInput.value = "";
+}
+
+// =====================================================
+// toggleMobileMenu
 // =====================================================
 function toggleMobileMenu() {
     state.mobileMenuOpen = !state.mobileMenuOpen;
@@ -690,19 +843,6 @@ function renderGalleryGrid() {
 }
 
 // =====================================================
-// FILE UPLOADS
-// =====================================================
-function handleProductFileSelect(ev) {
-    const f=ev.target.files[0]; if(!f) return;
-    if(f.size>2*1024*1024){showToast("File too large! Max 2MB.","error");return;}
-    const r=new FileReader(); r.onload=e=>{uploadedProductImageBase64=e.target.result;const pi=document.getElementById('product-image-preview'),pc=document.getElementById('product-image-preview-container');if(pi)pi.src=uploadedProductImageBase64;if(pc)pc.classList.remove('hidden');const li=document.getElementById('modal-product-image');if(li)li.value="";showToast("Photo loaded!","success");}; r.readAsDataURL(f);
-}
-function clearProductUpload() {
-    uploadedProductImageBase64="";const fi=document.getElementById('modal-product-file');if(fi)fi.value="";const c=document.getElementById('product-image-preview-container');if(c)c.classList.add('hidden');
-}
-
-
-// =====================================================
 // QUOTE CART
 // =====================================================
 function addToQuoteCart(pid) {
@@ -743,7 +883,7 @@ function renderQuoteCartUI() {
 }
 
 // =====================================================
-// ADMIN PRODUCTS / GALLERY
+// ADMIN PRODUCTS
 // =====================================================
 function renderAdminProducts() {
     const c=document.getElementById('admin-products-grid'); if(!c) return; c.innerHTML='';
@@ -752,7 +892,6 @@ function renderAdminProducts() {
     f.forEach(p=>{const out=p.availability==='Out of Stock';const sc=out?'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-400':'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400';c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm animate-fadeIn"><div class="relative aspect-video bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden mb-3"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"><span class="absolute top-2 left-2 px-2 py-0.5 bg-slate-900/80 text-white font-bold text-[8px] rounded uppercase tracking-wider">${p.category}</span></div><div><h4 class="font-extrabold text-sm text-slate-900 dark:text-white line-clamp-1">${p.name}</h4><p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">${p.description}</p><div class="flex items-center justify-end mt-3"><span class="px-2 py-0.5 rounded text-[9px] font-black tracking-wide ${sc}">${p.availability}</span></div></div><div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-200 dark:border-slate-800/80"><button onclick="openProductModal('edit','${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold border border-amber-300 dark:border-amber-800/40">✍️ Edit</button><button onclick="toggleProductStock('${p.id}')" class="bg-blue-100 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold border border-blue-300 dark:border-blue-800/40">Stock</button><button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-700 dark:text-rose-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold border border-rose-300 dark:border-rose-800/40">🗑️ Del</button></div></div>`);});
 }
 function handleAdminProductSearch(v){state.adminProductSearch=v;renderAdminProducts();}
-
 
 // =====================================================
 // PRODUCT MODAL
@@ -763,18 +902,35 @@ function openProductModal(mode,pid=null) {
     const cs=document.getElementById('modal-product-category'); if(cs){cs.innerHTML='';CATEGORIES.forEach(cat=>cs.insertAdjacentHTML('beforeend',`<option value="${cat}">${cat}</option>`));}
     clearProductUpload();
     if(mode==='add'){title.innerText='Add New Product';['modal-product-id','modal-product-name','modal-product-description','modal-product-image'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const av=document.getElementById('modal-product-availability');if(av)av.value='In Stock';}
-    else{title.innerText='Edit Product';const p=state.products.find(i=>i.id===pid);if(p){document.getElementById('modal-product-id').value=p.id;document.getElementById('modal-product-name').value=p.name;document.getElementById('modal-product-category').value=p.category;document.getElementById('modal-product-description').value=p.description;document.getElementById('modal-product-availability').value=p.availability;if(p.image&&p.image.startsWith('data:image')){uploadedProductImageBase64=p.image;const pi=document.getElementById('product-image-preview'),pc=document.getElementById('product-image-preview-container');if(pi)pi.src=p.image;if(pc)pc.classList.remove('hidden');document.getElementById('modal-product-image').value="";}else{document.getElementById('modal-product-image').value=p.image||"";}}}
+    else{title.innerText='Edit Product';const p=state.products.find(i=>i.id===pid);if(p){document.getElementById('modal-product-id').value=p.id;document.getElementById('modal-product-name').value=p.name;document.getElementById('modal-product-category').value=p.category;document.getElementById('modal-product-description').value=p.description;document.getElementById('modal-product-availability').value=p.availability;
+        // If it's already a Cloudinary URL, show it in preview
+        if(p.image && p.image.startsWith('https://')){
+            document.getElementById('modal-product-image').value=p.image;
+            const preview=document.getElementById('product-image-preview');
+            const previewContainer=document.getElementById('product-image-preview-container');
+            const urlDisplay=document.getElementById('cloudinary-url-display');
+            if(preview) preview.src=p.image;
+            if(urlDisplay) urlDisplay.textContent=p.image;
+            if(previewContainer) previewContainer.classList.remove('hidden');
+            document.getElementById('product-upload-dropzone').classList.add('hidden');
+            uploadedCloudinaryUrl=p.image;
+        }
+    }}
     modal.classList.remove('hidden');modal.classList.add('flex');
 }
 function closeProductModal(){const m=document.getElementById('product-modal');m.classList.add('hidden');m.classList.remove('flex');clearProductUpload();}
 function saveProductForm(e) {
     e.preventDefault(); if(!state.adminLoggedIn){showCustomAlert("Only administrators can save products.","Access Denied","🚫");return;}
     const id=document.getElementById('modal-product-id').value;
-    const name=document.getElementById('modal-product-name').value,category=document.getElementById('modal-product-category').value,description=document.getElementById('modal-product-description').value,availability=document.getElementById('modal-product-availability').value;
-    const image=uploadedProductImageBase64||document.getElementById('modal-product-image').value||"https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80";
-    if(id){state.products=state.products.map(p=>p.id===id?{id,name,category,description,availability,image}:p);showToast("Product updated!");}
-    else{state.products.push({id:'prod-'+Date.now(),name,category,description,availability,image});showToast("New product added!");}
-    localStorage.setItem('sri_balaji_products',JSON.stringify(state.products));closeProductModal();renderAdminProducts();
+    const name=document.getElementById('modal-product-name').value;
+    const category=document.getElementById('modal-product-category').value;
+    const description=document.getElementById('modal-product-description').value;
+    const availability=document.getElementById('modal-product-availability').value;
+    // Priority: Cloudinary uploaded URL → manual URL input → fallback
+    const image = uploadedCloudinaryUrl || document.getElementById('modal-product-image').value || "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80";
+    if(id){state.products=state.products.map(p=>p.id===id?{id,name,category,description,availability,image}:p);showToast("✅ Product updated with Cloudinary image!");}
+    else{state.products.push({id:'prod-'+Date.now(),name,category,description,availability,image});showToast("✅ New product added with Cloudinary image!");}
+    localStorage.setItem('sri_balaji_products',JSON.stringify(state.products));closeProductModal();renderAdminProducts();renderFeaturedProducts();
 }
 function toggleProductStock(id) {
     if(!state.adminLoggedIn){showCustomAlert("Only administrators can change stock.","Access Denied","🚫");return;}
@@ -788,23 +944,22 @@ async function deleteProduct(id) {
 }
 
 // =====================================================
-// GALLERY MODAL
-// =====================================================
-
-
-// =====================================================
 // SETTINGS MODAL
 // =====================================================
 function openSettingsModal() {
     const s=state.settings;
-    ['shop-name','phone','whatsapp','hero-banner','address','hours'].forEach(k=>{const el=document.getElementById(`setting-${k}`);if(el)el.value=s[k.replace('-','')]||s[k]||'';});
-    document.getElementById('setting-shop-name').value=s.shopName;document.getElementById('setting-phone').value=s.phone;document.getElementById('setting-whatsapp').value=s.whatsapp;document.getElementById('setting-hero-banner').value=s.heroBannerUrl;document.getElementById('setting-address').value=s.address;document.getElementById('setting-hours').value=s.hours;
+    document.getElementById('setting-shop-name').value=s.shopName;
+    document.getElementById('setting-phone').value=s.phone;
+    document.getElementById('setting-whatsapp').value=s.whatsapp;
+    document.getElementById('setting-hero-banner').value=s.heroBannerUrl;
+    document.getElementById('setting-address').value=s.address;
+    document.getElementById('setting-hours').value=s.hours;
     const m=document.getElementById('settings-modal');m.classList.remove('hidden');m.classList.add('flex');
 }
 function closeSettingsModal(){const m=document.getElementById('settings-modal');m.classList.add('hidden');m.classList.remove('flex');}
 function saveSettingsForm(e) {
     e.preventDefault();
-    state.settings={...state.settings,shopName:document.getElementById('setting-shop-name').value,phone:document.getElementById('setting-phone').value,whatsapp:document.getElementById('setting-whatsapp').value,heroBannerUrl:document.getElementById('setting-hero-banner').value||'image_d576ee.jpg',address:document.getElementById('setting-address').value,hours:document.getElementById('setting-hours').value};
+    state.settings={...state.settings,shopName:document.getElementById('setting-shop-name').value,phone:document.getElementById('setting-phone').value,whatsapp:document.getElementById('setting-whatsapp').value,heroBannerUrl:document.getElementById('setting-hero-banner').value||CLOUDINARY_SHOP_IMAGE,address:document.getElementById('setting-address').value,hours:document.getElementById('setting-hours').value};
     localStorage.setItem('sri_balaji_settings',JSON.stringify(state.settings));showToast("Settings saved!","success");closeSettingsModal();updateShopBrandingDOM();renderAdminDashboard();
 }
 
@@ -812,7 +967,7 @@ function saveSettingsForm(e) {
 // FACTORY RESET
 // =====================================================
 async function resetToFactoryDefaults() {
-    let ok=false;try{ok=await showCustomAlert("This will restore default products, galleries, and configurations. Proceed?","Reset Confirmation","❓",true);}catch(err){ok=true;}
+    let ok=false;try{ok=await showCustomAlert("This will restore default products and configurations. Proceed?","Reset Confirmation","❓",true);}catch(err){ok=true;}
     if(ok){
         ['sri_balaji_products','sri_balaji_settings','sri_balaji_enquiries','sri_balaji_quotecart','sri_balaji_admin_auth'].forEach(k=>localStorage.removeItem(k));
         state.products=DEFAULT_PRODUCTS;state.settings=DEFAULT_SETTINGS;state.enquiries=[];state.quoteCart=[];state.adminLoggedIn=false;
@@ -891,7 +1046,7 @@ function updateShopBrandingDOM() {
     const ada=document.getElementById('admin-display-address');if(ada)ada.innerText=s.address;
     const adh=document.getElementById('admin-display-hours');if(adh)adh.innerText=s.hours;
     [['nav-mobile-call',`tel:${s.phone}`],['hero-call-btn',`tel:${s.phone}`],['hero-whatsapp-btn',`https://wa.me/91${s.whatsapp}`],['contact-tel-link',`tel:${s.phone}`],['contact-wa-link',`https://wa.me/91${s.whatsapp}`],['contact-footer-tel',`tel:${s.phone}`],['contact-footer-wa',`https://wa.me/91${s.whatsapp}`],['floating-call-btn',`tel:${s.phone}`],['floating-whatsapp-btn',`https://wa.me/91${s.whatsapp}`],['footer-tel',`tel:${s.phone}`]].forEach(([id,href])=>{const el=document.getElementById(id);if(el)el.href=href;});
-    const hb=document.getElementById('hero-banner');if(hb)hb.src=s.heroBannerUrl;
+    const hb=document.getElementById('hero-banner');if(hb)hb.src=s.heroBannerUrl||CLOUDINARY_SHOP_IMAGE;
 }
 
 // =====================================================
@@ -926,8 +1081,6 @@ window.onload = function() {
         const nma=document.getElementById('nav-mobile-admin');if(nma)nma.innerText="🔒 Admin Dashboard";
         navigateTo('admin');
     } else {
-        const nat=document.getElementById('nav-admin-text');if(nat)nat.innerText="Admin";
-        const nma=document.getElementById('nav-mobile-admin');if(nma)nma.innerText="🔑 Admin Login";
         navigateTo('home');
     }
     updateShopBrandingDOM();
