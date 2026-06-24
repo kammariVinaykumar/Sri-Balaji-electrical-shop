@@ -8,26 +8,16 @@
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: { 
-                extend: { 
-                    colors: { 
-                        brandBlue: { 50: '#f0f3ff', 600: '#1e40af', 900: '#1e3a8a' }, 
-                        brandOrange: '#f97316' 
-                    } 
-                } 
-            }
+            theme: { extend: { colors: { brandBlue: { 50: '#f0f3ff', 600: '#1e40af', 900: '#1e3a8a' }, brandOrange: '#f97316' } } }
         }
     </script>
     <style>
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
         * { transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        ::-webkit-scrollbar { width: 8px; } 
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        .dark ::-webkit-scrollbar-track { background: #0f172a; } 
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .dark ::-webkit-scrollbar-thumb { background: #334155; } 
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #0f172a; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; } ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         .glass-panel { background: rgba(255,255,255,0.75); backdrop-filter: blur(12px); }
         .dark .glass-panel { background: rgba(15,23,42,0.8); backdrop-filter: blur(12px); }
     </style>
@@ -42,10 +32,7 @@
                     <svg class="w-7 h-7 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                 </div>
                 <div>
-                    <div class="flex items-center space-x-1.5">
-                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-orange-400 via-amber-200 to-white bg-clip-text text-transparent animate-pulse" id="nav-shop-name">Sri Balaji Electrical Shop</h1>
-                        <span id="cloud-indicator" class="h-2.5 w-2.5 rounded-full bg-red-500 inline-block" title="Connecting to Live Sync..."></span>
-                    </div>
+                    <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-orange-400 via-amber-200 to-white bg-clip-text text-transparent" id="nav-shop-name">Sri Balaji Electrical Shop</h1>
                     <p class="text-[10px] sm:text-xs text-orange-400 font-bold tracking-widest uppercase" data-t="hero_badge_text">Electrical • Plumbing • Hardware</p>
                 </div>
             </div>
@@ -117,7 +104,7 @@
 <section id="page-home" class="page-section animate-fadeIn">
     <div class="relative bg-slate-950 text-white overflow-hidden min-h-[550px] flex items-center">
         <div class="absolute inset-0 z-0">
-            <img id="hero-banner" src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=1200&h=600&q=80" alt="Shop Banner" class="w-full h-full object-cover object-center opacity-30 filter blur-[1px]" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&h=500&q=80'">
+            <img id="hero-banner" src="image_d576ee.jpg" alt="Shop Banner" class="w-full h-full object-cover object-center opacity-30 filter blur-[1px]" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&h=500&q=80'">
             <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
@@ -164,11 +151,6 @@
 <!-- PAGE: PRODUCTS -->
 <section id="page-products" class="page-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
     <div class="text-center mb-10"><h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight" data-t="catalog_title">Products Catalogue</h2><p class="text-slate-500 dark:text-slate-400 mt-2 max-w-2xl mx-auto" data-t="catalog_desc">Sort through our comprehensive list of safety items, plumbing pipes, wires, and household equipment.</p></div>
-    
-    <div class="flex flex-wrap gap-2 justify-center mb-8" id="category-chips-container">
-        <!-- Dynamically injected chips -->
-    </div>
-
     <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 mb-8">
         <div class="relative"><svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><input type="text" id="product-search-input" oninput="handleSearch(this.value)" placeholder="Search products..." class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"></div>
     </div>
@@ -188,7 +170,7 @@
         <div class="text-center mb-16"><span class="text-xs font-bold text-orange-500 uppercase tracking-widest" data-t="about_badge">About Our Business</span><h2 class="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white mt-1" data-t="about_title">Sri Balaji Electricals</h2><p class="text-slate-500 dark:text-slate-400 mt-4 max-w-2xl mx-auto" data-t="about_desc">Your trusted neighborhood location supplying top-quality electrical, plumbing, and home maintenance devices.</p></div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
             <div><h3 class="text-2xl font-bold text-slate-900 dark:text-white" data-t="about_pillars_title">One-Stop Electrical & Plumbing Solutions</h3><p class="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed" data-t="about_p1">At Sri Balaji Electrical Shop, we pride ourselves on holding a comprehensive inventory of heavy-duty materials for building development, household repairs, wiring improvements, and fixture fittings.</p><p class="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed" data-t="about_p2">Our focus is safety first. Every switch, wire loop, or PVC conduit pipe we sell conforms to official safety indices.</p></div>
-            <div><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" alt="About Shop" class="rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'"></div>
+            <div><img src="image_372b9f.jpg" alt="About Shop" class="rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'"></div>
         </div>
         <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 sm:p-12 text-white">
             <h3 class="text-2xl sm:text-3xl font-extrabold text-center mb-10" data-t="about_pillars_title">Four Pillars of Our Commitment</h3>
@@ -211,7 +193,7 @@
                 <h3 class="text-2xl font-black text-slate-900 dark:text-white" data-t="contact_card_title">Store Location & Details</h3>
                 <div class="space-y-6">
                     <div class="flex items-start space-x-4"><div class="p-3 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-xl">📞</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_phone">Phone Number</span><a id="contact-tel-link" href="tel:9515168300" class="text-lg font-black text-slate-900 dark:text-orange-400 hover:text-blue-600 id-phone-text">9515168300</a></div></div>
-                    <div class="flex items-start space-x-4"><div class="p-3 bg-emerald-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-xl">💬</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_wa">WhatsApp Support</span><a id="contact-wa-link" href="https://wa.me/919515168300" target="_blank" class="text-lg font-black text-emerald-600 dark:text-emerald-400 hover:underline">9515168300</a></div></div>
+                    <div class="flex items-start space-x-4"><div class="p-3 bg-emerald-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-xl">💬</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_wa">WhatsApp Support</span><a id="contact-wa-link" href="https://wa.me/919515168300" target="_blank" class="text-lg font-black text-emerald-600 dark:text-emerald-400 hover:underline">9515168305</a></div></div>
                     <div class="flex items-start space-x-4"><div class="p-3 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 rounded-xl">📍</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_address">Store Physical Address</span><p id="contact-address-text" class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-relaxed">D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India</p></div></div>
                     <div class="flex items-start space-x-4"><div class="p-3 bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 rounded-xl">⏰</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_hours">Operational Timing</span><p id="contact-hours-text" class="text-slate-700 dark:text-slate-300 text-sm font-semibold" data-t="contact_hours_val">Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed</p></div></div>
                 </div>
@@ -279,9 +261,10 @@
         <div class="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
             <button onclick="setAdminTab('inbox')" id="admin-tab-inbox" class="px-6 py-3.5 font-extrabold text-sm border-b-2 border-orange-500 text-orange-500 transition-all shrink-0">📥 Inbox & Settings</button>
             <button onclick="setAdminTab('products')" id="admin-tab-products" class="px-6 py-3.5 font-bold text-sm text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-all shrink-0">📦 Manage Products</button>
+
         </div>
         <div id="admin-panel-inbox" class="space-y-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm"><div><span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_products">Products Catalog</span><span id="stat-products-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span><button onclick="setAdminTab('products')" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold mt-2 block">Go to Catalog →</button></div><div class="p-4 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-2xl text-xl">📦</div></div>
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm"><div><span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_enquiries">Guest Enquiries</span><span id="stat-enquiries-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span><span id="stat-pending-count" class="text-xs text-amber-600 font-bold block mt-1">0 Pending</span></div><div class="p-4 bg-purple-50 dark:bg-slate-800 text-purple-600 dark:text-purple-400 rounded-2xl text-xl">📥</div></div>
             </div>
@@ -305,6 +288,7 @@
             <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800"><div class="relative"><svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><input type="text" id="admin-product-search" oninput="handleAdminProductSearch(this.value)" placeholder="Search inventory catalog..." class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500"></div></div>
             <div id="admin-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
         </div>
+
     </div>
 </section>
 </main>
@@ -330,7 +314,7 @@
 
 <!-- PRODUCT MODAL -->
 <div id="product-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4 hidden">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl animate-fadeIn">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
         <div class="bg-slate-900 p-6 text-white flex justify-between items-center"><h3 id="product-modal-title" class="text-xl font-bold">Configure Product Item</h3><button onclick="closeProductModal()" class="p-1.5 hover:bg-slate-800 rounded-lg">✕</button></div>
         <form onsubmit="saveProductForm(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-slate-800 dark:text-white">
             <input type="hidden" id="modal-product-id">
@@ -338,23 +322,21 @@
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Category Group *</label><select id="modal-product-category" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none"></select></div>
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Short Specifications</label><textarea id="modal-product-description" rows="3" placeholder="Explain manufacturer parameters, brand tags..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></textarea></div>
             <div class="space-y-2">
-                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Product Image (Local File Upload)</label>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Product Image (File Upload)</label>
                 <div id="product-upload-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-orange-500 rounded-xl p-6 text-center cursor-pointer transition-colors bg-slate-50 dark:bg-slate-800/40" onclick="document.getElementById('modal-product-file').click()">
                     <input type="file" id="modal-product-file" accept="image/*" class="hidden" onchange="handleProductFileSelect(event)">
                     <div class="flex flex-col items-center space-y-1"><span class="text-3xl">📸</span><span class="text-xs font-bold text-slate-600 dark:text-slate-300">Click to Browse or Drag & Drop</span><span class="text-[10px] text-slate-400">JPG, PNG, WEBP (Max 2MB)</span></div>
                 </div>
                 <div id="product-image-preview-container" class="hidden relative rounded-xl border border-slate-200 dark:border-slate-800 p-2 max-w-xs bg-slate-50 dark:bg-slate-900 flex items-center space-x-3"><img id="product-image-preview" src="#" alt="Preview" class="w-16 h-16 object-cover rounded-lg"><div class="flex-grow min-w-0"><p class="text-xs font-bold text-slate-900 dark:text-white truncate">Image Uploaded!</p><button type="button" onclick="clearProductUpload()" class="text-[11px] text-rose-500 font-bold hover:underline">Clear</button></div></div>
             </div>
-            <div class="pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">🌐 Or paste a Cloud Image URL (Recommended for Multi-Device Visibility)</label>
-                <input type="text" id="modal-product-image" placeholder="https://images.unsplash.com/... or cloud link" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
-                <p class="text-[10px] text-slate-400 mt-1">If you paste an internet image link here, clients on mobile will instantly see it!</p>
-            </div>
+            <div class="pt-2 border-t border-slate-100 dark:border-slate-800/80"><label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Or paste an Image URL (Optional)</label><input type="text" id="modal-product-image" placeholder="https://example.com/image.jpg" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></div>
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Stock Availability *</label><select id="modal-product-availability" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none"><option value="In Stock">In Stock</option><option value="Out of Stock">Out of Stock</option></select></div>
             <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2"><button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button><button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md">Save Configuration</button></div>
         </form>
     </div>
 </div>
+
+
 
 <!-- SETTINGS MODAL -->
 <div id="settings-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4 hidden">
@@ -384,15 +366,11 @@
     </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
+<script>
 // =====================================================
-// TRANSLATIONS OBJECT
+// BUG FIX 1: TRANSLATIONS OBJECT (was completely missing)
 // =====================================================
-window.TRANSLATIONS = {
+const TRANSLATIONS = {
     en: {
         hero_badge_text:"Electrical • Plumbing • Hardware", hero_badge:"⚡ Quality Assured Electrical Solutions",
         hero_desc:"All Electrical, Plumbing, Hardware & Home Utility Products are Available Under One Roof with Premium Brand Assurance.",
@@ -441,7 +419,7 @@ window.TRANSLATIONS = {
     },
     te: {
         hero_badge_text:"విద్యుత్ • ప్లంబింగ్ • హార్డ్‌వేర్", hero_badge:"⚡ నాణ్యత హామీ విద్యుత్ పరిష్కారాలు",
-        hero_desc:"అన్ని విద్యుత్, ప్లంబింగ్, హార్డ్‌వేర్ & గృహ వస్తువులు ఒకే చోట లభించును.", hero_whatsapp:"💬 వాట్సాప్ పంపండి",
+        hero_desc:"అన్ని విద్యుత్, ప్లంబింగ్, హార్డ్‌వేర్ & గృహ వస్తువులు ఒకే చోట.", hero_whatsapp:"💬 వాట్సాప్ పంపండి",
         hero_direct_enq:"నేరుగా విచారణ పంపండి", call_now:"ఇప్పుడు కాల్ చేయండి",
         nav_home:"హోమ్", nav_products:"ఉత్పత్తులు", nav_gallery:"గ్యాలరీ",
         nav_about:"మా గురించి", nav_contact:"సంప్రదించండి", nav_enquiry:"విచారణ పంపండి", nav_admin:"నిర్వాహకుడు",
@@ -487,7 +465,7 @@ window.TRANSLATIONS = {
     },
     hi: {
         hero_badge_text:"बिजली • प्लंबिंग • हार्डवेयर", hero_badge:"⚡ गुणवत्ता-सुनिश्चित बिजली समाधान",
-        hero_desc:"सभी बिजली, प्लंबिंग, hardware और घरेलू उत्पाद एक ही छत के नीचे उपलब्ध हैं।",
+        hero_desc:"सभी बिजली, प्लंबिंग, हार्डवेयर और घरेलू उत्पाद एक ही छत के नीचे।",
         hero_whatsapp:"💬 WhatsApp करें", hero_direct_enq:"सीधी ऑनलाइन पूछताछ भेजें", call_now:"अभी कॉल करें",
         nav_home:"होम", nav_products:"उत्पाद", nav_gallery:"गैलरी",
         nav_about:"हमारे बारे में", nav_contact:"संपर्क", nav_enquiry:"पूछताछ भेजें", nav_admin:"एडमिन",
@@ -506,7 +484,7 @@ window.TRANSLATIONS = {
         pillar1_title:"गुणवत्ता उत्पाद", pillar1_desc:"Havells, Finolex, Syska जैसे शीर्ष ब्रांडों का अधिकृत स्टॉक।",
         pillar2_title:"सर्वोत्तम मूल्य", pillar2_desc:"खुदरा और थोक दरों पर ईमानदार मार्जिन।",
         pillar3_title:"मित्रवत सेवा", pillar3_desc:"हमारी टीम खुशी से मार्गदर्शन करेगी।",
-        pillar4_title:"customer_support", pillar4_desc:"कॉल करें, संदेश भेजें और त्वरित सहायता पाएं।",
+        pillar4_title:"ग्राहक सहायता", pillar4_desc:"कॉल करें, संदेश भेजें और त्वरित सहायता पाएं।",
         contact_title:"श्री बालाजी शॉप से संपर्क करें", contact_desc:"फोन या WhatsApp से ऑर्डर करें।",
         contact_card_title:"स्टोर विवरण", contact_phone:"फोन नंबर",
         contact_wa:"WhatsApp सहायता", contact_address:"स्टोर का पता",
@@ -522,7 +500,7 @@ window.TRANSLATIONS = {
         admin_btn:"प्रमाणित करें", admin_live_console:"लाइव कंसोल मोड", admin_exit:"सत्र समाप्त करें",
         admin_stat_products:"उत्पाद सूची", admin_stat_gallery:"गैलरी चित्र", admin_stat_enquiries:"अतिथि पूछताछ",
         admin_table_cust:"ग्राहक", admin_table_subj:"विषय", admin_table_msg:"संदेश",
-        admin_table_date:"तारीख", admin_table_status:"status", admin_table_action:"क्रिया",
+        admin_table_date:"तारीख", admin_table_status:"स्थिति", admin_table_action:"क्रिया",
         admin_no_enq:"अभी तक कोई पूछताछ नहीं", admin_no_enq_sub:"क्लाइंट सबमिशन यहाँ दिखाई देंगे।",
         admin_settings:"शॉप कॉन्फ़िगरेशन", admin_change_pass:"पासवर्ड बदलें",
         admin_change_pass_sub:"एडमिन कंसोल लॉगिन पासवर्ड बदलें।", admin_update_btn:"पासवर्ड अपडेट करें",
@@ -534,171 +512,56 @@ window.TRANSLATIONS = {
 };
 
 // =====================================================
+// CONFIG & DEFAULT DATA
 // =====================================================
+const CATEGORIES = ["Other Products"];
 const DEFAULT_PRODUCTS = [
-    { id:"prod-1", name:"Anchor Roma Classic Modular Switches", description:"Premium modular switches, sleek white, fire-retardant material.", category:"Switches", price:45, availability:"In Stock", image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80" },
-    { id:"prod-2", name:"Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description:"Flame Retardant multi-strand cables ideal for residential wiring.", category:"Wires & Cables", price:1540, availability:"In Stock", image:"https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80" },
-    { id:"prod-3", name:"Syska 9W LED Bright Bulbs (Cool Day Light)", description:"Energy-saving LED bulbs, B22 cap, zero flickering.", category:"Lighting", price:110, availability:"In Stock", image:"https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
+    { id:"prod-1", name:"Anchor Roma Classic Modular Switches", description:"Premium modular switches, sleek white, fire-retardant material.", category:"Other Products", price:45, availability:"In Stock", image:"image_d57726.png" },
+    { id:"prod-2", name:"Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description:"Flame Retardant multi-strand cables ideal for residential wiring.", category:"Other Products", price:1540, availability:"In Stock", image:"image_d57726.png" },
+    { id:"prod-3", name:"Syska 9W LED Bright Bulbs (Cool Day Light)", description:"Energy-saving LED bulbs, B22 cap, zero flickering.", category:"Other Products", price:110, availability:"In Stock", image:"https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
     { id:"prod-4", name:"Crompton Hill Briz 1200mm Ceiling Fan", description:"High speed electric ceiling fan with powerful copper motor.", category:"Other Products", price:2350, availability:"In Stock", image:"https://images.unsplash.com/photo-1618944847023-38aa001235f0?auto=format&fit=crop&w=500&q=80" },
-    { id:"prod-5", name:"Sudhakar PVC Conduit Pipe (1 inch, 3m)", description:"Heavy-duty fire-retardant PVC electrical pipes.", category:"Plumbing & Pipes", price:95, availability:"In Stock", image:"https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
-    { id:"prod-6", name:"Jaquar Wall-Mounted Brass Shower Faucet", description:"Premium rust-free chrome finished brass shower mixture.", category:"Plumbing & Pipes", price:1850, availability:"In Stock", image:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" }
+    { id:"prod-5", name:"Sudhakar PVC Conduit Pipe (1 inch, 3m)", description:"Heavy-duty fire-retardant PVC electrical pipes.", category:"Other Products", price:95, availability:"In Stock", image:"https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
+    { id:"prod-6", name:"Jaquar Wall-Mounted Brass Shower Faucet", description:"Premium rust-free chrome finished brass shower mixture.", category:"Other Products", price:1850, availability:"In Stock", image:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" }
 ];
 
 const DEFAULT_GALLERY = [
-    { id:"gal-1", caption:"Our Main Display Shop Front & Product Rows", image:"https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" },
-    { id:"gal-2", caption:"Fully Stocked Electrical Wire Reels & Pipes", image:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" },
-    { id:"gal-3", caption:"Premium Quality Hardware & Lighting Display Panels", image:"https://images.unsplash.com/photo-1530124560612-3fe9a12097ff?auto=format&fit=crop&w=800&q=80" },
+    { id:"gal-1", caption:"Our Main Display Shop Front & Product Rows", image:"image_d576ee.jpg" },
+    { id:"gal-2", caption:"Fully Stocked Electrical Wire Reels & Pipes", image:"image_d57726.png" },
+    { id:"gal-3", caption:"Premium Quality Hardware & Lighting Display Panels", image:"image_372b9f.jpg" },
     { id:"gal-4", caption:"Branded LED Light Bulbs and Ceiling Accessories", image:"https://images.unsplash.com/photo-1565814636199-ae8133055c1c?auto=format&fit=crop&w=800&q=80" }
 ];
-const DEFAULT_SETTINGS = { shopName:"Sri Balaji Electrical Shop", phone:"9515168300", whatsapp:"9515168300", logoUrl:"https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=500&q=80", heroBannerUrl:"https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=1200&h=600&q=80", address:"D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India", hours:"Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed", adminPassword:"admin" };
-
-const CATEGORIES = ["Other Products", "Switches", "Wires & Cables", "Lighting", "Plumbing & Pipes"];
-
-// Exact configuration extracted from user's image_6cbc62.jpg
-const userFirebaseConfig = {
-    apiKey: "AIzaSyAlhj6VvXClXfNwYPsAE-zoyy4Y7L8mcNU",
-    authDomain: "sri-balaji-electrical-shop.firebaseapp.com",
-    projectId: "sri-balaji-electrical-shop",
-    storageBucket: "sri-balaji-electrical-shop.firebasestorage.app",
-    messagingSenderId: "94487869589",
-    appId: "1:94487869589:web:d7e47215b275395113439c",
-    measurementId: "G-60K7G2FL5X"
-};
-
-const firebaseConfig = typeof __firebase_config !== 'undefined'
-    ? JSON.parse(__firebase_config)
-    : userFirebaseConfig;
-
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'sri-balaji-electrical-shop';
+const DEFAULT_SETTINGS = { shopName:"Sri Balaji Electrical Shop", phone:"9515168300", whatsapp:"9515168300", logoUrl:"image_d576ee.jpg", heroBannerUrl:"image_d576ee.jpg", address:"D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India", hours:"Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed", adminPassword:"admin" };
 
 // =====================================================
-// STATE & APPLICATION SYSTEM VARIABLES
+// STATE
 // =====================================================
-window.state = {
-    currentPage:'home', 
-    mobileMenuOpen:false,
+let state = {
+    currentPage:'home', mobileMenuOpen:false,
     lang: localStorage.getItem('sri_balaji_lang')||'en',
     theme: localStorage.getItem('sri_balaji_theme')||'light',
-    products: DEFAULT_PRODUCTS,
-    gallery: DEFAULT_GALLERY,
-    enquiries: [],
-    settings: DEFAULT_SETTINGS,
+    products: (()=>{ try{return JSON.parse(localStorage.getItem('sri_balaji_products'))||DEFAULT_PRODUCTS;}catch(e){return DEFAULT_PRODUCTS;} })(),
+    gallery: (()=>{ try{return JSON.parse(localStorage.getItem('sri_balaji_gallery'))||DEFAULT_GALLERY;}catch(e){return DEFAULT_GALLERY;} })(),
+    enquiries: (()=>{ try{return JSON.parse(localStorage.getItem('sri_balaji_enquiries'))||[];}catch(e){return [];} })(),
+    settings: (()=>{ try{return JSON.parse(localStorage.getItem('sri_balaji_settings'))||DEFAULT_SETTINGS;}catch(e){return DEFAULT_SETTINGS;} })(),
     adminLoggedIn: localStorage.getItem('sri_balaji_admin_auth')==='true',
-    selectedCategory:'All', 
-    productSearch:'', 
-    adminProductSearch:'', 
-    adminActiveTab:'inbox',
-    quoteCart: (() => { try { return JSON.parse(localStorage.getItem('sri_balaji_quotecart')) || []; } catch(e) { return []; } })()
+    selectedCategory:'All', productSearch:'', adminProductSearch:'', adminActiveTab:'inbox',
+    quoteCart: (()=>{ try{return JSON.parse(localStorage.getItem('sri_balaji_quotecart'))||[];}catch(e){return [];} })()
 };
-
-let db, auth;
-let uploadedProductImageBase64 = "";
-let customAlertPromiseResolver = null;
+let uploadedProductImageBase64="", customAlertPromiseResolver=null;
 
 // =====================================================
+// BUG FIX 2: toggleMobileMenu (was completely missing)
 // =====================================================
-async function initFirebase() {
-    try {
-        const app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        auth = getAuth(app);
-
-        // ALWAYS authenticate first per Rule 3
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-            await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-            await signInAnonymously(auth);
-        }
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log("Secure Connection Established. User ID:", user.uid);
-                const ind = document.getElementById('cloud-indicator');
-                if (ind) {
-                    ind.className = "h-2.5 w-2.5 rounded-full bg-emerald-500 inline-block animate-ping";
-                    ind.title = "Connected to Live Cloud Database";
-                }
-                listenToLiveFirestore();
-            } else {
-                const ind = document.getElementById('cloud-indicator');
-                if (ind) {
-                    ind.className = "h-2.5 w-2.5 rounded-full bg-red-500 inline-block";
-                }
-            }
-        });
-    } catch (err) {
-        console.error("Firebase connection error:", err);
-        showToast("Error connecting to database. Operating offline.", "error");
-    }
-}
-
-// =====================================================
-// =====================================================
-function listenToLiveFirestore() {
-    if (!auth.currentUser) return;
-
-    // Strict Paths: Rule 1
-    // 1. Listening to Global Settings document
-    const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'global_settings');
-    onSnapshot(settingsDocRef, (docSnap) => {
-        if (docSnap.exists()) {
-            window.state.settings = docSnap.data();
-            updateShopBrandingDOM();
-        } else {
-            // Document doesn't exist yet, seed it with default settings
-            setDoc(settingsDocRef, DEFAULT_SETTINGS);
-        }
-    }, (error) => console.error("Settings snapshot error:", error));
-
-    // 2. Listening to Products Collection
-    const productsCollRef = collection(db, 'artifacts', appId, 'public', 'data', 'products');
-    onSnapshot(productsCollRef, (querySnap) => {
-        let loadedProducts = [];
-        querySnap.forEach(doc => {
-            loadedProducts.push({ id: doc.id, ...doc.data() });
-        });
-        if (loadedProducts.length > 0) {
-            window.state.products = loadedProducts;
-        } else {
-            // First time load, seed Firestore with DEFAULT_PRODUCTS
-            DEFAULT_PRODUCTS.forEach(p => {
-                setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'products', p.id), p);
-            });
-        }
-        renderFeaturedProducts();
-        renderCategoryChips();
-        renderProductsCatalog();
-        if (window.state.adminLoggedIn) renderAdminDashboard();
-    }, (error) => {
-        console.error("Products query error:", error);
-    });
-
-    // 3. Listening to Enquiries Collection
-    const enquiriesColl = collection(db, 'artifacts', appId, 'public', 'data', 'enquiries');
-    onSnapshot(enquiriesColl, (snap) => {
-        const list = [];
-        snap.forEach(d => {
-            list.push({ id: d.id, ...d.data() });
-        });
-        // Sort in-memory to respect RULE 2 (no complex compound queries)
-        list.sort((a, b) => b.timestamp - a.timestamp);
-        window.state.enquiries = list;
-        if (window.state.adminLoggedIn) renderAdminDashboard();
-    }, (error) => {
-        console.error("Enquiries query error:", error);
-    });
-}
-
-// =====================================================
-// EXPOSED DYNAMIC ACTION FUNCTIONS
-// =====================================================
-window.toggleMobileMenu = function() {
-    window.state.mobileMenuOpen = !window.state.mobileMenuOpen;
+function toggleMobileMenu() {
+    state.mobileMenuOpen = !state.mobileMenuOpen;
     const menu = document.getElementById('mobile-menu');
-    if (menu) menu.classList.toggle('hidden', !window.state.mobileMenuOpen);
-};
+    if (menu) menu.classList.toggle('hidden', !state.mobileMenuOpen);
+}
 
-window.showCustomAlert = function(message, title="Notice", icon="🔔", showCancel=false) {
+// =====================================================
+// ALERT / TOAST
+// =====================================================
+function showCustomAlert(message, title="Notice", icon="🔔", showCancel=false) {
     document.getElementById('custom-alert-title').innerText = title;
     document.getElementById('custom-alert-message').innerText = message;
     document.getElementById('custom-alert-icon').innerText = icon;
@@ -707,64 +570,62 @@ window.showCustomAlert = function(message, title="Notice", icon="🔔", showCanc
     const ab = document.getElementById('custom-alert-box');
     ab.classList.remove('hidden'); ab.classList.add('flex');
     return new Promise(r => { customAlertPromiseResolver = r; });
-};
-
-window.resolveCustomConfirm = function(v) {
+}
+function resolveCustomConfirm(v) {
     const ab = document.getElementById('custom-alert-box');
     ab.classList.add('hidden'); ab.classList.remove('flex');
     if (customAlertPromiseResolver) { customAlertPromiseResolver(v); customAlertPromiseResolver=null; }
-};
-
-window.showToast = function(msg, type='success') {
+}
+function showToast(msg, type='success') {
     const c = document.getElementById('toast-container'); if(!c) return;
     const id = 'toast-'+Date.now();
     const cls = type==='success'?'bg-emerald-950 text-emerald-100 border-emerald-800/60':type==='error'?'bg-rose-950 text-rose-100 border-rose-800/60':'bg-slate-900 text-slate-100 border-slate-700';
     c.insertAdjacentHTML('beforeend',`<div id="${id}" class="p-4 rounded-xl shadow-2xl border flex items-start space-x-3 transition-all duration-300 animate-fadeIn ${cls}"><div class="flex-grow text-xs font-bold leading-relaxed">${msg}</div><button onclick="dismissToast('${id}')" class="text-white/70 hover:text-white shrink-0 font-bold">✕</button></div>`);
     setTimeout(()=>dismissToast(id), 4500);
-};
-
-window.dismissToast = function(id) {
+}
+function dismissToast(id) {
     const el = document.getElementById(id);
     if(el){el.style.opacity='0';el.style.transform='translateY(-10px)';setTimeout(()=>el.remove(),300);}
-};
+}
 
-window.syncNavVisibility = function() {
+// =====================================================
+// NAV / THEME / LANGUAGE
+// =====================================================
+function syncNavVisibility() {
     const dl=document.getElementById('desktop-user-links'), ml=document.getElementById('mobile-user-links'), fb=document.getElementById('floating-cart-btn');
-    if(window.state.adminLoggedIn){ dl&&dl.classList.add('hidden'); ml&&ml.classList.add('hidden'); fb&&fb.classList.add('hidden'); }
+    if(state.adminLoggedIn){ dl&&dl.classList.add('hidden'); ml&&ml.classList.add('hidden'); fb&&fb.classList.add('hidden'); }
     else{ dl&&dl.classList.remove('hidden'); ml&&ml.classList.remove('hidden'); updateCartBadges(); }
-};
-
-window.applyThemeDOM = function() {
-    const dark=window.state.theme==='dark'; document.documentElement.classList.toggle('dark',dark);
+}
+function applyThemeDOM() {
+    const dark=state.theme==='dark'; document.documentElement.classList.toggle('dark',dark);
     const icon=dark?'☀️':'🌙';
     const d=document.getElementById('theme-icon-desktop'),m=document.getElementById('theme-icon-mobile');
     if(d)d.innerText=icon; if(m)m.innerText=icon;
-};
-
-window.toggleTheme = function() {
-    window.state.theme=window.state.theme==='light'?'dark':'light';
-    localStorage.setItem('sri_balaji_theme',window.state.theme); applyThemeDOM();
-    showToast(window.state.theme==='dark'?'Dark Mode Activated':'Light Mode Activated','info');
-};
-
-window.updateLanguageDOM = function() {
-    const dict = TRANSLATIONS[window.state.lang]||TRANSLATIONS['en'];
+}
+function toggleTheme() {
+    state.theme=state.theme==='light'?'dark':'light';
+    localStorage.setItem('sri_balaji_theme',state.theme); applyThemeDOM();
+    showToast(state.theme==='dark'?'Dark Mode Activated':'Light Mode Activated','info');
+}
+function updateLanguageDOM() {
+    const dict = TRANSLATIONS[state.lang]||TRANSLATIONS['en'];
     document.querySelectorAll('[data-t]').forEach(el=>{ const k=el.getAttribute('data-t'); if(dict[k]) el.innerText=dict[k]; });
     const ls=document.getElementById('language-switcher'),lsm=document.getElementById('language-switcher-mobile');
-    if(ls)ls.value=window.state.lang; if(lsm)lsm.value=window.state.lang;
-    renderCategoryChips();
-    renderProductsCatalog();
-};
-
-window.changeLanguage = function(code) {
-    window.state.lang=code; localStorage.setItem('sri_balaji_lang',code); updateLanguageDOM();
+    if(ls)ls.value=state.lang; if(lsm)lsm.value=state.lang;
+    renderCategoryChips(); renderProductsCatalog();
+}
+function changeLanguage(code) {
+    state.lang=code; localStorage.setItem('sri_balaji_lang',code); updateLanguageDOM();
     const msgs={te:"భాష మార్చబడింది",hi:"भाषा बदल दी गई है",en:"Language switched successfully"};
     showToast(msgs[code]||msgs.en,'info');
-};
+}
 
-window.navigateTo = function(pageId) {
-    if(window.state.adminLoggedIn && pageId!=='admin'){ showToast("🔒 Active Admin Mode. Click 'Exit Session' to logout first.","error"); return; }
-    window.state.currentPage=pageId;
+// =====================================================
+// NAVIGATION
+// =====================================================
+function navigateTo(pageId) {
+    if(state.adminLoggedIn && pageId!=='admin'){ showToast("🔒 Active Admin Mode. Click 'Exit Session' to logout first.","error"); return; }
+    state.currentPage=pageId;
     document.querySelectorAll('.page-section').forEach(s=>s.classList.add('hidden'));
     const t=document.getElementById(`page-${pageId}`); if(t)t.classList.remove('hidden');
     document.querySelectorAll('.nav-btn').forEach(btn=>{
@@ -773,17 +634,16 @@ window.navigateTo = function(pageId) {
             :"nav-btn px-3 py-2 rounded-lg font-bold text-sm transition-all text-slate-300 hover:text-white hover:bg-slate-800";
     });
     const ab=document.getElementById('nav-admin-btn');
-    if(ab){ if(pageId==='admin') ab.className="nav-btn flex items-center space-x-1.5 px-4 py-2 rounded-lg font-extrabold text-sm bg-blue-600 text-white border border-blue-500"; else if(window.state.adminLoggedIn) ab.className="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg font-bold text-sm border border-emerald-500 text-emerald-400 hover:bg-emerald-950/30"; else ab.className="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg font-bold text-sm border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"; }
+    if(ab){ if(pageId==='admin') ab.className="nav-btn flex items-center space-x-1.5 px-4 py-2 rounded-lg font-extrabold text-sm bg-blue-600 text-white border border-blue-500"; else if(state.adminLoggedIn) ab.className="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg font-bold text-sm border border-emerald-500 text-emerald-400 hover:bg-emerald-950/30"; else ab.className="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg font-bold text-sm border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"; }
     if(pageId==='home') renderFeaturedProducts();
-    if(pageId==='products'){renderCategoryChips(); renderProductsCatalog();}
+    if(pageId==='products'){renderCategoryChips();renderProductsCatalog();}
     if(pageId==='gallery') renderGalleryGrid();
     if(pageId==='admin') renderAdminDashboard();
     if(pageId==='enquiry') renderQuoteCartUI();
     window.scrollTo({top:0,behavior:'smooth'});
-};
-
-window.setAdminTab = function(tab) {
-    window.state.adminActiveTab=tab;
+}
+function setAdminTab(tab) {
+    state.adminActiveTab=tab;
     ['inbox','products'].forEach(t=>{
         const btn=document.getElementById(`admin-tab-${t}`),panel=document.getElementById(`admin-panel-${t}`);
         if(btn&&panel){
@@ -792,66 +652,27 @@ window.setAdminTab = function(tab) {
         }
     });
     if(tab==='products') renderAdminProducts();
-};
+}
 
 // =====================================================
+// RENDER FUNCTIONS
 // =====================================================
-window.renderFeaturedProducts = function() {
+function renderFeaturedProducts() {
     const c=document.getElementById('featured-products-container'); if(!c) return; c.innerHTML='';
-    window.state.products.slice(0,4).forEach(p=>{
+    state.products.slice(0,4).forEach(p=>{
         const out=p.availability==='Out of Stock';
         const btn=out?`<span class="text-xs text-rose-500 font-bold uppercase">Out of Stock</span>`:`<button onclick="addToQuoteCart('${p.id}')" class="px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-lg shadow-sm">➕ Add to Quote</button>`;
         c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-xl shadow-md border border-slate-100 dark:border-slate-800/50 overflow-hidden flex flex-col group hover:shadow-xl transition-all duration-300"><div class="relative aspect-video bg-slate-100 dark:bg-slate-800 overflow-hidden"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"><span class="absolute top-2.5 left-2.5 px-2 py-1 bg-slate-950/85 text-white font-bold text-[9px] rounded-md uppercase">${p.category}</span></div><div class="p-4 flex-grow flex flex-col justify-between"><div><h3 class="font-extrabold text-slate-900 dark:text-white group-hover:text-blue-600 line-clamp-1">${p.name}</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1.5 leading-relaxed">${p.description}</p></div><div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/50 flex items-center justify-end">${btn}</div></div></div>`);
     });
-};
-
-window.renderCategoryChips = function() {
-    const c = document.getElementById('category-chips-container'); if (!c) return;
-    c.innerHTML = '';
-    
-    // Add "All" chip
-    const allSelected = window.state.selectedCategory === 'All';
-    const allCls = allSelected 
-        ? 'bg-orange-500 text-white shadow-md' 
-        : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-750';
-    c.insertAdjacentHTML('beforeend', `
-        <button onclick="setCategoryFilter('All')" class="px-4 py-2 rounded-xl text-xs font-black tracking-wide transition-all ${allCls}">
-            All Available Products (${window.state.products.length})
-        </button>
-    `);
-
-    // Add unique categories based on existing inventory
-    const presentCategories = [...new Set(window.state.products.map(p => p.category))];
-    presentCategories.forEach(cat => {
-        if (!cat) return;
-        const selected = window.state.selectedCategory === cat;
-        const cls = selected 
-            ? 'bg-orange-500 text-white shadow-md' 
-            : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-750';
-        c.insertAdjacentHTML('beforeend', `
-            <button onclick="setCategoryFilter('${cat}')" class="px-4 py-2 rounded-xl text-xs font-bold tracking-wide transition-all ${cls}">
-                ${cat}
-            </button>
-        `);
-    });
-};
-
-window.setCategoryFilter = function(category) {
-    window.state.selectedCategory = category;
-    renderCategoryChips();
-    renderProductsCatalog();
-};
-
-window.renderProductsCatalog = function() {
+}
+function renderCategoryChips() {
+    const c=document.getElementById('category-chips-container'); if(!c) return; c.innerHTML='';
+    const s=state.selectedCategory==='All'?'bg-blue-600 text-white shadow-md':'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200';
+    c.insertAdjacentHTML('beforeend',`<button onclick="setCategoryFilter('All')" class="px-4 py-2 rounded-lg text-xs font-extrabold tracking-wide transition-all ${s}">All Available Products (${state.products.length})</button>`);
+}
+function renderProductsCatalog() {
     const c=document.getElementById('products-catalog-grid'); if(!c) return; c.innerHTML='';
-    
-    // Apply combined category and search filter
-    let f = window.state.products;
-    if (window.state.selectedCategory !== 'All') {
-        f = f.filter(p => p.category === window.state.selectedCategory);
-    }
-    f = f.filter(p => p.name.toLowerCase().includes(window.state.productSearch.toLowerCase()) || p.description.toLowerCase().includes(window.state.productSearch.toLowerCase()));
-    
+    const f=state.products.filter(p=>p.name.toLowerCase().includes(state.productSearch.toLowerCase())||p.description.toLowerCase().includes(state.productSearch.toLowerCase()));
     const ct=document.getElementById('catalog-count-text'); if(ct) ct.innerText=`Found ${f.length} products`;
     if(f.length===0){c.innerHTML=`<div class="col-span-full py-16 text-center text-slate-400"><div class="text-5xl mb-3">🔍</div><p class="font-bold text-lg">No matching products found</p><p class="text-xs mt-1">Try adjusting your search keywords.</p></div>`;return;}
     f.forEach(p=>{
@@ -859,333 +680,206 @@ window.renderProductsCatalog = function() {
         const sc=out?'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300':'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300';
         let action='';
         if(out){action=`<button disabled class="w-full py-2 px-3 rounded-lg font-bold text-xs bg-slate-100 text-slate-400 cursor-not-allowed">Out of Stock</button>`;}
-        else{const ic=window.state.quoteCart.find(i=>i.id===p.id);if(ic){action=`<div class="flex items-center justify-between gap-2"><div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 rounded-lg px-2 py-1"><button onclick="adjustCartQty('${p.id}',-1)" class="text-xs font-bold px-1.5 py-0.5 text-slate-500 hover:text-slate-900">-</button><span class="text-xs font-black text-slate-950 dark:text-white">${ic.qty}</span><button onclick="adjustCartQty('${p.id}',1)" class="text-xs font-bold px-1.5 py-0.5 text-slate-500 hover:text-slate-900">+</button></div><button onclick="removeFromQuoteCart('${p.id}')" class="text-xs text-rose-500 hover:underline font-bold">Remove</button></div>`;}else{action=`<button onclick="addToQuoteCart('${p.id}')" class="w-full py-2.5 px-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-bold text-xs flex items-center justify-center space-x-2 active:scale-95 shadow-sm">➕ Add to Quote Cart</button>`;}}
+        else{const ic=state.quoteCart.find(i=>i.id===p.id);if(ic){action=`<div class="flex items-center justify-between gap-2"><div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 rounded-lg px-2 py-1"><button onclick="adjustCartQty('${p.id}',-1)" class="text-xs font-bold px-1.5 py-0.5 text-slate-500 hover:text-slate-900">-</button><span class="text-xs font-black text-slate-950 dark:text-white">${ic.qty}</span><button onclick="adjustCartQty('${p.id}',1)" class="text-xs font-bold px-1.5 py-0.5 text-slate-500 hover:text-slate-900">+</button></div><button onclick="removeFromQuoteCart('${p.id}')" class="text-xs text-rose-500 hover:underline font-bold">Remove</button></div>`;}else{action=`<button onclick="addToQuoteCart('${p.id}')" class="w-full py-2.5 px-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-bold text-xs flex items-center justify-center space-x-2 active:scale-95 shadow-sm">➕ Add to Quote Cart</button>`;}}
         c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800/85 overflow-hidden flex flex-col group hover:shadow-xl hover:border-blue-400/50 transition-all duration-300 relative"><div class="absolute top-3 left-3 z-10 flex flex-col gap-1.5"><span class="px-2.5 py-1 bg-slate-900/85 text-white font-extrabold text-[9px] rounded-md uppercase tracking-wider">${p.category}</span><span class="px-2.5 py-1 rounded-md text-[9px] font-extrabold uppercase tracking-wider text-center ${sc}">${p.availability}</span></div><div class="relative aspect-square bg-slate-50 dark:bg-slate-800 overflow-hidden border-b border-slate-100 dark:border-slate-800/80"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"></div><div class="p-4 flex-grow flex flex-col justify-between bg-white dark:bg-slate-900"><div class="space-y-1"><h3 class="font-extrabold text-slate-900 dark:text-white group-hover:text-blue-600 text-base leading-tight line-clamp-2">${p.name}</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${p.description}</p></div><div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60">${action}</div></div></div>`);
     });
-};
-
-window.renderGalleryGrid = function() {
+}
+function renderGalleryGrid() {
     const c=document.getElementById('gallery-grid-container'); if(!c) return; c.innerHTML='';
-    window.state.gallery.forEach(g=>{c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300"><div class="relative aspect-square overflow-hidden bg-slate-900"><img src="${g.image}" alt="${g.caption}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'"></div><div class="p-4 flex-grow flex items-center bg-white dark:bg-slate-900"><p class="text-xs text-slate-600 dark:text-slate-300 font-medium italic leading-relaxed">${g.caption||"Balaji Electrical Area"}</p></div></div>`);});
-};
+    state.gallery.forEach(g=>{c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300"><div class="relative aspect-square overflow-hidden bg-slate-900"><img src="${g.image}" alt="${g.caption}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'"></div><div class="p-4 flex-grow flex items-center bg-white dark:bg-slate-900"><p class="text-xs text-slate-600 dark:text-slate-300 font-medium italic leading-relaxed">${g.caption||"Balaji Electrical Area"}</p></div></div>`);});
+}
 
 // =====================================================
-// FILE UTILITIES
+// FILE UPLOADS
 // =====================================================
-window.handleProductFileSelect = function(ev) {
+function handleProductFileSelect(ev) {
     const f=ev.target.files[0]; if(!f) return;
     if(f.size>2*1024*1024){showToast("File too large! Max 2MB.","error");return;}
-    const r=new FileReader(); 
-    r.onload=e=>{
-        uploadedProductImageBase64=e.target.result;
-        const pi=document.getElementById('product-image-preview'),pc=document.getElementById('product-image-preview-container');
-        if(pi)pi.src=uploadedProductImageBase64;
-        if(pc)pc.classList.remove('hidden');
-        const li=document.getElementById('modal-product-image');
-        if(li)li.value="";
-        showToast("Photo loaded successfully!","success");
-    }; 
-    r.readAsDataURL(f);
-};
+    const r=new FileReader(); r.onload=e=>{uploadedProductImageBase64=e.target.result;const pi=document.getElementById('product-image-preview'),pc=document.getElementById('product-image-preview-container');if(pi)pi.src=uploadedProductImageBase64;if(pc)pc.classList.remove('hidden');const li=document.getElementById('modal-product-image');if(li)li.value="";showToast("Photo loaded!","success");}; r.readAsDataURL(f);
+}
+function clearProductUpload() {
+    uploadedProductImageBase64="";const fi=document.getElementById('modal-product-file');if(fi)fi.value="";const c=document.getElementById('product-image-preview-container');if(c)c.classList.add('hidden');
+}
 
-window.clearProductUpload = function() {
-    uploadedProductImageBase64="";
-    const fi=document.getElementById('modal-product-file'); if(fi)fi.value="";
-    const c=document.getElementById('product-image-preview-container'); if(c)c.classList.add('hidden');
-};
 
 // =====================================================
-// QUOTATION CART MANAGEMENT
+// QUOTE CART
 // =====================================================
-window.addToQuoteCart = function(pid) {
-    const p=window.state.products.find(x=>x.id===pid); if(!p||p.availability==='Out of Stock') return;
-    const ex=window.state.quoteCart.find(i=>i.id===pid); if(ex) ex.qty+=1; else window.state.quoteCart.push({id:p.id,name:p.name,qty:1});
-    saveCartState(); showToast(`Added "${p.name}" to Quote Cart`,"success");
-    if(window.state.currentPage=='products') renderProductsCatalog(); renderQuoteCartUI();
-};
-
-window.removeFromQuoteCart = function(pid) {
-    window.state.quoteCart=window.state.quoteCart.filter(i=>i.id!==pid); saveCartState(); showToast("Product removed","info");
-    if(window.state.currentPage=='products') renderProductsCatalog(); renderQuoteCartUI();
-};
-
-window.adjustCartQty = function(pid,delta) {
-    const item=window.state.quoteCart.find(i=>i.id===pid); if(!item) return;
-    item.qty+=delta; if(item.qty<=0) window.state.quoteCart=window.state.quoteCart.filter(i=>i.id!==pid);
-    saveCartState(); if(window.state.currentPage=='products') renderProductsCatalog(); renderQuoteCartUI();
-};
-
-window.clearQuoteCart = function() {
-    window.state.quoteCart=[]; saveCartState(); showToast("Quote cart cleared","info");
-    if(window.state.currentPage=='products') renderProductsCatalog(); renderQuoteCartUI();
-};
-
-window.saveCartState = function() { localStorage.setItem('sri_balaji_quotecart',JSON.stringify(window.state.quoteCart)); updateCartBadges(); };
-
-window.updateCartBadges = function() {
-    const cnt=window.state.quoteCart.reduce((a,i)=>a+i.qty,0);
+function addToQuoteCart(pid) {
+    const p=state.products.find(x=>x.id===pid); if(!p||p.availability==='Out of Stock') return;
+    const ex=state.quoteCart.find(i=>i.id===pid); if(ex) ex.qty+=1; else state.quoteCart.push({id:p.id,name:p.name,qty:1});
+    saveCartState(); showToast(`Added "${p.name}" to quote cart`,"success");
+    if(state.currentPage==='products') renderProductsCatalog(); renderQuoteCartUI();
+}
+function removeFromQuoteCart(pid) {
+    state.quoteCart=state.quoteCart.filter(i=>i.id!==pid); saveCartState(); showToast("Product removed","info");
+    if(state.currentPage==='products') renderProductsCatalog(); renderQuoteCartUI();
+}
+function adjustCartQty(pid,delta) {
+    const item=state.quoteCart.find(i=>i.id===pid); if(!item) return;
+    item.qty+=delta; if(item.qty<=0) state.quoteCart=state.quoteCart.filter(i=>i.id!==pid);
+    saveCartState(); if(state.currentPage==='products') renderProductsCatalog(); renderQuoteCartUI();
+}
+function clearQuoteCart() {
+    state.quoteCart=[]; saveCartState(); showToast("Quote cart cleared","info");
+    if(state.currentPage==='products') renderProductsCatalog(); renderQuoteCartUI();
+}
+function saveCartState() { localStorage.setItem('sri_balaji_quotecart',JSON.stringify(state.quoteCart)); updateCartBadges(); }
+function updateCartBadges() {
+    const cnt=state.quoteCart.reduce((a,i)=>a+i.qty,0);
     ['cart-nav-badge','cart-nav-badge-mobile','floating-cart-badge'].forEach(id=>{const el=document.getElementById(id);if(el){el.innerText=cnt;cnt>0?el.classList.remove('hidden'):el.classList.add('hidden');}});
     const db=document.getElementById('cart-mobile-drawer-badge'); if(db) db.innerText=`${cnt} item(s)`;
     const fb=document.getElementById('floating-cart-btn'); if(fb){cnt>0?(fb.classList.remove('hidden'),fb.classList.add('flex')):(fb.classList.add('hidden'),fb.classList.remove('flex'));}
-};
-
-window.renderQuoteCartUI = function() {
+}
+function renderQuoteCartUI() {
     const c=document.getElementById('quote-cart-items-container'); if(!c) return; c.innerHTML='';
-    if(window.state.quoteCart.length===0){c.innerHTML=`<div class="py-8 text-center text-slate-400"><p class="font-bold">Your Quote Cart is empty</p><p class="text-[11px] mt-0.5">Browse products and tap "Add to Quote Cart".</p></div>`;document.getElementById('quote-cart-count').innerText="0 items";return;}
+    if(state.quoteCart.length===0){c.innerHTML=`<div class="py-8 text-center text-slate-400"><p class="font-bold">Your Quote Cart is empty</p><p class="text-[11px] mt-0.5">Browse products and tap "Add to Quote Cart".</p></div>`;document.getElementById('quote-cart-count').innerText="0 items";return;}
     let totalItems=0;
-    window.state.quoteCart.forEach(item=>{totalItems+=item.qty;c.insertAdjacentHTML('beforeend',`<div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg flex items-center justify-between gap-2 border border-slate-100 dark:border-slate-800/40"><div class="flex-grow"><p class="text-xs font-extrabold text-slate-900 dark:text-white line-clamp-1">${item.name}</p><p class="text-[10px] text-slate-400">Qty: ${item.qty}</p></div><div class="text-right shrink-0"><div class="flex items-center space-x-1.5 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 px-1"><button onclick="adjustCartQty('${item.id}',-1)" class="text-[10px] font-bold text-slate-500 hover:text-slate-900">-</button><span class="text-[10px] font-black">${item.qty}</span><button onclick="adjustCartQty('${item.id}',1)" class="text-[10px] font-bold text-slate-500 hover:text-slate-900">+</button></div></div></div>`);});
+    state.quoteCart.forEach(item=>{totalItems+=item.qty;c.insertAdjacentHTML('beforeend',`<div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg flex items-center justify-between gap-2 border border-slate-100 dark:border-slate-800/40"><div class="flex-grow"><p class="text-xs font-extrabold text-slate-900 dark:text-white line-clamp-1">${item.name}</p><p class="text-[10px] text-slate-400">Qty: ${item.qty}</p></div><div class="text-right shrink-0"><div class="flex items-center space-x-1.5 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 px-1"><button onclick="adjustCartQty('${item.id}',-1)" class="text-[10px] font-bold text-slate-500 hover:text-slate-900">-</button><span class="text-[10px] font-black">${item.qty}</span><button onclick="adjustCartQty('${item.id}',1)" class="text-[10px] font-bold text-slate-500 hover:text-slate-900">+</button></div></div></div>`);});
     document.getElementById('quote-cart-count').innerText=`${totalItems} items`;
     const es=document.getElementById('enq-subject'),em=document.getElementById('enq-message');
     if(es&&!es.value) es.value=`Bulk Quote Request for ${totalItems} items`;
-    if(em&&(!em.value||em.value.includes("Selected Items for Quote Request:"))){let list="Selected Items for Quote Request:\n";window.state.quoteCart.forEach(i=>{list+=` - ${i.name} (Qty: ${i.qty})\n`;});em.value=list;}
-};
+    if(em&&(!em.value||em.value.includes("Selected Items for Quote Request:"))){let list="Selected Items for Quote Request:\n";state.quoteCart.forEach(i=>{list+=` - ${i.name} (Qty: ${i.qty})\n`;});em.value=list;}
+}
 
 // =====================================================
+// ADMIN PRODUCTS / GALLERY
 // =====================================================
-window.renderAdminProducts = function() {
+function renderAdminProducts() {
     const c=document.getElementById('admin-products-grid'); if(!c) return; c.innerHTML='';
-    const f=window.state.products.filter(p=>p.name.toLowerCase().includes(window.state.adminProductSearch.toLowerCase())||p.description.toLowerCase().includes(window.state.adminProductSearch.toLowerCase()));
+    const f=state.products.filter(p=>p.name.toLowerCase().includes(state.adminProductSearch.toLowerCase())||p.description.toLowerCase().includes(state.adminProductSearch.toLowerCase()));
     if(f.length===0){c.innerHTML=`<div class="col-span-full py-12 text-center text-slate-400"><p class="font-bold text-sm">No items found.</p></div>`;return;}
-    f.forEach(p=>{
-        const out=p.availability==='Out of Stock';
-        const sc=out?'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-400':'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400';
-        c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm animate-fadeIn"><div class="relative aspect-video bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden mb-3"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"><span class="absolute top-2 left-2 px-2 py-0.5 bg-slate-900/80 text-white font-bold text-[8px] rounded uppercase tracking-wider">${p.category}</span></div><div><h4 class="font-extrabold text-sm text-slate-900 dark:text-white line-clamp-1">${p.name}</h4><p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">${p.description}</p><div class="flex items-center justify-end mt-3"><span class="px-2 py-0.5 rounded text-[9px] font-black tracking-wide ${sc}">${p.availability}</span></div></div><div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-200 dark:border-slate-800/80"><button onclick="openProductModal('edit','${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold border border-amber-300 dark:border-amber-800/40">✍️ Edit</button><button onclick="toggleProductStock('${p.id}')" class="bg-blue-100 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold border border-blue-300 dark:border-blue-800/40">Stock</button><button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-700 dark:text-rose-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold border border-rose-300 dark:border-rose-800/40">🗑️ Del</button></div></div>`);
-    });
-};
+    f.forEach(p=>{const out=p.availability==='Out of Stock';const sc=out?'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-400':'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400';c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm animate-fadeIn"><div class="relative aspect-video bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden mb-3"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"><span class="absolute top-2 left-2 px-2 py-0.5 bg-slate-900/80 text-white font-bold text-[8px] rounded uppercase tracking-wider">${p.category}</span></div><div><h4 class="font-extrabold text-sm text-slate-900 dark:text-white line-clamp-1">${p.name}</h4><p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">${p.description}</p><div class="flex items-center justify-end mt-3"><span class="px-2 py-0.5 rounded text-[9px] font-black tracking-wide ${sc}">${p.availability}</span></div></div><div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-200 dark:border-slate-800/80"><button onclick="openProductModal('edit','${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold border border-amber-300 dark:border-amber-800/40">✍️ Edit</button><button onclick="toggleProductStock('${p.id}')" class="bg-blue-100 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold border border-blue-300 dark:border-blue-800/40">Stock</button><button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-700 dark:text-rose-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold border border-rose-300 dark:border-rose-800/40">🗑️ Del</button></div></div>`);});
+}
+function handleAdminProductSearch(v){state.adminProductSearch=v;renderAdminProducts();}
 
-window.handleAdminProductSearch = function(v){window.state.adminProductSearch=v;renderAdminProducts();};
 
-window.openProductModal = function(mode,pid=null) {
-    if(!window.state.adminLoggedIn){showCustomAlert("Only administrators can configure products.","Access Denied","🚫");return;}
+// =====================================================
+// PRODUCT MODAL
+// =====================================================
+function openProductModal(mode,pid=null) {
+    if(!state.adminLoggedIn){showCustomAlert("Only administrators can configure products.","Access Denied","🚫");return;}
     const modal=document.getElementById('product-modal'),title=document.getElementById('product-modal-title');
-    const cs=document.getElementById('modal-product-category'); 
-    if(cs){
-        cs.innerHTML='';
-        CATEGORIES.forEach(cat=>cs.insertAdjacentHTML('beforeend',`<option value="${cat}">${cat}</option>`));
-    }
+    const cs=document.getElementById('modal-product-category'); if(cs){cs.innerHTML='';CATEGORIES.forEach(cat=>cs.insertAdjacentHTML('beforeend',`<option value="${cat}">${cat}</option>`));}
     clearProductUpload();
-    if(mode==='add'){
-        title.innerText='Add New Product';
-        ['modal-product-id','modal-product-name','modal-product-description','modal-product-image'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-        const av=document.getElementById('modal-product-availability');if(av)av.value='In Stock';
-    } else {
-        title.innerText='Edit Product';
-        const p=window.state.products.find(i=>i.id===pid);
-        if(p){
-            document.getElementById('modal-product-id').value=p.id;
-            document.getElementById('modal-product-name').value=p.name;
-            document.getElementById('modal-product-category').value=p.category;
-            document.getElementById('modal-product-description').value=p.description;
-            document.getElementById('modal-product-availability').value=p.availability;
-            if(p.image && p.image.startsWith('data:image')){
-                uploadedProductImageBase64=p.image;
-                const pi=document.getElementById('product-image-preview'),pc=document.getElementById('product-image-preview-container');
-                if(pi)pi.src=p.image;
-                if(pc)pc.classList.remove('hidden');
-                document.getElementById('modal-product-image').value="";
-            } else {
-                document.getElementById('modal-product-image').value=p.image||"";
-            }
-        }
-    }
+    if(mode==='add'){title.innerText='Add New Product';['modal-product-id','modal-product-name','modal-product-description','modal-product-image'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const av=document.getElementById('modal-product-availability');if(av)av.value='In Stock';}
+    else{title.innerText='Edit Product';const p=state.products.find(i=>i.id===pid);if(p){document.getElementById('modal-product-id').value=p.id;document.getElementById('modal-product-name').value=p.name;document.getElementById('modal-product-category').value=p.category;document.getElementById('modal-product-description').value=p.description;document.getElementById('modal-product-availability').value=p.availability;if(p.image&&p.image.startsWith('data:image')){uploadedProductImageBase64=p.image;const pi=document.getElementById('product-image-preview'),pc=document.getElementById('product-image-preview-container');if(pi)pi.src=p.image;if(pc)pc.classList.remove('hidden');document.getElementById('modal-product-image').value="";}else{document.getElementById('modal-product-image').value=p.image||"";}}}
     modal.classList.remove('hidden');modal.classList.add('flex');
-};
-
-window.closeProductModal = function(){const m=document.getElementById('product-modal');m.classList.add('hidden');m.classList.remove('flex');clearProductUpload();};
-
-window.saveProductForm = async function(e) {
-    e.preventDefault(); 
-    if(!window.state.adminLoggedIn){showCustomAlert("Only administrators can save products.","Access Denied","🚫");return;}
-    if(!auth.currentUser) { showToast("Not authenticated to save database. Connecting...", "error"); return; }
-    
-    const id=document.getElementById('modal-product-id').value || ('prod-' + Date.now());
-    const name=document.getElementById('modal-product-name').value;
-    const category=document.getElementById('modal-product-category').value;
-    const description=document.getElementById('modal-product-description').value;
-    const availability=document.getElementById('modal-product-availability').value;
+}
+function closeProductModal(){const m=document.getElementById('product-modal');m.classList.add('hidden');m.classList.remove('flex');clearProductUpload();}
+function saveProductForm(e) {
+    e.preventDefault(); if(!state.adminLoggedIn){showCustomAlert("Only administrators can save products.","Access Denied","🚫");return;}
+    const id=document.getElementById('modal-product-id').value;
+    const name=document.getElementById('modal-product-name').value,category=document.getElementById('modal-product-category').value,description=document.getElementById('modal-product-description').value,availability=document.getElementById('modal-product-availability').value;
     const image=uploadedProductImageBase64||document.getElementById('modal-product-image').value||"https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80";
-    
-    const productPayload = { id, name, category, description, availability, image };
-
-    try {
-        // Save to Live Firebase Cloud Document (Strict Path)
-        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'products', id);
-        await setDoc(docRef, productPayload);
-        showToast("System saved and synchronized in Cloud!", "success");
-        closeProductModal();
-    } catch(err) {
-        console.error("Firestore save product error:", err);
-        showToast("Error uploading product to cloud database.", "error");
-    }
-};
-
-window.toggleProductStock = async function(id) {
-    if(!window.state.adminLoggedIn){showCustomAlert("Only administrators can change stock.","Access Denied","🚫");return;}
-    if(!auth.currentUser) return;
-    const p = window.state.products.find(x => x.id === id);
-    if (!p) return;
-    const nextAvailability = p.availability === 'In Stock' ? 'Out of Stock' : 'In Stock';
-    try {
-        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'products', id);
-        await updateDoc(docRef, { availability: nextAvailability });
-        showToast(`Stock updated to ${nextAvailability}`);
-    } catch(err) {
-        console.error("Firestore update stock error:", err);
-    }
-};
-
-window.deleteProduct = async function(id) {
-    if(!window.state.adminLoggedIn){showCustomAlert("Only administrators can delete products.","Access Denied","🚫");return;}
-    if(!auth.currentUser) return;
+    if(id){state.products=state.products.map(p=>p.id===id?{id,name,category,description,availability,image}:p);showToast("Product updated!");}
+    else{state.products.push({id:'prod-'+Date.now(),name,category,description,availability,image});showToast("New product added!");}
+    localStorage.setItem('sri_balaji_products',JSON.stringify(state.products));closeProductModal();renderAdminProducts();
+}
+function toggleProductStock(id) {
+    if(!state.adminLoggedIn){showCustomAlert("Only administrators can change stock.","Access Denied","🚫");return;}
+    state.products=state.products.map(p=>{if(p.id===id){const next=p.availability==='In Stock'?'Out of Stock':'In Stock';showToast(`Stock updated`);return{...p,availability:next};}return p;});
+    localStorage.setItem('sri_balaji_products',JSON.stringify(state.products));renderAdminProducts();
+}
+async function deleteProduct(id) {
+    if(!state.adminLoggedIn){showCustomAlert("Only administrators can delete products.","Access Denied","🚫");return;}
     const ok=await showCustomAlert("Are you sure you want to remove this product?","Confirm","❓",true);
-    if(ok){
-        try {
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'products', id);
-            await deleteDoc(docRef);
-            showToast("Product deleted from Cloud Database", "info");
-        } catch(err) {
-            console.error("Firestore delete product error:", err);
-        }
-    }
-};
+    if(ok){state.products=state.products.filter(p=>p.id!==id);localStorage.setItem('sri_balaji_products',JSON.stringify(state.products));showToast("Product deleted","info");renderAdminProducts();}
+}
 
-window.openSettingsModal = function() {
-    const s=window.state.settings;
+// =====================================================
+// GALLERY MODAL
+// =====================================================
+
+
+// =====================================================
+// SETTINGS MODAL
+// =====================================================
+function openSettingsModal() {
+    const s=state.settings;
     ['shop-name','phone','whatsapp','hero-banner','address','hours'].forEach(k=>{const el=document.getElementById(`setting-${k}`);if(el)el.value=s[k.replace('-','')]||s[k]||'';});
     document.getElementById('setting-shop-name').value=s.shopName;document.getElementById('setting-phone').value=s.phone;document.getElementById('setting-whatsapp').value=s.whatsapp;document.getElementById('setting-hero-banner').value=s.heroBannerUrl;document.getElementById('setting-address').value=s.address;document.getElementById('setting-hours').value=s.hours;
     const m=document.getElementById('settings-modal');m.classList.remove('hidden');m.classList.add('flex');
-};
-
-window.closeSettingsModal = function(){const m=document.getElementById('settings-modal');m.classList.add('hidden');m.classList.remove('flex');};
-
-window.saveSettingsForm = async function(e) {
+}
+function closeSettingsModal(){const m=document.getElementById('settings-modal');m.classList.add('hidden');m.classList.remove('flex');}
+function saveSettingsForm(e) {
     e.preventDefault();
-    if (!auth.currentUser) return;
-    const payload = {
-        shopName: document.getElementById('setting-shop-name').value,
-        phone: document.getElementById('setting-phone').value,
-        whatsapp: document.getElementById('setting-whatsapp').value,
-        heroBannerUrl: document.getElementById('setting-hero-banner').value || 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=1200&h=600&q=80',
-        address: document.getElementById('setting-address').value,
-        hours: document.getElementById('setting-hours').value
-    };
-    try {
-        const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'global_settings');
-        await setDoc(settingsDocRef, payload);
-        showToast("Global settings synchronized to Cloud Database!", "success");
-        closeSettingsModal();
-    } catch(err) {
-        console.error("Firestore settings save error:", err);
-    }
-};
+    state.settings={...state.settings,shopName:document.getElementById('setting-shop-name').value,phone:document.getElementById('setting-phone').value,whatsapp:document.getElementById('setting-whatsapp').value,heroBannerUrl:document.getElementById('setting-hero-banner').value||'image_d576ee.jpg',address:document.getElementById('setting-address').value,hours:document.getElementById('setting-hours').value};
+    localStorage.setItem('sri_balaji_settings',JSON.stringify(state.settings));showToast("Settings saved!","success");closeSettingsModal();updateShopBrandingDOM();renderAdminDashboard();
+}
 
 // =====================================================
+// FACTORY RESET
 // =====================================================
-window.submitEnquiry = async function(e) {
+async function resetToFactoryDefaults() {
+    let ok=false;try{ok=await showCustomAlert("This will restore default products, galleries, and configurations. Proceed?","Reset Confirmation","❓",true);}catch(err){ok=true;}
+    if(ok){
+        ['sri_balaji_products','sri_balaji_settings','sri_balaji_enquiries','sri_balaji_quotecart','sri_balaji_admin_auth'].forEach(k=>localStorage.removeItem(k));
+        state.products=DEFAULT_PRODUCTS;state.settings=DEFAULT_SETTINGS;state.enquiries=[];state.quoteCart=[];state.adminLoggedIn=false;
+        saveCartState();updateShopBrandingDOM();
+        const nat=document.getElementById('nav-admin-text');if(nat)nat.innerText="Admin";
+        const nma=document.getElementById('nav-mobile-admin');if(nma)nma.innerText="🔑 Admin Login";
+        syncNavVisibility();renderProductsCatalog();showToast("System restored to defaults!","success");navigateTo('home');
+    }
+}
+
+// =====================================================
+// ENQUIRY
+// =====================================================
+function submitEnquiry(e) {
     e.preventDefault();
-    if (!auth.currentUser) { showToast("System not connected to internet. Try again.", "error"); return; }
-    
-    const enqId = 'enq-' + Date.now();
-    const newE = {
-        id: enqId,
-        name: document.getElementById('enq-name').value,
-        mobile: document.getElementById('enq-mobile').value,
-        location: document.getElementById('enq-location').value,
-        subject: document.getElementById('enq-subject').value,
-        message: document.getElementById('enq-message').value,
-        date: new Date().toLocaleDateString('en-IN') + ' ' + new Date().toLocaleTimeString('en-IN'),
-        timestamp: Date.now(),
-        status: 'Pending'
-    };
-
-    try {
-        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'enquiries', enqId);
-        await setDoc(docRef, newE);
-        showCustomAlert("Thank you! Your inquiry has been registered in the Cloud. The shop manager has been notified.", "Submission Successful", "🎉");
-        window.state.quoteCart=[];
-        saveCartState();
-        resetEnquiryForm();
-        navigateTo('home');
-    } catch(err) {
-        console.error("Firestore enquiry submission error:", err);
-        showToast("Error transmitting your request online.", "error");
-    }
-};
-
-window.resetEnquiryForm = function(){document.getElementById('enquiry-form').reset();};
-
-window.toggleEnquiryStatus = async function(id) {
-    if(!window.state.adminLoggedIn || !auth.currentUser) return;
-    const enq = window.state.enquiries.find(e => e.id === id);
-    if (!enq) return;
-    const nextStatus = enq.status === 'Contacted' ? 'Pending' : 'Contacted';
-    try {
-        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'enquiries', id);
-        await updateDoc(docRef, { status: nextStatus });
-        showToast(`Status updated: ${nextStatus}`, "success");
-    } catch(err) {
-        console.error("Firestore status toggle error:", err);
-    }
-};
-
-window.deleteEnquiry = async function(id) {
-    if(!window.state.adminLoggedIn || !auth.currentUser) return;
-    const ok = await showCustomAlert("Permanently delete this request?", "Confirm", "❓", true);
-    if(ok) {
-        try {
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'enquiries', id);
-            await deleteDoc(docRef);
-            showToast("Inquiry request removed", "info");
-        } catch(err) {
-            console.error("Firestore enquiry delete error:", err);
-        }
-    }
-};
-
-window.respondViaWhatsApp = function(eid) {
-    const enq=window.state.enquiries.find(e=>e.id===eid); if(!enq) return;
+    const newE={id:'enq-'+Date.now(),name:document.getElementById('enq-name').value,mobile:document.getElementById('enq-mobile').value,location:document.getElementById('enq-location').value,subject:document.getElementById('enq-subject').value,message:document.getElementById('enq-message').value,date:new Date().toLocaleDateString('en-IN')+' '+new Date().toLocaleTimeString('en-IN'),status:'Pending'};
+    state.enquiries.unshift(newE);localStorage.setItem('sri_balaji_enquiries',JSON.stringify(state.enquiries));
+    showCustomAlert("Thank you! Your enquiry has been registered. Our team will contact you soon.","Submission Successful","🎉");
+    state.quoteCart=[];saveCartState();resetEnquiryForm();navigateTo('home');
+}
+function resetEnquiryForm(){document.getElementById('enquiry-form').reset();}
+function toggleEnquiryStatus(id) {
+    state.enquiries=state.enquiries.map(e=>{if(e.id===id){const next=e.status==='Contacted'?'Pending':'Contacted';showToast(`Status: ${next}`,"success");return{...e,status:next};}return e;});
+    localStorage.setItem('sri_balaji_enquiries',JSON.stringify(state.enquiries));renderAdminDashboard();
+}
+async function deleteEnquiry(id) {
+    const ok=await showCustomAlert("Permanently delete this request?","Confirm","❓",true);
+    if(ok){state.enquiries=state.enquiries.filter(e=>e.id!==id);localStorage.setItem('sri_balaji_enquiries',JSON.stringify(state.enquiries));showToast("Request removed","info");renderAdminDashboard();}
+}
+function respondViaWhatsApp(eid) {
+    const enq=state.enquiries.find(e=>e.id===eid); if(!enq) return;
     let mob=enq.mobile.replace(/\D/g,''); if(mob.length===10) mob='91'+mob;
     window.open(`https://wa.me/${mob}?text=${encodeURIComponent(`Hi ${enq.name}, this is Sri Balaji Electrical Shop. Thank you for your enquiry about "${enq.subject}". We are glad to help!`)}`, '_blank');
-};
+}
 
-window.handleAdminLogin = function(e) {
+// =====================================================
+// ADMIN AUTH
+// =====================================================
+function handleAdminLogin(e) {
     e.preventDefault();
     const input=document.getElementById('admin-password-input').value;
-    if(input===(window.state.settings.adminPassword||'admin')){
-        window.state.adminLoggedIn=true;localStorage.setItem('sri_balaji_admin_auth','true');showToast("Access granted!","success");document.getElementById('admin-password-input').value='';
+    if(input===(state.settings.adminPassword||'admin')){
+        state.adminLoggedIn=true;localStorage.setItem('sri_balaji_admin_auth','true');showToast("Access granted!","success");document.getElementById('admin-password-input').value='';
         const nat=document.getElementById('nav-admin-text');if(nat)nat.innerText="Dashboard";
         const nma=document.getElementById('nav-mobile-admin');if(nma)nma.innerText="🔒 Admin Dashboard";
         syncNavVisibility();renderProductsCatalog();navigateTo('admin');
-    } else {
-        showToast("Invalid password. Try again.","error");
-    }
-};
-
-window.handleAdminLogout = function() {
-    window.state.adminLoggedIn=false;localStorage.removeItem('sri_balaji_admin_auth');showToast("Session ended.","info");
+    } else{showToast("Invalid password. Try again.","error");}
+}
+function handleAdminLogout() {
+    state.adminLoggedIn=false;localStorage.removeItem('sri_balaji_admin_auth');showToast("Session ended.","info");
     const nat=document.getElementById('nav-admin-text');if(nat)nat.innerText="Admin";
     const nma=document.getElementById('nav-mobile-admin');if(nma)nma.innerText="🔑 Admin Login";
     syncNavVisibility();renderProductsCatalog();navigateTo('home');
-};
-
-window.handlePasswordChange = async function(e) {
-    e.preventDefault();
-    const v=document.getElementById('new-admin-password-field').value;
+}
+function handlePasswordChange(e) {
+    e.preventDefault();const v=document.getElementById('new-admin-password-field').value;
     if(v.trim().length<4){showToast("Password must be at least 4 characters","error");return;}
-    try {
-        const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'global_settings');
-        await updateDoc(settingsDocRef, { adminPassword: v });
-        document.getElementById('new-admin-password-field').value='';
-        showToast("Password updated in cloud!", "success");
-    } catch(err) {
-        console.error("Firestore password update error:", err);
-    }
-};
+    state.settings.adminPassword=v;localStorage.setItem('sri_balaji_settings',JSON.stringify(state.settings));document.getElementById('new-admin-password-field').value='';showToast("Password updated!","success");
+}
+function handleSearch(v){state.productSearch=v;renderProductsCatalog();}
+function setCategoryFilter(cat){state.selectedCategory=cat;renderCategoryChips();renderProductsCatalog();}
 
-window.handleSearch = function(v){window.state.productSearch=v;renderProductsCatalog();};
-
-window.updateShopBrandingDOM = function() {
-    const s=window.state.settings; if(!s) return;
+// =====================================================
+// BRANDING
+// =====================================================
+function updateShopBrandingDOM() {
+    const s=state.settings; if(!s) return;
     document.querySelectorAll('.id-shop-name').forEach(el=>{if(el)el.innerText=s.shopName;});
     const nsn=document.getElementById('nav-shop-name');if(nsn)nsn.innerText=s.shopName;
     document.querySelectorAll('.id-phone-text').forEach(el=>{if(el)el.innerText=s.phone;});
@@ -1198,43 +892,36 @@ window.updateShopBrandingDOM = function() {
     const adh=document.getElementById('admin-display-hours');if(adh)adh.innerText=s.hours;
     [['nav-mobile-call',`tel:${s.phone}`],['hero-call-btn',`tel:${s.phone}`],['hero-whatsapp-btn',`https://wa.me/91${s.whatsapp}`],['contact-tel-link',`tel:${s.phone}`],['contact-wa-link',`https://wa.me/91${s.whatsapp}`],['contact-footer-tel',`tel:${s.phone}`],['contact-footer-wa',`https://wa.me/91${s.whatsapp}`],['floating-call-btn',`tel:${s.phone}`],['floating-whatsapp-btn',`https://wa.me/91${s.whatsapp}`],['footer-tel',`tel:${s.phone}`]].forEach(([id,href])=>{const el=document.getElementById(id);if(el)el.href=href;});
     const hb=document.getElementById('hero-banner');if(hb)hb.src=s.heroBannerUrl;
-};
+}
 
 // =====================================================
+// ADMIN DASHBOARD RENDER
 // =====================================================
-window.renderAdminDashboard = function() {
+function renderAdminDashboard() {
     try {
         const lc=document.getElementById('admin-login-card'),dp=document.getElementById('admin-dashboard-panel');
-        if(!window.state.adminLoggedIn){if(lc)lc.classList.remove('hidden');if(dp)dp.classList.add('hidden');return;}
+        if(!state.adminLoggedIn){if(lc)lc.classList.remove('hidden');if(dp)dp.classList.add('hidden');return;}
         if(lc)lc.classList.add('hidden');if(dp)dp.classList.remove('hidden');
-        const sp=document.getElementById('stat-products-count');if(sp)sp.innerText=window.state.products.length;
-        const se=document.getElementById('stat-enquiries-count');if(se)se.innerText=window.state.enquiries.length;
-        const pending=window.state.enquiries.filter(e=>e.status!=='Contacted').length;
+        const sp=document.getElementById('stat-products-count');if(sp)sp.innerText=state.products.length;
+        const se=document.getElementById('stat-enquiries-count');if(se)se.innerText=state.enquiries.length;
+        const pending=state.enquiries.filter(e=>e.status!=='Contacted').length;
         const spc=document.getElementById('stat-pending-count');if(spc)spc.innerText=`${pending} Pending`;
         updateShopBrandingDOM();
         const tbody=document.getElementById('enquiries-table-body'),fb=document.getElementById('no-enquiries-fallback');
         if(!tbody) return; tbody.innerHTML='';
-        if(window.state.enquiries.length===0){if(fb)fb.classList.remove('hidden');}
-        else{
-            if(fb)fb.classList.add('hidden');
-            window.state.enquiries.forEach(enq=>{
-                const sc=enq.status==='Contacted'?'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300':'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300';
-                tbody.insertAdjacentHTML('beforeend',`<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors"><td class="p-4"><p class="font-black text-slate-900 dark:text-white">${enq.name}</p><p class="text-xs text-slate-500 mt-0.5">📞 ${enq.mobile}</p>${enq.location?`<p class="text-[10px] text-slate-400">📍 ${enq.location}</p>`:''}</td><td class="p-4"><span class="inline-block px-2.5 py-1 bg-blue-50 dark:bg-slate-800 text-blue-700 dark:text-blue-300 rounded-md text-xs font-bold line-clamp-1">${enq.subject}</span></td><td class="p-4 max-w-xs"><p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2">${enq.message||"No description."}</p></td><td class="p-4 text-slate-500 text-xs">${enq.date}</td><td class="p-4 text-center"><button onclick="toggleEnquiryStatus('${enq.id}')" class="px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider ${sc}">${enq.status||'Pending'}</button></td><td class="p-4 text-right"><div class="flex items-center justify-end space-x-1.5"><button onclick="respondViaWhatsApp('${enq.id}')" class="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 p-2 rounded-lg text-xs">💬 WhatsApp</button><button onclick="deleteEnquiry('${enq.id}')" class="text-rose-600 hover:text-rose-800 p-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg">🗑️</button></div></td></tr>`);
-            });
-        }
-        if(window.state.adminActiveTab=='products') renderAdminProducts();
+        if(state.enquiries.length===0){if(fb)fb.classList.remove('hidden');}
+        else{if(fb)fb.classList.add('hidden');state.enquiries.forEach(enq=>{const sc=enq.status==='Contacted'?'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300':'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300';tbody.insertAdjacentHTML('beforeend',`<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors"><td class="p-4"><p class="font-black text-slate-900 dark:text-white">${enq.name}</p><p class="text-xs text-slate-500 mt-0.5">📞 ${enq.mobile}</p>${enq.location?`<p class="text-[10px] text-slate-400">📍 ${enq.location}</p>`:''}</td><td class="p-4"><span class="inline-block px-2.5 py-1 bg-blue-50 dark:bg-slate-800 text-blue-700 dark:text-blue-300 rounded-md text-xs font-bold line-clamp-1">${enq.subject}</span></td><td class="p-4 max-w-xs"><p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2">${enq.message||"No description."}</p></td><td class="p-4 text-slate-500 text-xs">${enq.date}</td><td class="p-4 text-center"><button onclick="toggleEnquiryStatus('${enq.id}')" class="px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider ${sc}">${enq.status||'Pending'}</button></td><td class="p-4 text-right"><div class="flex items-center justify-end space-x-1.5"><button onclick="respondViaWhatsApp('${enq.id}')" class="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 p-2 rounded-lg text-xs">💬 WhatsApp</button><button onclick="deleteEnquiry('${enq.id}')" class="text-rose-600 hover:text-rose-800 p-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg">🗑️</button></div></td></tr>`);});}
+        if(state.adminActiveTab==='products') renderAdminProducts();
     } catch(err){console.error("Dashboard render error:",err);}
-};
+}
 
 // =====================================================
-// WINDOW ONLOAD INITIALIZATION
+// BOOTSTRAP
 // =====================================================
-window.addEventListener('load', () => {
+window.onload = function() {
     applyThemeDOM();
     updateCartBadges();
-    
-    // Check local Auth Session
-    if(window.state.adminLoggedIn){
+    if(state.adminLoggedIn){
         const nat=document.getElementById('nav-admin-text');if(nat)nat.innerText="Dashboard";
         const nma=document.getElementById('nav-mobile-admin');if(nma)nma.innerText="🔒 Admin Dashboard";
         navigateTo('admin');
@@ -1243,14 +930,10 @@ window.addEventListener('load', () => {
         const nma=document.getElementById('nav-mobile-admin');if(nma)nma.innerText="🔑 Admin Login";
         navigateTo('home');
     }
-    
     updateShopBrandingDOM();
     updateLanguageDOM();
     syncNavVisibility();
-    
-    // Bootstrap Firebase Realtime Integration
-    initFirebase();
-});
+};
 </script>
 </body>
 </html>
