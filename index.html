@@ -8,16 +8,26 @@
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: { extend: { colors: { brandBlue: { 50: '#f0f3ff', 600: '#1e40af', 900: '#1e3a8a' }, brandOrange: '#f97316' } } }
+            theme: { 
+                extend: { 
+                    colors: { 
+                        brandBlue: { 50: '#f0f3ff', 600: '#1e40af', 900: '#1e3a8a' }, 
+                        brandOrange: '#f97316' 
+                    } 
+                } 
+            }
         }
     </script>
     <style>
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
         * { transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; }
-        .dark ::-webkit-scrollbar-track { background: #0f172a; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .dark ::-webkit-scrollbar-thumb { background: #334155; } ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        ::-webkit-scrollbar { width: 8px; } 
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #0f172a; } 
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; } 
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         .glass-panel { background: rgba(255,255,255,0.75); backdrop-filter: blur(12px); }
         .dark .glass-panel { background: rgba(15,23,42,0.8); backdrop-filter: blur(12px); }
     </style>
@@ -104,7 +114,7 @@
 <section id="page-home" class="page-section animate-fadeIn">
     <div class="relative bg-slate-950 text-white overflow-hidden min-h-[550px] flex items-center">
         <div class="absolute inset-0 z-0">
-            <img id="hero-banner" src="image_d576ee.jpg" alt="Shop Banner" class="w-full h-full object-cover object-center opacity-30 filter blur-[1px]" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&h=500&q=80'">
+            <img id="hero-banner" src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=1200&h=600&q=80" alt="Shop Banner" class="w-full h-full object-cover object-center opacity-30 filter blur-[1px]" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&h=500&q=80'">
             <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
@@ -170,7 +180,7 @@
         <div class="text-center mb-16"><span class="text-xs font-bold text-orange-500 uppercase tracking-widest" data-t="about_badge">About Our Business</span><h2 class="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white mt-1" data-t="about_title">Sri Balaji Electricals</h2><p class="text-slate-500 dark:text-slate-400 mt-4 max-w-2xl mx-auto" data-t="about_desc">Your trusted neighborhood location supplying top-quality electrical, plumbing, and home maintenance devices.</p></div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
             <div><h3 class="text-2xl font-bold text-slate-900 dark:text-white" data-t="about_pillars_title">One-Stop Electrical & Plumbing Solutions</h3><p class="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed" data-t="about_p1">At Sri Balaji Electrical Shop, we pride ourselves on holding a comprehensive inventory of heavy-duty materials for building development, household repairs, wiring improvements, and fixture fittings.</p><p class="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed" data-t="about_p2">Our focus is safety first. Every switch, wire loop, or PVC conduit pipe we sell conforms to official safety indices.</p></div>
-            <div><img src="image_372b9f.jpg" alt="About Shop" class="rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'"></div>
+            <div><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" alt="About Shop" class="rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 w-full h-80 object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'"></div>
         </div>
         <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 sm:p-12 text-white">
             <h3 class="text-2xl sm:text-3xl font-extrabold text-center mb-10" data-t="about_pillars_title">Four Pillars of Our Commitment</h3>
@@ -193,7 +203,7 @@
                 <h3 class="text-2xl font-black text-slate-900 dark:text-white" data-t="contact_card_title">Store Location & Details</h3>
                 <div class="space-y-6">
                     <div class="flex items-start space-x-4"><div class="p-3 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-xl">📞</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_phone">Phone Number</span><a id="contact-tel-link" href="tel:9515168300" class="text-lg font-black text-slate-900 dark:text-orange-400 hover:text-blue-600 id-phone-text">9515168300</a></div></div>
-                    <div class="flex items-start space-x-4"><div class="p-3 bg-emerald-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-xl">💬</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_wa">WhatsApp Support</span><a id="contact-wa-link" href="https://wa.me/919515168300" target="_blank" class="text-lg font-black text-emerald-600 dark:text-emerald-400 hover:underline">9515168305</a></div></div>
+                    <div class="flex items-start space-x-4"><div class="p-3 bg-emerald-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-xl">💬</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_wa">WhatsApp Support</span><a id="contact-wa-link" href="https://wa.me/919515168300" target="_blank" class="text-lg font-black text-emerald-600 dark:text-emerald-400 hover:underline">9515168300</a></div></div>
                     <div class="flex items-start space-x-4"><div class="p-3 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 rounded-xl">📍</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_address">Store Physical Address</span><p id="contact-address-text" class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-relaxed">D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India</p></div></div>
                     <div class="flex items-start space-x-4"><div class="p-3 bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 rounded-xl">⏰</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_hours">Operational Timing</span><p id="contact-hours-text" class="text-slate-700 dark:text-slate-300 text-sm font-semibold" data-t="contact_hours_val">Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed</p></div></div>
                 </div>
@@ -236,7 +246,6 @@
             <div id="quote-cart-items-container" class="space-y-3 max-h-80 overflow-y-auto pr-1"></div>
             <div class="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
                 <div class="flex justify-between text-xs font-bold text-slate-500 dark:text-slate-400"><span>Selected Products:</span><span id="quote-cart-count">0 items</span></div>
-                <div class="flex justify-between text-sm font-black text-slate-950 dark:text-white"><span>Estimated Total:</span><span id="quote-cart-total">₹0.00</span></div>
             </div>
             <div class="bg-blue-50 dark:bg-slate-950/40 p-3 rounded-lg border border-blue-100 dark:border-slate-800/60 text-xs text-blue-800 dark:text-blue-300">💡 Adding items to this list helps us prepare an accurate wholesale quote quickly.</div>
         </div>
@@ -262,12 +271,10 @@
         <div class="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
             <button onclick="setAdminTab('inbox')" id="admin-tab-inbox" class="px-6 py-3.5 font-extrabold text-sm border-b-2 border-orange-500 text-orange-500 transition-all shrink-0">📥 Inbox & Settings</button>
             <button onclick="setAdminTab('products')" id="admin-tab-products" class="px-6 py-3.5 font-bold text-sm text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-all shrink-0">📦 Manage Products</button>
-            <button onclick="setAdminTab('gallery')" id="admin-tab-gallery" class="px-6 py-3.5 font-bold text-sm text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-all shrink-0">🖼️ Manage Gallery</button>
         </div>
         <div id="admin-panel-inbox" class="space-y-8">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm"><div><span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_products">Products Catalog</span><span id="stat-products-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span><button onclick="setAdminTab('products')" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold mt-2 block">Go to Catalog →</button></div><div class="p-4 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-2xl text-xl">📦</div></div>
-                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm"><div><span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_gallery">Gallery Pictures</span><span id="stat-gallery-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span><button onclick="setAdminTab('gallery')" class="text-xs text-orange-600 dark:text-orange-400 hover:underline font-bold mt-2 block">Go to Photos →</button></div><div class="p-4 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 rounded-2xl text-xl">🖼️</div></div>
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm"><div><span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block" data-t="admin_stat_enquiries">Guest Enquiries</span><span id="stat-enquiries-count" class="text-3xl font-black text-slate-900 dark:text-white block mt-1">0</span><span id="stat-pending-count" class="text-xs text-amber-600 font-bold block mt-1">0 Pending</span></div><div class="p-4 bg-purple-50 dark:bg-slate-800 text-purple-600 dark:text-purple-400 rounded-2xl text-xl">📥</div></div>
             </div>
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
@@ -289,10 +296,6 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><div><h3 class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Inventory Catalogue Manager</h3><p class="text-xs text-slate-500 dark:text-slate-400">Configure catalog entries, pricing and stock metrics.</p></div><button onclick="openProductModal('add')" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-3 rounded-xl flex items-center justify-center space-x-1.5 shadow-lg self-start sm:self-auto">➕ Add New Product</button></div>
             <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800"><div class="relative"><svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><input type="text" id="admin-product-search" oninput="handleAdminProductSearch(this.value)" placeholder="Search inventory catalog..." class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-orange-500"></div></div>
             <div id="admin-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-        </div>
-        <div id="admin-panel-gallery" class="hidden space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><div><h3 class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Gallery Showcase Manager</h3><p class="text-xs text-slate-500 dark:text-slate-400">Configure visual displays and edit captions.</p></div><button onclick="openGalleryModal('add')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-3 rounded-xl flex items-center justify-center space-x-1.5 shadow-lg self-start sm:self-auto">➕ Add Gallery Image</button></div>
-            <div id="admin-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fadeIn"></div>
         </div>
     </div>
 </section>
@@ -319,45 +322,28 @@
 
 <!-- PRODUCT MODAL -->
 <div id="product-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4 hidden">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl animate-fadeIn">
         <div class="bg-slate-900 p-6 text-white flex justify-between items-center"><h3 id="product-modal-title" class="text-xl font-bold">Configure Product Item</h3><button onclick="closeProductModal()" class="p-1.5 hover:bg-slate-800 rounded-lg">✕</button></div>
         <form onsubmit="saveProductForm(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-slate-800 dark:text-white">
             <input type="hidden" id="modal-product-id">
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Product Title / Brand Name *</label><input type="text" id="modal-product-name" required placeholder="e.g. Anchor Roma Classic Modular Switches" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"></div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Category Group *</label><select id="modal-product-category" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none"></select></div><div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Price (₹ INR) *</label><input type="number" id="modal-product-price" required placeholder="Price" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></div></div>
+            <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Category Group *</label><select id="modal-product-category" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none"></select></div>
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Short Specifications</label><textarea id="modal-product-description" rows="3" placeholder="Explain manufacturer parameters, brand tags..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></textarea></div>
             <div class="space-y-2">
-                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Product Image (File Upload)</label>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Product Image (Local File Upload)</label>
                 <div id="product-upload-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-orange-500 rounded-xl p-6 text-center cursor-pointer transition-colors bg-slate-50 dark:bg-slate-800/40" onclick="document.getElementById('modal-product-file').click()">
                     <input type="file" id="modal-product-file" accept="image/*" class="hidden" onchange="handleProductFileSelect(event)">
                     <div class="flex flex-col items-center space-y-1"><span class="text-3xl">📸</span><span class="text-xs font-bold text-slate-600 dark:text-slate-300">Click to Browse or Drag & Drop</span><span class="text-[10px] text-slate-400">JPG, PNG, WEBP (Max 2MB)</span></div>
                 </div>
                 <div id="product-image-preview-container" class="hidden relative rounded-xl border border-slate-200 dark:border-slate-800 p-2 max-w-xs bg-slate-50 dark:bg-slate-900 flex items-center space-x-3"><img id="product-image-preview" src="#" alt="Preview" class="w-16 h-16 object-cover rounded-lg"><div class="flex-grow min-w-0"><p class="text-xs font-bold text-slate-900 dark:text-white truncate">Image Uploaded!</p><button type="button" onclick="clearProductUpload()" class="text-[11px] text-rose-500 font-bold hover:underline">Clear</button></div></div>
             </div>
-            <div class="pt-2 border-t border-slate-100 dark:border-slate-800/80"><label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Or paste an Image URL (Optional)</label><input type="text" id="modal-product-image" placeholder="https://example.com/image.jpg" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></div>
+            <div class="pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">🌐 Or paste a Cloud Image URL (Recommended for Multi-Device Visibility)</label>
+                <input type="text" id="modal-product-image" placeholder="https://images.unsplash.com/... or cloud link" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none">
+                <p class="text-[10px] text-slate-400 mt-1">If you paste an internet image link here, clients on mobile will instantly see it!</p>
+            </div>
             <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Stock Availability *</label><select id="modal-product-availability" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 dark:text-white border dark:border-slate-700 rounded-lg text-sm font-semibold focus:outline-none"><option value="In Stock">In Stock</option><option value="Out of Stock">Out of Stock</option></select></div>
             <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2"><button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button><button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md">Save Configuration</button></div>
-        </form>
-    </div>
-</div>
-
-<!-- GALLERY MODAL -->
-<div id="gallery-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4 hidden">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
-        <div class="bg-slate-900 p-6 text-white flex justify-between items-center"><h3 id="gallery-modal-title" class="text-xl font-bold">Gallery Photo Details</h3><button onclick="closeGalleryModal()" class="p-1.5 hover:bg-slate-800 rounded-lg">✕</button></div>
-        <form onsubmit="saveGalleryForm(event)" class="p-6 space-y-4 text-slate-800 dark:text-white">
-            <input type="hidden" id="modal-gallery-id">
-            <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Image Caption Label *</label><input type="text" id="modal-gallery-caption" required placeholder="e.g. Safety wire displays" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></div>
-            <div class="space-y-2">
-                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">Gallery Image File</label>
-                <div id="gallery-upload-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-emerald-500 rounded-xl p-5 text-center cursor-pointer transition-colors bg-slate-50 dark:bg-slate-800/40" onclick="document.getElementById('modal-gallery-file').click()">
-                    <input type="file" id="modal-gallery-file" accept="image/*" class="hidden" onchange="handleGalleryFileSelect(event)">
-                    <div class="flex flex-col items-center space-y-1"><span class="text-2xl">🖼️</span><span class="text-xs font-bold text-slate-600 dark:text-slate-300">Browse Image or Drag here</span></div>
-                </div>
-                <div id="gallery-image-preview-container" class="hidden relative rounded-xl border border-slate-200 dark:border-slate-800 p-2 max-w-xs bg-slate-50 dark:bg-slate-900 flex items-center space-x-3"><img id="gallery-image-preview" src="#" alt="Preview" class="w-14 h-14 object-cover rounded-lg"><div class="flex-grow min-w-0"><p class="text-xs font-bold text-slate-900 dark:text-white truncate">Image loaded!</p><button type="button" onclick="clearGalleryUpload()" class="text-[10px] text-rose-500 font-bold hover:underline">Clear</button></div></div>
-            </div>
-            <div class="pt-2 border-t border-slate-100 dark:border-slate-800"><label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Or paste online image URL</label><input type="text" id="modal-gallery-image" placeholder="image.jpg or URL" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-sm focus:outline-none"></div>
-            <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end space-x-2"><button type="button" onclick="closeGalleryModal()" class="px-4 py-2 border rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Cancel</button><button type="submit" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-sm">Save Element</button></div>
         </form>
     </div>
 </div>
@@ -392,7 +378,7 @@
 
 <script>
 // =====================================================
-// BUG FIX 1: TRANSLATIONS OBJECT (was completely missing)
+// TRANSLATIONS OBJECT
 // =====================================================
 const TRANSLATIONS = {
     en: {
@@ -443,7 +429,7 @@ const TRANSLATIONS = {
     },
     te: {
         hero_badge_text:"విద్యుత్ • ప్లంబింగ్ • హార్డ్‌వేర్", hero_badge:"⚡ నాణ్యత హామీ విద్యుత్ పరిష్కారాలు",
-        hero_desc:"అన్ని విద్యుత్, ప్లంబింగ్, హార్డ్‌వేర్ & గృహ వస్తువులు ఒకే చోట.", hero_whatsapp:"💬 వాట్సాప్ పంపండి",
+        hero_desc:"అన్ని విద్యుత్, ప్లంబింగ్, హార్డ్‌వేర్ & గృహ వస్తువులు ఒకే చోట లభించును.", hero_whatsapp:"💬 వాట్సాప్ పంపండి",
         hero_direct_enq:"నేరుగా విచారణ పంపండి", call_now:"ఇప్పుడు కాల్ చేయండి",
         nav_home:"హోమ్", nav_products:"ఉత్పత్తులు", nav_gallery:"గ్యాలరీ",
         nav_about:"మా గురించి", nav_contact:"సంప్రదించండి", nav_enquiry:"విచారణ పంపండి", nav_admin:"నిర్వాహకుడు",
@@ -481,7 +467,7 @@ const TRANSLATIONS = {
         admin_table_date:"తేదీ", admin_table_status:"స్థితి", admin_table_action:"చర్య",
         admin_no_enq:"ఇంకా విచారణలు లేవు", admin_no_enq_sub:"క్లయింట్ సమర్పణలు ఇక్కడ కనిపిస్తాయి.",
         admin_settings:"షాప్ కాన్ఫిగరేషన్", admin_change_pass:"పాస్‌వర్డ్ మార్చండి",
-        admin_change_pass_sub:"నిర్వాహక కన్సోల్ లాగిన్ కీని సవరించండి.", admin_update_btn:"పాస్‌వర్డ్ నవీకరించండి",
+        admin_change_pass_sub:"निర్వాహక కన్సోల్ లాగిన్ కీని సవరించండి.", admin_update_btn:"పాస్‌వర్డ్ నవీకరించండి",
         footer_desc:"అత్యుత్తమ ధరలలో సర్టిఫైడ్ ప్రీమియం విద్యుత్ ఉత్పత్తులు.",
         footer_support:"సపోర్ట్ హాట్‌లైన్:", footer_directions:"త్వరిత దిశలు",
         footer_hours_title:"స్టోర్ వేళలు & స్థానాలు", footer_secure:"🔐 సురక్షిత నిర్వాహక ప్రాంతం",
@@ -489,7 +475,7 @@ const TRANSLATIONS = {
     },
     hi: {
         hero_badge_text:"बिजली • प्लंबिंग • हार्डवेयर", hero_badge:"⚡ गुणवत्ता-सुनिश्चित बिजली समाधान",
-        hero_desc:"सभी बिजली, प्लंबिंग, हार्डवेयर और घरेलू उत्पाद एक ही छत के नीचे।",
+        hero_desc:"सभी बिजली, प्लंबिंग, hardware और घरेलू उत्पाद एक ही छत के नीचे उपलब्ध हैं।",
         hero_whatsapp:"💬 WhatsApp करें", hero_direct_enq:"सीधी ऑनलाइन पूछताछ भेजें", call_now:"अभी कॉल करें",
         nav_home:"होम", nav_products:"उत्पाद", nav_gallery:"गैलरी",
         nav_about:"हमारे बारे में", nav_contact:"संपर्क", nav_enquiry:"पूछताछ भेजें", nav_admin:"एडमिन",
@@ -536,24 +522,25 @@ const TRANSLATIONS = {
 };
 
 // =====================================================
-// CONFIG & DEFAULT DATA
+// CONFIG & DEFAULT DATA (With High Quality Web Image URLs)
 // =====================================================
-const CATEGORIES = ["Other Products"];
+const CATEGORIES = ["Other Products", "Switches", "Wires & Cables", "Lighting", "Plumbing & Pipes"];
 const DEFAULT_PRODUCTS = [
-    { id:"prod-1", name:"Anchor Roma Classic Modular Switches", description:"Premium modular switches, sleek white, fire-retardant material.", category:"Other Products", price:45, availability:"In Stock", image:"image_d57726.png" },
-    { id:"prod-2", name:"Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description:"Flame Retardant multi-strand cables ideal for residential wiring.", category:"Other Products", price:1540, availability:"In Stock", image:"image_d57726.png" },
-    { id:"prod-3", name:"Syska 9W LED Bright Bulbs (Cool Day Light)", description:"Energy-saving LED bulbs, B22 cap, zero flickering.", category:"Other Products", price:110, availability:"In Stock", image:"https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
+    { id:"prod-1", name:"Anchor Roma Classic Modular Switches", description:"Premium modular switches, sleek white, fire-retardant material.", category:"Switches", price:45, availability:"In Stock", image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80" },
+    { id:"prod-2", name:"Finolex 1.5 Sqmm Copper Wire (90m Bundle)", description:"Flame Retardant multi-strand cables ideal for residential wiring.", category:"Wires & Cables", price:1540, availability:"In Stock", image:"https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80" },
+    { id:"prod-3", name:"Syska 9W LED Bright Bulbs (Cool Day Light)", description:"Energy-saving LED bulbs, B22 cap, zero flickering.", category:"Lighting", price:110, availability:"In Stock", image:"https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" },
     { id:"prod-4", name:"Crompton Hill Briz 1200mm Ceiling Fan", description:"High speed electric ceiling fan with powerful copper motor.", category:"Other Products", price:2350, availability:"In Stock", image:"https://images.unsplash.com/photo-1618944847023-38aa001235f0?auto=format&fit=crop&w=500&q=80" },
-    { id:"prod-5", name:"Sudhakar PVC Conduit Pipe (1 inch, 3m)", description:"Heavy-duty fire-retardant PVC electrical pipes.", category:"Other Products", price:95, availability:"In Stock", image:"https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
-    { id:"prod-6", name:"Jaquar Wall-Mounted Brass Shower Faucet", description:"Premium rust-free chrome finished brass shower mixture.", category:"Other Products", price:1850, availability:"In Stock", image:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" }
+    { id:"prod-5", name:"Sudhakar PVC Conduit Pipe (1 inch, 3m)", description:"Heavy-duty fire-retardant PVC electrical pipes.", category:"Plumbing & Pipes", price:95, availability:"In Stock", image:"https://images.unsplash.com/photo-1542013936693-8848e5742383?auto=format&fit=crop&w=500&q=80" },
+    { id:"prod-6", name:"Jaquar Wall-Mounted Brass Shower Faucet", description:"Premium rust-free chrome finished brass shower mixture.", category:"Plumbing & Pipes", price:1850, availability:"In Stock", image:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=500&q=80" }
 ];
+
 const DEFAULT_GALLERY = [
-    { id:"gal-1", caption:"Our Main Display Shop Front & Product Rows", image:"image_d576ee.jpg" },
-    { id:"gal-2", caption:"Fully Stocked Electrical Wire Reels & Pipes", image:"image_d57726.png" },
-    { id:"gal-3", caption:"Premium Quality Hardware & Lighting Display Panels", image:"image_372b9f.jpg" },
+    { id:"gal-1", caption:"Our Main Display Shop Front & Product Rows", image:"https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" },
+    { id:"gal-2", caption:"Fully Stocked Electrical Wire Reels & Pipes", image:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" },
+    { id:"gal-3", caption:"Premium Quality Hardware & Lighting Display Panels", image:"https://images.unsplash.com/photo-1530124560612-3fe9a12097ff?auto=format&fit=crop&w=800&q=80" },
     { id:"gal-4", caption:"Branded LED Light Bulbs and Ceiling Accessories", image:"https://images.unsplash.com/photo-1565814636199-ae8133055c1c?auto=format&fit=crop&w=800&q=80" }
 ];
-const DEFAULT_SETTINGS = { shopName:"Sri Balaji Electrical Shop", phone:"9515168300", whatsapp:"9515168300", logoUrl:"image_d576ee.jpg", heroBannerUrl:"image_d576ee.jpg", address:"D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India", hours:"Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed", adminPassword:"admin" };
+const DEFAULT_SETTINGS = { shopName:"Sri Balaji Electrical Shop", phone:"9515168300", whatsapp:"9515168300", logoUrl:"https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=500&q=80", heroBannerUrl:"https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=1200&h=600&q=80", address:"D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India", hours:"Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed", adminPassword:"admin" };
 
 // =====================================================
 // STATE
@@ -570,10 +557,10 @@ let state = {
     selectedCategory:'All', productSearch:'', adminProductSearch:'', adminActiveTab:'inbox',
     quoteCart: (()=>{ try{return JSON.parse(localStorage.getItem('sri_balaji_quotecart'))||[];}catch(e){return [];} })()
 };
-let uploadedProductImageBase64="", uploadedGalleryImageBase64="", customAlertPromiseResolver=null;
+let uploadedProductImageBase64="", customAlertPromiseResolver=null;
 
 // =====================================================
-// BUG FIX 2: toggleMobileMenu (was completely missing)
+// TOOGLE MOBILE DRAWER MENU
 // =====================================================
 function toggleMobileMenu() {
     state.mobileMenuOpen = !state.mobileMenuOpen;
@@ -582,7 +569,7 @@ function toggleMobileMenu() {
 }
 
 // =====================================================
-// ALERT / TOAST
+// ALERT / TOAST MESSAGE SYSTEM
 // =====================================================
 function showCustomAlert(message, title="Notice", icon="🔔", showCancel=false) {
     document.getElementById('custom-alert-title').innerText = title;
@@ -612,7 +599,7 @@ function dismissToast(id) {
 }
 
 // =====================================================
-// NAV / THEME / LANGUAGE
+// NAVIGATION & CORE HANDLERS
 // =====================================================
 function syncNavVisibility() {
     const dl=document.getElementById('desktop-user-links'), ml=document.getElementById('mobile-user-links'), fb=document.getElementById('floating-cart-btn');
@@ -635,7 +622,7 @@ function updateLanguageDOM() {
     document.querySelectorAll('[data-t]').forEach(el=>{ const k=el.getAttribute('data-t'); if(dict[k]) el.innerText=dict[k]; });
     const ls=document.getElementById('language-switcher'),lsm=document.getElementById('language-switcher-mobile');
     if(ls)ls.value=state.lang; if(lsm)lsm.value=state.lang;
-    renderCategoryChips(); renderProductsCatalog();
+    renderProductsCatalog();
 }
 function changeLanguage(code) {
     state.lang=code; localStorage.setItem('sri_balaji_lang',code); updateLanguageDOM();
@@ -643,9 +630,6 @@ function changeLanguage(code) {
     showToast(msgs[code]||msgs.en,'info');
 }
 
-// =====================================================
-// NAVIGATION
-// =====================================================
 function navigateTo(pageId) {
     if(state.adminLoggedIn && pageId!=='admin'){ showToast("🔒 Active Admin Mode. Click 'Exit Session' to logout first.","error"); return; }
     state.currentPage=pageId;
@@ -659,15 +643,16 @@ function navigateTo(pageId) {
     const ab=document.getElementById('nav-admin-btn');
     if(ab){ if(pageId==='admin') ab.className="nav-btn flex items-center space-x-1.5 px-4 py-2 rounded-lg font-extrabold text-sm bg-blue-600 text-white border border-blue-500"; else if(state.adminLoggedIn) ab.className="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg font-bold text-sm border border-emerald-500 text-emerald-400 hover:bg-emerald-950/30"; else ab.className="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg font-bold text-sm border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"; }
     if(pageId==='home') renderFeaturedProducts();
-    if(pageId==='products'){renderCategoryChips();renderProductsCatalog();}
+    if(pageId==='products'){renderProductsCatalog();}
     if(pageId==='gallery') renderGalleryGrid();
     if(pageId==='admin') renderAdminDashboard();
     if(pageId==='enquiry') renderQuoteCartUI();
     window.scrollTo({top:0,behavior:'smooth'});
 }
+
 function setAdminTab(tab) {
     state.adminActiveTab=tab;
-    ['inbox','products','gallery'].forEach(t=>{
+    ['inbox','products'].forEach(t=>{
         const btn=document.getElementById(`admin-tab-${t}`),panel=document.getElementById(`admin-panel-${t}`);
         if(btn&&panel){
             if(t===tab){btn.className="px-6 py-3.5 font-extrabold text-sm border-b-2 border-orange-500 text-orange-500 transition-all shrink-0";panel.classList.remove('hidden');}
@@ -675,25 +660,20 @@ function setAdminTab(tab) {
         }
     });
     if(tab==='products') renderAdminProducts();
-    if(tab==='gallery') renderAdminGallery();
 }
 
 // =====================================================
-// RENDER FUNCTIONS
+// RENDER DYNAMIC DOM SECTIONS
 // =====================================================
 function renderFeaturedProducts() {
     const c=document.getElementById('featured-products-container'); if(!c) return; c.innerHTML='';
     state.products.slice(0,4).forEach(p=>{
         const out=p.availability==='Out of Stock';
         const btn=out?`<span class="text-xs text-rose-500 font-bold uppercase">Out of Stock</span>`:`<button onclick="addToQuoteCart('${p.id}')" class="px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-lg shadow-sm">➕ Add to Quote</button>`;
-        c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-xl shadow-md border border-slate-100 dark:border-slate-800/50 overflow-hidden flex flex-col group hover:shadow-xl transition-all duration-300"><div class="relative aspect-video bg-slate-100 dark:bg-slate-800 overflow-hidden"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"><span class="absolute top-2.5 left-2.5 px-2 py-1 bg-slate-950/85 text-white font-bold text-[9px] rounded-md uppercase">${p.category}</span></div><div class="p-4 flex-grow flex flex-col justify-between"><div><h3 class="font-extrabold text-slate-900 dark:text-white group-hover:text-blue-600 line-clamp-1">${p.name}</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1.5 leading-relaxed">${p.description}</p></div><div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/50 flex items-center justify-between"><span class="text-lg font-black text-slate-900 dark:text-white">₹${p.price}</span>${btn}</div></div></div>`);
+        c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-xl shadow-md border border-slate-100 dark:border-slate-800/50 overflow-hidden flex flex-col group hover:shadow-xl transition-all duration-300"><div class="relative aspect-video bg-slate-100 dark:bg-slate-800 overflow-hidden"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"><span class="absolute top-2.5 left-2.5 px-2 py-1 bg-slate-950/85 text-white font-bold text-[9px] rounded-md uppercase">${p.category}</span></div><div class="p-4 flex-grow flex flex-col justify-between"><div><h3 class="font-extrabold text-slate-900 dark:text-white group-hover:text-blue-600 line-clamp-1">${p.name}</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1.5 leading-relaxed">${p.description}</p></div><div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/50 flex items-center justify-end">${btn}</div></div></div>`);
     });
 }
-function renderCategoryChips() {
-    const c=document.getElementById('category-chips-container'); if(!c) return; c.innerHTML='';
-    const s=state.selectedCategory==='All'?'bg-blue-600 text-white shadow-md':'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200';
-    c.insertAdjacentHTML('beforeend',`<button onclick="setCategoryFilter('All')" class="px-4 py-2 rounded-lg text-xs font-extrabold tracking-wide transition-all ${s}">All Available Products (${state.products.length})</button>`);
-}
+
 function renderProductsCatalog() {
     const c=document.getElementById('products-catalog-grid'); if(!c) return; c.innerHTML='';
     const f=state.products.filter(p=>p.name.toLowerCase().includes(state.productSearch.toLowerCase())||p.description.toLowerCase().includes(state.productSearch.toLowerCase()));
@@ -705,55 +685,60 @@ function renderProductsCatalog() {
         let action='';
         if(out){action=`<button disabled class="w-full py-2 px-3 rounded-lg font-bold text-xs bg-slate-100 text-slate-400 cursor-not-allowed">Out of Stock</button>`;}
         else{const ic=state.quoteCart.find(i=>i.id===p.id);if(ic){action=`<div class="flex items-center justify-between gap-2"><div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 rounded-lg px-2 py-1"><button onclick="adjustCartQty('${p.id}',-1)" class="text-xs font-bold px-1.5 py-0.5 text-slate-500 hover:text-slate-900">-</button><span class="text-xs font-black text-slate-950 dark:text-white">${ic.qty}</span><button onclick="adjustCartQty('${p.id}',1)" class="text-xs font-bold px-1.5 py-0.5 text-slate-500 hover:text-slate-900">+</button></div><button onclick="removeFromQuoteCart('${p.id}')" class="text-xs text-rose-500 hover:underline font-bold">Remove</button></div>`;}else{action=`<button onclick="addToQuoteCart('${p.id}')" class="w-full py-2.5 px-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-bold text-xs flex items-center justify-center space-x-2 active:scale-95 shadow-sm">➕ Add to Quote Cart</button>`;}}
-        c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800/85 overflow-hidden flex flex-col group hover:shadow-xl hover:border-blue-400/50 transition-all duration-300 relative"><div class="absolute top-3 left-3 z-10 flex flex-col gap-1.5"><span class="px-2.5 py-1 bg-slate-900/85 text-white font-extrabold text-[9px] rounded-md uppercase tracking-wider">${p.category}</span><span class="px-2.5 py-1 rounded-md text-[9px] font-extrabold uppercase tracking-wider text-center ${sc}">${p.availability}</span></div><div class="relative aspect-square bg-slate-50 dark:bg-slate-800 overflow-hidden border-b border-slate-100 dark:border-slate-800/80"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"></div><div class="p-4 flex-grow flex flex-col justify-between bg-white dark:bg-slate-900"><div class="space-y-1"><h3 class="font-extrabold text-slate-900 dark:text-white group-hover:text-blue-600 text-base leading-tight line-clamp-2">${p.name}</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${p.description}</p></div><div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60"><div class="flex items-baseline justify-between mb-3"><span class="text-slate-400 text-xs font-bold">Price:</span><span class="text-xl font-black text-slate-900 dark:text-white">₹${p.price}</span></div>${action}</div></div></div>`);
+        c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800/85 overflow-hidden flex flex-col group hover:shadow-xl hover:border-blue-400/50 transition-all duration-300 relative"><div class="absolute top-3 left-3 z-10 flex flex-col gap-1.5"><span class="px-2.5 py-1 bg-slate-900/85 text-white font-extrabold text-[9px] rounded-md uppercase tracking-wider">${p.category}</span><span class="px-2.5 py-1 rounded-md text-[9px] font-extrabold uppercase tracking-wider text-center ${sc}">${p.availability}</span></div><div class="relative aspect-square bg-slate-50 dark:bg-slate-800 overflow-hidden border-b border-slate-100 dark:border-slate-800/80"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"></div><div class="p-4 flex-grow flex flex-col justify-between bg-white dark:bg-slate-900"><div class="space-y-1"><h3 class="font-extrabold text-slate-900 dark:text-white group-hover:text-blue-600 text-base leading-tight line-clamp-2">${p.name}</h3><p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${p.description}</p></div><div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60">${action}</div></div></div>`);
     });
 }
+
 function renderGalleryGrid() {
     const c=document.getElementById('gallery-grid-container'); if(!c) return; c.innerHTML='';
     state.gallery.forEach(g=>{c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300"><div class="relative aspect-square overflow-hidden bg-slate-900"><img src="${g.image}" alt="${g.caption}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'"></div><div class="p-4 flex-grow flex items-center bg-white dark:bg-slate-900"><p class="text-xs text-slate-600 dark:text-slate-300 font-medium italic leading-relaxed">${g.caption||"Balaji Electrical Area"}</p></div></div>`);});
 }
 
 // =====================================================
-// FILE UPLOADS
+// FILE UPLOAD AND BASE64 HANDLERS
 // =====================================================
 function handleProductFileSelect(ev) {
     const f=ev.target.files[0]; if(!f) return;
     if(f.size>2*1024*1024){showToast("File too large! Max 2MB.","error");return;}
-    const r=new FileReader(); r.onload=e=>{uploadedProductImageBase64=e.target.result;const pi=document.getElementById('product-image-preview'),pc=document.getElementById('product-image-preview-container');if(pi)pi.src=uploadedProductImageBase64;if(pc)pc.classList.remove('hidden');const li=document.getElementById('modal-product-image');if(li)li.value="";showToast("Photo loaded!","success");}; r.readAsDataURL(f);
+    const r=new FileReader(); 
+    r.onload=e=>{
+        uploadedProductImageBase64=e.target.result;
+        const pi=document.getElementById('product-image-preview'),pc=document.getElementById('product-image-preview-container');
+        if(pi)pi.src=uploadedProductImageBase64;
+        if(pc)pc.classList.remove('hidden');
+        const li=document.getElementById('modal-product-image');
+        if(li)li.value="";
+        showToast("Photo loaded successfully!","success");
+    }; 
+    r.readAsDataURL(f);
 }
 function clearProductUpload() {
-    uploadedProductImageBase64="";const fi=document.getElementById('modal-product-file');if(fi)fi.value="";const c=document.getElementById('product-image-preview-container');if(c)c.classList.add('hidden');
-}
-function handleGalleryFileSelect(ev) {
-    const f=ev.target.files[0]; if(!f) return;
-    if(f.size>2*1024*1024){showToast("File too large! Max 2MB.","error");return;}
-    const r=new FileReader(); r.onload=e=>{uploadedGalleryImageBase64=e.target.result;const pi=document.getElementById('gallery-image-preview'),pc=document.getElementById('gallery-image-preview-container');if(pi)pi.src=uploadedGalleryImageBase64;if(pc)pc.classList.remove('hidden');const li=document.getElementById('modal-gallery-image');if(li)li.value="";showToast("Gallery photo loaded!","success");}; r.readAsDataURL(f);
-}
-function clearGalleryUpload() {
-    uploadedGalleryImageBase64="";const fi=document.getElementById('modal-gallery-file');if(fi)fi.value="";const c=document.getElementById('gallery-image-preview-container');if(c)c.classList.add('hidden');
+    uploadedProductImageBase64="";
+    const fi=document.getElementById('modal-product-file'); if(fi)fi.value="";
+    const c=document.getElementById('product-image-preview-container'); if(c)c.classList.add('hidden');
 }
 
 // =====================================================
-// QUOTE CART
+// QUOTATION CART MANAGEMENT
 // =====================================================
 function addToQuoteCart(pid) {
     const p=state.products.find(x=>x.id===pid); if(!p||p.availability==='Out of Stock') return;
-    const ex=state.quoteCart.find(i=>i.id===pid); if(ex) ex.qty+=1; else state.quoteCart.push({id:p.id,name:p.name,price:p.price,qty:1});
-    saveCartState(); showToast(`Added "${p.name}" to quote cart`,"success");
-    if(state.currentPage==='products') renderProductsCatalog(); renderQuoteCartUI();
+    const ex=state.quoteCart.find(i=>i.id===pid); if(ex) ex.qty+=1; else state.quoteCart.push({id:p.id,name:p.name,qty:1});
+    saveCartState(); showToast(`Added "${p.name}" to Quote Cart`,"success");
+    if(state.currentPage=='products') renderProductsCatalog(); renderQuoteCartUI();
 }
 function removeFromQuoteCart(pid) {
     state.quoteCart=state.quoteCart.filter(i=>i.id!==pid); saveCartState(); showToast("Product removed","info");
-    if(state.currentPage==='products') renderProductsCatalog(); renderQuoteCartUI();
+    if(state.currentPage=='products') renderProductsCatalog(); renderQuoteCartUI();
 }
 function adjustCartQty(pid,delta) {
     const item=state.quoteCart.find(i=>i.id===pid); if(!item) return;
     item.qty+=delta; if(item.qty<=0) state.quoteCart=state.quoteCart.filter(i=>i.id!==pid);
-    saveCartState(); if(state.currentPage==='products') renderProductsCatalog(); renderQuoteCartUI();
+    saveCartState(); if(state.currentPage=='products') renderProductsCatalog(); renderQuoteCartUI();
 }
 function clearQuoteCart() {
     state.quoteCart=[]; saveCartState(); showToast("Quote cart cleared","info");
-    if(state.currentPage==='products') renderProductsCatalog(); renderQuoteCartUI();
+    if(state.currentPage=='products') renderProductsCatalog(); renderQuoteCartUI();
 }
 function saveCartState() { localStorage.setItem('sri_balaji_quotecart',JSON.stringify(state.quoteCart)); updateCartBadges(); }
 function updateCartBadges() {
@@ -764,56 +749,84 @@ function updateCartBadges() {
 }
 function renderQuoteCartUI() {
     const c=document.getElementById('quote-cart-items-container'); if(!c) return; c.innerHTML='';
-    if(state.quoteCart.length===0){c.innerHTML=`<div class="py-8 text-center text-slate-400"><p class="font-bold">Your Quote Cart is empty</p><p class="text-[11px] mt-0.5">Browse products and tap "Add to Quote Cart".</p></div>`;document.getElementById('quote-cart-count').innerText="0 items";document.getElementById('quote-cart-total').innerText="₹0.00";return;}
-    let total=0,totalItems=0;
-    state.quoteCart.forEach(item=>{const sub=item.price*item.qty;total+=sub;totalItems+=item.qty;c.insertAdjacentHTML('beforeend',`<div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg flex items-center justify-between gap-2 border border-slate-100 dark:border-slate-800/40"><div class="flex-grow"><p class="text-xs font-extrabold text-slate-900 dark:text-white line-clamp-1">${item.name}</p><p class="text-[10px] text-slate-400">₹${item.price} × ${item.qty}</p></div><div class="text-right shrink-0"><p class="text-xs font-black text-slate-900 dark:text-white">₹${sub}</p><div class="flex items-center space-x-1.5 mt-1 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 px-1"><button onclick="adjustCartQty('${item.id}',-1)" class="text-[10px] font-bold text-slate-500 hover:text-slate-900">-</button><span class="text-[10px] font-black">${item.qty}</span><button onclick="adjustCartQty('${item.id}',1)" class="text-[10px] font-bold text-slate-500 hover:text-slate-900">+</button></div></div></div>`);});
+    if(state.quoteCart.length===0){c.innerHTML=`<div class="py-8 text-center text-slate-400"><p class="font-bold">Your Quote Cart is empty</p><p class="text-[11px] mt-0.5">Browse products and tap "Add to Quote Cart".</p></div>`;document.getElementById('quote-cart-count').innerText="0 items";return;}
+    let totalItems=0;
+    state.quoteCart.forEach(item=>{totalItems+=item.qty;c.insertAdjacentHTML('beforeend',`<div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg flex items-center justify-between gap-2 border border-slate-100 dark:border-slate-800/40"><div class="flex-grow"><p class="text-xs font-extrabold text-slate-900 dark:text-white line-clamp-1">${item.name}</p><p class="text-[10px] text-slate-400">Qty: ${item.qty}</p></div><div class="text-right shrink-0"><div class="flex items-center space-x-1.5 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 px-1"><button onclick="adjustCartQty('${item.id}',-1)" class="text-[10px] font-bold text-slate-500 hover:text-slate-900">-</button><span class="text-[10px] font-black">${item.qty}</span><button onclick="adjustCartQty('${item.id}',1)" class="text-[10px] font-bold text-slate-500 hover:text-slate-900">+</button></div></div></div>`);});
     document.getElementById('quote-cart-count').innerText=`${totalItems} items`;
-    document.getElementById('quote-cart-total').innerText=`₹${total.toLocaleString('en-IN')}`;
     const es=document.getElementById('enq-subject'),em=document.getElementById('enq-message');
     if(es&&!es.value) es.value=`Bulk Quote Request for ${totalItems} items`;
-    if(em&&(!em.value||em.value.includes("Selected Items for Quote Request:"))){let list="Selected Items for Quote Request:\n";state.quoteCart.forEach(i=>{list+=` - ${i.name} (Qty: ${i.qty}, Unit: ₹${i.price})\n`;});list+=`Estimated total: ₹${total}\n`;em.value=list;}
+    if(em&&(!em.value||em.value.includes("Selected Items for Quote Request:"))){let list="Selected Items for Quote Request:\n";state.quoteCart.forEach(i=>{list+=` - ${i.name} (Qty: ${i.qty})\n`;});em.value=list;}
 }
 
 // =====================================================
-// ADMIN PRODUCTS / GALLERY
+// ADMIN PRODUCTS CATALOGUE MANAGEMENT
 // =====================================================
 function renderAdminProducts() {
     const c=document.getElementById('admin-products-grid'); if(!c) return; c.innerHTML='';
     const f=state.products.filter(p=>p.name.toLowerCase().includes(state.adminProductSearch.toLowerCase())||p.description.toLowerCase().includes(state.adminProductSearch.toLowerCase()));
     if(f.length===0){c.innerHTML=`<div class="col-span-full py-12 text-center text-slate-400"><p class="font-bold text-sm">No items found.</p></div>`;return;}
-    f.forEach(p=>{const out=p.availability==='Out of Stock';const sc=out?'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-400':'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400';c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm animate-fadeIn"><div class="relative aspect-video bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden mb-3"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"><span class="absolute top-2 left-2 px-2 py-0.5 bg-slate-900/80 text-white font-bold text-[8px] rounded uppercase tracking-wider">${p.category}</span></div><div><h4 class="font-extrabold text-sm text-slate-900 dark:text-white line-clamp-1">${p.name}</h4><p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">${p.description}</p><div class="flex items-center justify-between mt-3"><span class="text-sm font-black text-slate-950 dark:text-white">₹${p.price}</span><span class="px-2 py-0.5 rounded text-[9px] font-black tracking-wide ${sc}">${p.availability}</span></div></div><div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-200 dark:border-slate-800/80"><button onclick="openProductModal('edit','${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold border border-amber-300 dark:border-amber-800/40">✍️ Edit</button><button onclick="toggleProductStock('${p.id}')" class="bg-blue-100 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold border border-blue-300 dark:border-blue-800/40">Stock</button><button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-700 dark:text-rose-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold border border-rose-300 dark:border-rose-800/40">🗑️ Del</button></div></div>`);});
+    f.forEach(p=>{
+        const out=p.availability==='Out of Stock';
+        const sc=out?'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-400':'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400';
+        c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm animate-fadeIn"><div class="relative aspect-video bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden mb-3"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80'"><span class="absolute top-2 left-2 px-2 py-0.5 bg-slate-900/80 text-white font-bold text-[8px] rounded uppercase tracking-wider">${p.category}</span></div><div><h4 class="font-extrabold text-sm text-slate-900 dark:text-white line-clamp-1">${p.name}</h4><p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">${p.description}</p><div class="flex items-center justify-end mt-3"><span class="px-2 py-0.5 rounded text-[9px] font-black tracking-wide ${sc}">${p.availability}</span></div></div><div class="grid grid-cols-3 gap-1.5 pt-3 mt-3 border-t border-slate-200 dark:border-slate-800/80"><button onclick="openProductModal('edit','${p.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-amber-200 text-xs font-bold border border-amber-300 dark:border-amber-800/40">✍️ Edit</button><button onclick="toggleProductStock('${p.id}')" class="bg-blue-100 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 text-[10px] py-1.5 rounded-lg flex items-center justify-center hover:bg-blue-200 font-bold border border-blue-300 dark:border-blue-800/40">Stock</button><button onclick="deleteProduct('${p.id}')" class="bg-red-100 dark:bg-rose-950/40 text-red-700 dark:text-rose-400 py-1.5 rounded-lg flex items-center justify-center hover:bg-red-200 text-xs font-bold border border-rose-300 dark:border-rose-800/40">🗑️ Del</button></div></div>`);
+    });
 }
 function handleAdminProductSearch(v){state.adminProductSearch=v;renderAdminProducts();}
-function renderAdminGallery() {
-    const c=document.getElementById('admin-gallery-grid'); if(!c) return; c.innerHTML='';
-    state.gallery.forEach(g=>{c.insertAdjacentHTML('beforeend',`<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col animate-fadeIn"><div class="relative aspect-square overflow-hidden bg-slate-900"><img src="${g.image}" alt="${g.caption}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80'"></div><div class="p-3 flex-grow flex items-center justify-between bg-white dark:bg-slate-900 gap-2"><p class="text-xs text-slate-600 dark:text-slate-300 font-medium italic line-clamp-2">${g.caption||"Showroom"}</p><div class="flex space-x-1 shrink-0"><button onclick="openGalleryModal('edit','${g.id}')" class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 p-2 rounded-lg hover:bg-amber-200 text-xs border border-amber-300 dark:border-amber-800/40">✍️</button><button onclick="deleteGalleryItem('${g.id}')" class="bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 p-2 rounded-lg hover:bg-rose-100 text-xs border border-rose-300 dark:border-rose-800/40">🗑️</button></div></div></div>`);});
-}
 
-// =====================================================
-// PRODUCT MODAL
-// =====================================================
 function openProductModal(mode,pid=null) {
     if(!state.adminLoggedIn){showCustomAlert("Only administrators can configure products.","Access Denied","🚫");return;}
     const modal=document.getElementById('product-modal'),title=document.getElementById('product-modal-title');
-    const cs=document.getElementById('modal-product-category'); if(cs){cs.innerHTML='';CATEGORIES.forEach(cat=>cs.insertAdjacentHTML('beforeend',`<option value="${cat}">${cat}</option>`));}
+    const cs=document.getElementById('modal-product-category'); 
+    if(cs){
+        cs.innerHTML='';
+        CATEGORIES.forEach(cat=>cs.insertAdjacentHTML('beforeend',`<option value="${cat}">${cat}</option>`));
+    }
     clearProductUpload();
-    if(mode==='add'){title.innerText='Add New Product';['modal-product-id','modal-product-name','modal-product-price','modal-product-description','modal-product-image'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const av=document.getElementById('modal-product-availability');if(av)av.value='In Stock';}
-    else{title.innerText='Edit Product';const p=state.products.find(i=>i.id===pid);if(p){document.getElementById('modal-product-id').value=p.id;document.getElementById('modal-product-name').value=p.name;document.getElementById('modal-product-category').value=p.category;document.getElementById('modal-product-price').value=p.price;document.getElementById('modal-product-description').value=p.description;document.getElementById('modal-product-availability').value=p.availability;if(p.image&&p.image.startsWith('data:image')){uploadedProductImageBase64=p.image;const pi=document.getElementById('product-image-preview'),pc=document.getElementById('product-image-preview-container');if(pi)pi.src=p.image;if(pc)pc.classList.remove('hidden');document.getElementById('modal-product-image').value="";}else{document.getElementById('modal-product-image').value=p.image||"";}}}
+    if(mode==='add'){
+        title.innerText='Add New Product';
+        ['modal-product-id','modal-product-name','modal-product-description','modal-product-image'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+        const av=document.getElementById('modal-product-availability');if(av)av.value='In Stock';
+    } else {
+        title.innerText='Edit Product';
+        const p=state.products.find(i=>i.id===pid);
+        if(p){
+            document.getElementById('modal-product-id').value=p.id;
+            document.getElementById('modal-product-name').value=p.name;
+            document.getElementById('modal-product-category').value=p.category;
+            document.getElementById('modal-product-description').value=p.description;
+            document.getElementById('modal-product-availability').value=p.availability;
+            if(p.image && p.image.startsWith('data:image')){
+                uploadedProductImageBase64=p.image;
+                const pi=document.getElementById('product-image-preview'),pc=document.getElementById('product-image-preview-container');
+                if(pi)pi.src=p.image;
+                if(pc)pc.classList.remove('hidden');
+                document.getElementById('modal-product-image').value="";
+            } else {
+                document.getElementById('modal-product-image').value=p.image||"";
+            }
+        }
+    }
     modal.classList.remove('hidden');modal.classList.add('flex');
 }
 function closeProductModal(){const m=document.getElementById('product-modal');m.classList.add('hidden');m.classList.remove('flex');clearProductUpload();}
+
 function saveProductForm(e) {
     e.preventDefault(); if(!state.adminLoggedIn){showCustomAlert("Only administrators can save products.","Access Denied","🚫");return;}
     const id=document.getElementById('modal-product-id').value;
-    const name=document.getElementById('modal-product-name').value,category=document.getElementById('modal-product-category').value,price=parseFloat(document.getElementById('modal-product-price').value),description=document.getElementById('modal-product-description').value,availability=document.getElementById('modal-product-availability').value;
+    const name=document.getElementById('modal-product-name').value,category=document.getElementById('modal-product-category').value,description=document.getElementById('modal-product-description').value,availability=document.getElementById('modal-product-availability').value;
     const image=uploadedProductImageBase64||document.getElementById('modal-product-image').value||"https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=500&q=80";
-    if(id){state.products=state.products.map(p=>p.id===id?{id,name,category,price,description,availability,image}:p);showToast("Product updated!");}
-    else{state.products.push({id:'prod-'+Date.now(),name,category,price,description,availability,image});showToast("New product added!");}
+    if(id){
+        state.products=state.products.map(p=>p.id===id?{id,name,category,description,availability,image}:p);
+        showToast("Product updated!");
+    } else {
+        state.products.push({id:'prod-'+Date.now(),name,category,description,availability,image});
+        showToast("New product added!");
+    }
     localStorage.setItem('sri_balaji_products',JSON.stringify(state.products));closeProductModal();renderAdminProducts();
 }
 function toggleProductStock(id) {
     if(!state.adminLoggedIn){showCustomAlert("Only administrators can change stock.","Access Denied","🚫");return;}
-    state.products=state.products.map(p=>{if(p.id===id){const next=p.availability==='In Stock'?'Out of Stock':'In Stock';showToast(`Stock updated`);return{...p,availability:next};}return p;});
+    state.products=state.products.map(p=>{if(p.id===id){const next=p.availability==='In Stock'?'Out of Stock':'In Stock';showToast(`Stock updated to ${next}`);return{...p,availability:next};}return p;});
     localStorage.setItem('sri_balaji_products',JSON.stringify(state.products));renderAdminProducts();
 }
 async function deleteProduct(id) {
@@ -823,33 +836,7 @@ async function deleteProduct(id) {
 }
 
 // =====================================================
-// GALLERY MODAL
-// =====================================================
-function openGalleryModal(mode,gid=null) {
-    if(!state.adminLoggedIn){showCustomAlert("Only administrators can manage gallery.","Access Denied","🚫");return;}
-    const modal=document.getElementById('gallery-modal'),title=document.getElementById('gallery-modal-title');
-    clearGalleryUpload();
-    if(mode==='add'){title.innerText='Add Photo to Gallery';['modal-gallery-id','modal-gallery-caption','modal-gallery-image'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
-    else{title.innerText='Edit Gallery Caption';const g=state.gallery.find(i=>i.id===gid);if(g){document.getElementById('modal-gallery-id').value=g.id;document.getElementById('modal-gallery-caption').value=g.caption;if(g.image&&g.image.startsWith('data:image')){uploadedGalleryImageBase64=g.image;const pi=document.getElementById('gallery-image-preview'),pc=document.getElementById('gallery-image-preview-container');if(pi)pi.src=g.image;if(pc)pc.classList.remove('hidden');document.getElementById('modal-gallery-image').value="";}else{document.getElementById('modal-gallery-image').value=g.image||"";}}}
-    modal.classList.remove('hidden');modal.classList.add('flex');
-}
-function closeGalleryModal(){const m=document.getElementById('gallery-modal');m.classList.add('hidden');m.classList.remove('flex');clearGalleryUpload();}
-function saveGalleryForm(e) {
-    e.preventDefault(); if(!state.adminLoggedIn){showCustomAlert("Only administrators can manage gallery.","Access Denied","🚫");return;}
-    const id=document.getElementById('modal-gallery-id').value,caption=document.getElementById('modal-gallery-caption').value;
-    const image=uploadedGalleryImageBase64||document.getElementById('modal-gallery-image').value||"image_d576ee.jpg";
-    if(id){state.gallery=state.gallery.map(g=>g.id===id?{id,caption,image}:g);showToast("Gallery updated!");}
-    else{state.gallery.push({id:'gal-'+Date.now(),caption,image});showToast("Photo added!");}
-    localStorage.setItem('sri_balaji_gallery',JSON.stringify(state.gallery));closeGalleryModal();renderAdminGallery();
-}
-async function deleteGalleryItem(id) {
-    if(!state.adminLoggedIn){showCustomAlert("Only administrators can delete images.","Access Denied","🚫");return;}
-    const ok=await showCustomAlert("Remove this image from showcase?","Confirm","❓",true);
-    if(ok){state.gallery=state.gallery.filter(g=>g.id!==id);localStorage.setItem('sri_balaji_gallery',JSON.stringify(state.gallery));showToast("Image removed","info");renderAdminGallery();}
-}
-
-// =====================================================
-// SETTINGS MODAL
+// SETTINGS MANAGEMENT
 // =====================================================
 function openSettingsModal() {
     const s=state.settings;
@@ -860,27 +847,27 @@ function openSettingsModal() {
 function closeSettingsModal(){const m=document.getElementById('settings-modal');m.classList.add('hidden');m.classList.remove('flex');}
 function saveSettingsForm(e) {
     e.preventDefault();
-    state.settings={...state.settings,shopName:document.getElementById('setting-shop-name').value,phone:document.getElementById('setting-phone').value,whatsapp:document.getElementById('setting-whatsapp').value,heroBannerUrl:document.getElementById('setting-hero-banner').value||'image_d576ee.jpg',address:document.getElementById('setting-address').value,hours:document.getElementById('setting-hours').value};
+    state.settings={...state.settings,shopName:document.getElementById('setting-shop-name').value,phone:document.getElementById('setting-phone').value,whatsapp:document.getElementById('setting-whatsapp').value,heroBannerUrl:document.getElementById('setting-hero-banner').value||'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=1200&h=600&q=80',address:document.getElementById('setting-address').value,hours:document.getElementById('setting-hours').value};
     localStorage.setItem('sri_balaji_settings',JSON.stringify(state.settings));showToast("Settings saved!","success");closeSettingsModal();updateShopBrandingDOM();renderAdminDashboard();
 }
 
 // =====================================================
-// FACTORY RESET
+// FACTORY RESET (RECOVERY ACTION)
 // =====================================================
 async function resetToFactoryDefaults() {
     let ok=false;try{ok=await showCustomAlert("This will restore default products, galleries, and configurations. Proceed?","Reset Confirmation","❓",true);}catch(err){ok=true;}
     if(ok){
-        ['sri_balaji_products','sri_balaji_gallery','sri_balaji_settings','sri_balaji_enquiries','sri_balaji_quotecart','sri_balaji_admin_auth'].forEach(k=>localStorage.removeItem(k));
-        state.products=DEFAULT_PRODUCTS;state.gallery=DEFAULT_GALLERY;state.settings=DEFAULT_SETTINGS;state.enquiries=[];state.quoteCart=[];state.adminLoggedIn=false;
+        ['sri_balaji_products','sri_balaji_settings','sri_balaji_enquiries','sri_balaji_quotecart','sri_balaji_admin_auth'].forEach(k=>localStorage.removeItem(k));
+        state.products=DEFAULT_PRODUCTS;state.settings=DEFAULT_SETTINGS;state.enquiries=[];state.quoteCart=[];state.adminLoggedIn=false;
         saveCartState();updateShopBrandingDOM();
         const nat=document.getElementById('nav-admin-text');if(nat)nat.innerText="Admin";
         const nma=document.getElementById('nav-mobile-admin');if(nma)nma.innerText="🔑 Admin Login";
-        syncNavVisibility();renderProductsCatalog();renderGalleryGrid();showToast("System restored to defaults!","success");navigateTo('home');
+        syncNavVisibility();renderProductsCatalog();showToast("System restored to defaults!","success");navigateTo('home');
     }
 }
 
 // =====================================================
-// ENQUIRY
+// ENQUIRY SUBMISSION HANDLE
 // =====================================================
 function submitEnquiry(e) {
     e.preventDefault();
@@ -891,7 +878,7 @@ function submitEnquiry(e) {
 }
 function resetEnquiryForm(){document.getElementById('enquiry-form').reset();}
 function toggleEnquiryStatus(id) {
-    state.enquiries=state.enquiries.map(e=>{if(e.id===id){const next=e.status==='Contacted'?'Pending':'Contacted';showToast(`Status: ${next}`,"success");return{...e,status:next};}return e;});
+    state.enquiries=state.enquiries.map(e=>{if(e.id===id){const next=e.status==='Contacted'?'Pending':'Contacted';showToast(`Status Updated to: ${next}`,"success");return{...e,status:next};}return e;});
     localStorage.setItem('sri_balaji_enquiries',JSON.stringify(state.enquiries));renderAdminDashboard();
 }
 async function deleteEnquiry(id) {
@@ -905,7 +892,7 @@ function respondViaWhatsApp(eid) {
 }
 
 // =====================================================
-// ADMIN AUTH
+// ADMINISTRATIVE ACCESS CONTROL
 // =====================================================
 function handleAdminLogin(e) {
     e.preventDefault();
@@ -914,14 +901,16 @@ function handleAdminLogin(e) {
         state.adminLoggedIn=true;localStorage.setItem('sri_balaji_admin_auth','true');showToast("Access granted!","success");document.getElementById('admin-password-input').value='';
         const nat=document.getElementById('nav-admin-text');if(nat)nat.innerText="Dashboard";
         const nma=document.getElementById('nav-mobile-admin');if(nma)nma.innerText="🔒 Admin Dashboard";
-        syncNavVisibility();renderProductsCatalog();renderGalleryGrid();navigateTo('admin');
-    } else{showToast("Invalid password. Try again.","error");}
+        syncNavVisibility();renderProductsCatalog();navigateTo('admin');
+    } else {
+        showToast("Invalid password. Try again.","error");
+    }
 }
 function handleAdminLogout() {
     state.adminLoggedIn=false;localStorage.removeItem('sri_balaji_admin_auth');showToast("Session ended.","info");
     const nat=document.getElementById('nav-admin-text');if(nat)nat.innerText="Admin";
     const nma=document.getElementById('nav-mobile-admin');if(nma)nma.innerText="🔑 Admin Login";
-    syncNavVisibility();renderProductsCatalog();renderGalleryGrid();navigateTo('home');
+    syncNavVisibility();renderProductsCatalog();navigateTo('home');
 }
 function handlePasswordChange(e) {
     e.preventDefault();const v=document.getElementById('new-admin-password-field').value;
@@ -929,10 +918,9 @@ function handlePasswordChange(e) {
     state.settings.adminPassword=v;localStorage.setItem('sri_balaji_settings',JSON.stringify(state.settings));document.getElementById('new-admin-password-field').value='';showToast("Password updated!","success");
 }
 function handleSearch(v){state.productSearch=v;renderProductsCatalog();}
-function setCategoryFilter(cat){state.selectedCategory=cat;renderCategoryChips();renderProductsCatalog();}
 
 // =====================================================
-// BRANDING
+// BRANDING SYNC DOM FUNCTION
 // =====================================================
 function updateShopBrandingDOM() {
     const s=state.settings; if(!s) return;
@@ -951,7 +939,7 @@ function updateShopBrandingDOM() {
 }
 
 // =====================================================
-// ADMIN DASHBOARD RENDER
+// ADMIN DASHBOARD RENDER CONTROL
 // =====================================================
 function renderAdminDashboard() {
     try {
@@ -959,7 +947,6 @@ function renderAdminDashboard() {
         if(!state.adminLoggedIn){if(lc)lc.classList.remove('hidden');if(dp)dp.classList.add('hidden');return;}
         if(lc)lc.classList.add('hidden');if(dp)dp.classList.remove('hidden');
         const sp=document.getElementById('stat-products-count');if(sp)sp.innerText=state.products.length;
-        const sg=document.getElementById('stat-gallery-count');if(sg)sg.innerText=state.gallery.length;
         const se=document.getElementById('stat-enquiries-count');if(se)se.innerText=state.enquiries.length;
         const pending=state.enquiries.filter(e=>e.status!=='Contacted').length;
         const spc=document.getElementById('stat-pending-count');if(spc)spc.innerText=`${pending} Pending`;
@@ -969,12 +956,11 @@ function renderAdminDashboard() {
         if(state.enquiries.length===0){if(fb)fb.classList.remove('hidden');}
         else{if(fb)fb.classList.add('hidden');state.enquiries.forEach(enq=>{const sc=enq.status==='Contacted'?'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300':'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300';tbody.insertAdjacentHTML('beforeend',`<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors"><td class="p-4"><p class="font-black text-slate-900 dark:text-white">${enq.name}</p><p class="text-xs text-slate-500 mt-0.5">📞 ${enq.mobile}</p>${enq.location?`<p class="text-[10px] text-slate-400">📍 ${enq.location}</p>`:''}</td><td class="p-4"><span class="inline-block px-2.5 py-1 bg-blue-50 dark:bg-slate-800 text-blue-700 dark:text-blue-300 rounded-md text-xs font-bold line-clamp-1">${enq.subject}</span></td><td class="p-4 max-w-xs"><p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2">${enq.message||"No description."}</p></td><td class="p-4 text-slate-500 text-xs">${enq.date}</td><td class="p-4 text-center"><button onclick="toggleEnquiryStatus('${enq.id}')" class="px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider ${sc}">${enq.status||'Pending'}</button></td><td class="p-4 text-right"><div class="flex items-center justify-end space-x-1.5"><button onclick="respondViaWhatsApp('${enq.id}')" class="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 p-2 rounded-lg text-xs">💬 WhatsApp</button><button onclick="deleteEnquiry('${enq.id}')" class="text-rose-600 hover:text-rose-800 p-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg">🗑️</button></div></td></tr>`);});}
         if(state.adminActiveTab==='products') renderAdminProducts();
-        if(state.adminActiveTab==='gallery') renderAdminGallery();
     } catch(err){console.error("Dashboard render error:",err);}
 }
 
 // =====================================================
-// BOOTSTRAP
+// ONLOAD BOOTSTRAP INITIALIZATION
 // =====================================================
 window.onload = function() {
     applyThemeDOM();
