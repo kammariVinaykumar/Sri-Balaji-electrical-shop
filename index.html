@@ -24,14 +24,10 @@
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col min-h-screen">
-<div id="global-loading-overlay">
-    <div class="spin"></div>
-    <p class="text-xs font-bold uppercase tracking-widest text-orange-400">Connecting to Firestore…</p>
-</div>
 <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-xl border-b border-orange-500/30 backdrop-blur-md bg-opacity-95">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="handleLogoClick()">
                 <div class="bg-gradient-to-br from-orange-500 to-amber-400 p-2.5 rounded-xl shadow-lg ring-2 ring-white/10 hover:scale-105 active:scale-95 transition-transform">
                     <svg class="w-7 h-7 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                 </div>
@@ -52,11 +48,6 @@
                         <span id="cart-nav-badge" class="hidden absolute -top-1.5 -right-1 bg-orange-500 text-white text-[10px] font-black rounded-full h-5 w-5 flex items-center justify-center animate-bounce">0</span>
                     </button>
                 </div>
-                <span class="h-6 w-px bg-slate-700 mx-2"></span>
-                <button onclick="navigateTo('admin')" class="nav-btn flex items-center space-x-1.5 px-3 py-2 rounded-lg font-bold text-sm border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" data-page="admin" id="nav-admin-btn">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
-                    <span id="nav-admin-text" data-t="nav_admin">Admin</span>
-                </button>
                 <span class="h-6 w-px bg-slate-700 mx-2"></span>
                 <select onchange="changeLanguage(this.value)" id="language-switcher" class="bg-slate-800 text-slate-200 text-xs font-bold rounded-lg px-2.5 py-1.5 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer">
                     <option value="en">🇺🇸 EN</option>
@@ -97,7 +88,6 @@
                     <span id="cart-mobile-drawer-badge" class="bg-orange-500 text-white text-xs font-black rounded-full px-2 py-0.5">0 items</span>
                 </button>
             </div>
-            <button onclick="navigateTo('admin'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg text-base font-semibold text-orange-400 hover:bg-slate-800" id="nav-mobile-admin">🔑 Secure Admin Area</button>
         </div>
     </div>
 </header>
@@ -110,7 +100,7 @@
             </div>
             <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
                 <div class="max-w-2xl">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30 text-xs font-semibold tracking-wider uppercase mb-6" data-t="hero_badge">⚡ Quality Assured Electrical Solutions</span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30 text-xs font-semibold tracking-wider uppercase mb-6" data-t="hero_badge">⚡ Quality Assured Electrical Productions</span>
                     <h2 class="text-4xl sm:text-6xl font-black tracking-tight leading-none text-white id-shop-name">Sri Balaji Electrical Shop</h2>
                     <p class="mt-4 text-lg sm:text-xl text-slate-300 font-medium" data-t="hero_desc">All Electrical, Plumbing, Hardware & Home Utility Products are Available Under One Roof with Premium Brand Assurance.</p>
                     <div class="mt-8 flex flex-col sm:flex-row gap-4">
@@ -186,9 +176,9 @@
                     <h3 class="text-2xl font-black text-slate-900 dark:text-white" data-t="contact_card_title">Store Location & Details</h3>
                     <div class="space-y-6">
                         <div class="flex items-start space-x-4"><div class="p-3 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-xl">📞</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_phone">Phone Number</span><a id="contact-tel-link" href="tel:9515168300" class="text-lg font-black text-slate-900 dark:text-orange-400 hover:text-blue-600 id-phone-text">9515168300</a></div></div>
-                        <div class="flex items-start space-x-4"><div class="p-3 bg-emerald-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-xl">💬</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_wa">WhatsApp Support</span><a id="contact-wa-link" href="https://wa.me/919515168300" target="_blank" class="text-lg font-black text-emerald-600 dark:text-emerald-400 hover:underline">9515168305</a></div></div>
-                        <div class="flex items-start space-x-4"><div class="p-3 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 rounded-xl">📍</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_address">Store Physical Address</span><p id="contact-address-text" class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-relaxed">D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India</p></div></div>
-                        <div class="flex items-start space-x-4"><div class="p-3 bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 rounded-xl">⏰</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_hours">Operational Timing</span><p id="contact-hours-text" class="text-slate-700 dark:text-slate-300 text-sm font-semibold" data-t="contact_hours_val">Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed</p></div></div>
+                        <div class="flex items-start space-x-4"><div class="p-3 bg-emerald-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-xl">💬</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_wa">WhatsApp Support</span><a id="contact-wa-link" href="https://wa.me/919515168300" target="_blank" class="text-lg font-black text-emerald-600 dark:text-emerald-400 hover:underline">9515168300</a></div></div>
+                        <div class="flex items-start space-x-4"><div class="p-3 bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 rounded-xl">📍</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_address">Store Physical Address</span><p id="contact-address-text" class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-relaxed">Batkal, Kotakonda, Narayanpet, 509210</p></div></div>
+                        <div class="flex items-start space-x-4"><div class="p-3 bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 rounded-xl">⏰</div><div><span class="text-xs font-bold text-slate-400 uppercase block" data-t="contact_hours">Operational Timing</span><p id="contact-hours-text" class="text-slate-700 dark:text-slate-300 text-sm font-semibold" data-t="contact_hours_val">Monday - Sunday: Open 24 Hours</p></div></div>
                     </div>
                 </div>
                 <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row gap-3">
@@ -197,9 +187,9 @@
                 </div>
             </div>
             <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col min-h-[380px]">
-                <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white border-b border-slate-800"><span class="text-xs font-bold uppercase tracking-wider text-orange-400" data-t="contact_map_title">Navigation Map Locator</span><span class="text-xs font-semibold text-slate-300" data-t="contact_map_desc">Hyderabad (TS), India</span></div>
-                <div class="flex-grow relative"><iframe title="Shop Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15228.40822694119!2d78.474668!3d17.385044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb978a6e1a939f%3A0xbc1d6c82439c29d0!2sHyderabad%2C%20Telangana%2C%20India!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" class="absolute inset-0 w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe></div>
-                <div class="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 text-center"><a href="https://maps.app.goo.gl/tYKh4TAWhDSzsGdF7" target="_blank" class="inline-flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl shadow-md text-sm"><span>📍 Open in Google Maps</span></a></div>
+                <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white border-b border-slate-800"><span class="text-xs font-bold uppercase tracking-wider text-orange-400" data-t="contact_map_title">Navigation Map Locator</span><span class="text-xs font-semibold text-slate-300" data-t="contact_map_desc">Narayanpet (TS), India</span></div>
+                <div class="flex-grow relative"><iframe title="Shop Location Map" src="https://www.google.com/maps?q=16.7553968,77.6424155&z=15&output=embed" class="absolute inset-0 w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe></div>
+                <div class="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 text-center"><a href="https://maps.app.goo.gl/wv8zfNrDZAgNDuLBA" target="_blank" class="inline-flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl shadow-md text-sm"><span>📍 Open in Google Maps</span></a></div>
             </div>
         </div>
     </section>
@@ -212,9 +202,9 @@
                         <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_name">Full Name *</label><input type="text" id="enq-name" required placeholder="e.g. Ramesh Kumar" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"></div>
                         <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_mobile">Mobile Number *</label><input type="tel" id="enq-mobile" required placeholder="10 digit phone number" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"></div>
                     </div>
-                    <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_location">Delivery Location</label><input type="text" id="enq-location" placeholder="e.g. Hyderabad" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"></div>
+                    <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_location">Delivery Location</label><input type="text" id="enq-location" placeholder="e.g. Narayanpet" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"></div>
                     <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_subject">Subject / Item Group *</label><input type="text" id="enq-subject" required placeholder="e.g. Copper wiring rates quote" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"></div>
-                    <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_message">Detailed Message</label><textarea id="enq-message" rows="5" placeholder="Enter sizing dimensions, custom lengths..." class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"></textarea></div>
+                    <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2" data-t="form_message">Detailed Message</label><textarea id="enq-message" rows="5" placeholder="Enter sizing dimensions, custom lengths..." class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"></textarea></div>
                     <div class="flex items-center space-x-2 text-xs text-slate-500 pt-1"><span class="text-orange-500 font-bold">ℹ️</span><p data-t="form_info">Our representatives will respond via Call or WhatsApp within 1-3 business hours.</p></div>
                     <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end space-x-3">
                         <button type="button" onclick="resetEnquiryForm()" class="px-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-semibold" data-t="form_reset">Reset Form</button>
@@ -265,7 +255,7 @@
                 </div>
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
                     <div class="flex justify-between items-center mb-4"><h3 class="font-extrabold text-slate-900 dark:text-white text-lg" data-t="admin_settings">Shop Configuration Settings</h3><button onclick="openSettingsModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2 rounded-lg flex items-center space-x-1 shadow-sm"><span>⚙️ Edit Settings</span></button></div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-600 dark:text-slate-400"><div><strong class="text-slate-950 dark:text-white">Shop Name:</strong> <span class="id-shop-name">Sri Balaji Electrical Shop</span></div><div><strong class="text-slate-950 dark:text-white">Phone:</strong> <span class="id-phone-text">9515168300</span></div><div class="sm:col-span-2"><strong class="text-slate-950 dark:text-white">Address:</strong> <span id="admin-display-address">D.No: 4-12, Hyderabad, India</span></div><div class="sm:col-span-2"><strong class="text-slate-950 dark:text-white">Hours:</strong> <span id="admin-display-hours">Monday - Saturday: 9am - 9pm</span></div></div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-600 dark:text-slate-400"><div><strong class="text-slate-950 dark:text-white">Shop Name:</strong> <span class="id-shop-name">Sri Balaji Electrical Shop</span></div><div><strong class="text-slate-950 dark:text-white">Phone:</strong> <span class="id-phone-text">9515168300</span></div><div class="sm:col-span-2"><strong class="text-slate-950 dark:text-white">Address:</strong> <span id="admin-display-address">Batkal, Kotakonda, Narayanpet, 509210</span></div><div class="sm:col-span-2"><strong class="text-slate-950 dark:text-white">Hours:</strong> <span id="admin-display-hours">Monday - Sunday: Open 24 Hours</span></div></div>
                 </div>
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
                     <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-2" data-t="admin_change_pass">Change Administrative Password</h3>
@@ -290,9 +280,9 @@
         <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-slate-900 text-center sm:text-left">
             <div class="md:col-span-5 space-y-4"><div class="flex items-center space-x-2 justify-center sm:justify-start"><div class="bg-orange-500 p-2 rounded-lg text-slate-950 font-bold text-lg">⚡</div><h4 class="text-xl font-extrabold text-white tracking-tight id-shop-name">Sri Balaji Electrical Shop</h4></div><p class="text-xs text-slate-400 leading-relaxed max-w-sm" data-t="footer_desc">Certified premium switches, plumbing pipes, wires, fans, and lighting fittings at absolute best retail rates.</p><div class="text-xs font-bold text-orange-400"><span data-t="footer_support">Support Hotline:</span> <a id="footer-tel" href="tel:9515168300" class="hover:underline text-white font-extrabold id-phone-text">9515168300</a></div></div>
             <div class="md:col-span-3 space-y-3 text-xs"><h5 class="font-black uppercase text-slate-200 tracking-widest" data-t="footer_directions">Quick Directions</h5><div class="flex flex-col space-y-2"><button onclick="navigateTo('home')" class="text-center sm:text-left hover:text-orange-400 transition-colors" data-t="nav_home">Home Page</button><button onclick="navigateTo('products')" class="text-center sm:text-left hover:text-orange-400 transition-colors" data-t="nav_products">Products Catalogue</button><button onclick="navigateTo('gallery')" class="text-center sm:text-left hover:text-orange-400 transition-colors" data-t="nav_gallery">Showcase Photos</button><button onclick="navigateTo('enquiry')" class="text-center sm:text-left hover:text-orange-400 transition-colors" data-t="nav_enquiry">Quotation Enquiry</button></div></div>
-            <div class="md:col-span-4 space-y-3 text-xs"><h5 class="font-black uppercase text-slate-200 tracking-widest" data-t="footer_hours_title">Store Hours & Locations</h5><p id="footer-hours" class="leading-relaxed" data-t="contact_hours_val">Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed</p><p id="footer-address" class="text-slate-500 leading-relaxed">D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India</p></div>
+            <div class="md:col-span-4 space-y-3 text-xs"><h5 class="font-black uppercase text-slate-200 tracking-widest" data-t="footer_hours_title">Store Hours & Locations</h5><p id="footer-hours" class="leading-relaxed" data-t="contact_hours_val">Monday - Sunday: Open 24 Hours</p><p id="footer-address" class="text-slate-500 leading-relaxed">Batkal, Kotakonda, Narayanpet, 509210</p></div>
         </div>
-        <div class="pt-8 text-center text-xs flex flex-col sm:flex-row justify-between items-center text-slate-500 gap-4"><p>© 2026 <span id="footer-copyright-name">Sri Balaji Electrical Shop</span>. <span data-t="all_rights_reserved">All Rights Reserved.</span></p><button onclick="navigateTo('admin')" class="hover:text-white flex items-center space-x-1 transition-colors"><span data-t="footer_secure">🔐 Secure Admin Area</span></button></div>
+        <div class="pt-8 text-center text-xs flex flex-col sm:flex-row justify-center items-center text-slate-500 gap-4"><p>© 2026 <span id="footer-copyright-name">Sri Balaji Electrical Shop</span>. <span data-t="all_rights_reserved">All Rights Reserved.</span></p></div>
     </div>
 </footer>
 <div class="fixed bottom-6 right-6 z-40 flex flex-col space-y-3">
@@ -427,8 +417,8 @@ const DEFAULT_SETTINGS = {
     phone: "9515168300", 
     whatsapp: "9515168300", 
     heroBannerUrl: "https://res.cloudinary.com/dp8tp7jah/image/upload/v1782228784/ChatGPT_Image_Jun_22_2026_10_08_37_PM_roydsy.png", 
-    address: "D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India", 
-    hours: "Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed", 
+    address: "Batkal, Kotakonda, Narayanpet, 509210", 
+    hours: "Monday - Sunday: Open 24 Hours", 
     adminPassword: "admin"};
 // ── DataService ───────────────────────────────────────────────────────────────
 class DataService { 
@@ -638,7 +628,7 @@ const CLOUDINARY_SHOP_IMAGE    = 'https://res.cloudinary.com/dp8tp7jah/image/upl
 // ── TRANSLATIONS ──────────────────────────────────────────────────────────────
 const TRANSLATIONS = { 
     en: { 
-        hero_badge_text:"Electrical • Plumbing • Hardware",hero_badge:"⚡ Quality Assured Electrical Solutions", 
+        hero_badge_text:"Electrical • Plumbing • Hardware",hero_badge:"⚡ Quality Assured Electrical Productions", 
         hero_desc:"All Electrical, Plumbing, Hardware & Home Utility Products are Available Under One Roof with Premium Brand Assurance.", 
         hero_whatsapp:"💬 WhatsApp Us",hero_direct_enq:"Send Direct Online Enquiry",call_now:"Call Now", 
         nav_home:"Home",nav_products:"Products",nav_gallery:"Gallery",nav_about:"About Us", 
@@ -662,8 +652,8 @@ const TRANSLATIONS = {
         contact_title:"Contact Sri Balaji Shop",contact_desc:"Visit us locally or connect via phone/WhatsApp.", 
         contact_card_title:"Store Location & Details",contact_phone:"Phone Number", 
         contact_wa:"WhatsApp Support",contact_address:"Store Physical Address", 
-        contact_hours:"Operational Timing",contact_hours_val:"Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed", 
-        contact_map_title:"Navigation Map Locator",contact_map_desc:"Hyderabad (TS), India", 
+        contact_hours:"Operational Timing",contact_hours_val:"Monday - Sunday: Open 24 Hours", 
+        contact_map_title:"Navigation Map Locator",contact_map_desc:"Narayanpet (TS), India", 
         contact_map_btn:"📍 Open in Google Maps", 
         enquiry_title:"Direct Product Enquiry Form",enquiry_sub:"No login required. Submit details and we will review our inventory instantly.", 
         form_name:"Full Name *",form_mobile:"Mobile Number *",form_location:"Delivery Location", 
@@ -684,7 +674,7 @@ const TRANSLATIONS = {
         footer_hours_title:"Store Hours & Locations",footer_secure:"🔐 Secure Admin Area",all_rights_reserved:"All Rights Reserved." 
     }, 
     te: { 
-        hero_badge_text:"విద్యుత్ • ప్లంబింగ్ • హార్డ్‌వేర్",hero_badge:"⚡ నాణ్యత హామీ విద్యుత్ పరిష్కారాలు", 
+        hero_badge_text:"విద్యుత్ • ప్లంబింగ్ • హార్డ్‌వేర్",hero_badge:"⚡ నాణ్యత హామీ విద్యుత్ ఉత్పత్తులు", 
         hero_desc:"అన్ని విద్యుత్, ప్లంబింగ్, హార్డ్‌వేర్ & గృహ వస్తువులు ఒకే చోట లభ్యం.", 
         hero_whatsapp:"💬 వాట్సాప్ పంపండి",hero_direct_enq:"నేరుగా విచారణ పంపండి",call_now:"ఇప్పుడు కాల్ చేయండి", 
         nav_home:"హోమ్",nav_products:"ఉత్పత్తులు",nav_gallery:"గ్యాలరీ",nav_about:"మా గురించి",nav_contact:"సంప్రదించండి",nav_enquiry:"విచారణ పంపండి",nav_admin:"నిర్వాహకుడు", 
@@ -707,8 +697,8 @@ const TRANSLATIONS = {
         contact_title:"శ్రీ బాలాజీ షాప్‌ను సంప్రదించండి",contact_desc:"ఫోన్ లేదా వాట్సాప్ ద్వారా.", 
         contact_card_title:"స్టోర్ వివరాలు",contact_phone:"ఫోన్ నంబర్", 
         contact_wa:"వాట్సాప్ సపోర్ట్",contact_address:"స్టోర్ చిరునామా", 
-        contact_hours:"పని వేళలు",contact_hours_val:"సోమవారం - శనివారం: ఉ. 9:00 - రా. 9:00, ఆదివారం: మూసివేత", 
-        contact_map_title:"మ్యాప్ లొకేటర్",contact_map_desc:"హైదరాబాద్ (TS), భారతదేశం", 
+        contact_hours:"పని వేళలు",contact_hours_val:"సోమవారం - ఆదివారం: 24 గంటలు తెరిచి ఉంటుంది", 
+        contact_map_title:"మ్యాప్ లొకేటర్",contact_map_desc:"నారాయణపేట్ (TS), భారతదేశం", 
         contact_map_btn:"📍 గూగుల్ మ్యాప్స్‌లో తెరవండి", 
         enquiry_title:"ఉత్పత్తి విచారణ ఫారం",enquiry_sub:"లాగిన్ అవసరం లేదు.", 
         form_name:"పూర్తి పేరు *",form_mobile:"మొబైల్ నంబర్ *",form_location:"డెలివరీ స్థానం", 
@@ -729,7 +719,7 @@ const TRANSLATIONS = {
         all_rights_reserved:"అన్ని హక్కులు రిజర్వు చేయబడ్డాయి." 
     }, 
     hi: { 
-        hero_badge_text:"बिजली • प्लंबिंग • हार्डवेयर",hero_badge:"⚡ गुणवत्ता-सुनिश्चित बिजली समाधान", 
+        hero_badge_text:"बिजली • प्लंबिंग • हार्डवेयर",hero_badge:"⚡ गुणवत्ता-सुनिश्चित बिजली उत्पाद", 
         hero_desc:"सभी बिजली, प्लंबिंग, हार्डवेयर & घरेलू उत्पाद एक ही छत के नीचे.", 
         hero_whatsapp:"💬 WhatsApp करें",hero_direct_enq:"सीधी ऑनलाइन पूछताछ भेजें",call_now:"अभी कॉल करें", 
         nav_home:"होम",nav_products:"उत्पाद",nav_gallery:"गैलरी",nav_about:"हमारे बारे में",nav_contact:"संपर्क",nav_enquiry:"पूछताछ भेजें",nav_admin:"एडमिन", 
@@ -752,8 +742,8 @@ const TRANSLATIONS = {
         contact_title:"श्री बालाजी शॉप से संपर्क करें",contact_desc:"फोन या WhatsApp से ऑर्डर करें.", 
         contact_card_title:"स्टोर विवरण",contact_phone:"फोन नंबर", 
         contact_wa:"WhatsApp सहायता",contact_address:"स्टोर का पता", 
-        contact_hours:"कार्य समय",contact_hours_val:"सोमवार - शनिवार: सुबह 9:00 - रात 9:00, रविवार: बंद", 
-        contact_map_title:"मैप लोकेटर",contact_map_desc:"हैदराबाद (TS), भारत", 
+        contact_hours:"कार्य समय",contact_hours_val:"सोमवार - रविवार: 24 घंटे खुला", 
+        contact_map_title:"मैप लोकेटर",contact_map_desc:"नारायणपेट (TS), भारत", 
         contact_map_btn:"📍 Google Maps में खोलें", 
         enquiry_title:"उत्पाद पूछताछ फ़ॉर्म",enquiry_sub:"लॉगिन की आवश्यकता नहीं.", 
         form_name:"पूरा नाम *",form_mobile:"मोबाइल नंबर *",form_location:"डिलीवरी स्थान", 
@@ -779,8 +769,8 @@ const CATEGORIES = ["Electrical","Wiring & Cables","Switches & Sockets","Lightin
 const DEFAULT_SETTINGS = { 
     shopName:"Sri Balaji Electrical Shop",phone:"9515168300",whatsapp:"9515168300", 
     heroBannerUrl:CLOUDINARY_SHOP_IMAGE, 
-    address:"D.No: 4-12, Main Bazar, Opposite Ramalayam Temple, Hyderabad, India", 
-    hours:"Monday - Saturday: 9:00 AM - 9:00 PM, Sunday: Closed",adminPassword:"admin"};
+    address:"Batkal, Kotakonda, Narayanpet, 509210", 
+    hours:"Monday - Sunday: Open 24 Hours",adminPassword:"admin"};
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let state = { 
     currentPage:'home', mobileMenuOpen:false, 
@@ -884,6 +874,20 @@ function clearGalleryUpload() {
 function toggleMobileMenu() { 
     state.mobileMenuOpen=!state.mobileMenuOpen; 
     const m=document.getElementById('mobile-menu'); if(m) m.classList.toggle('hidden',!state.mobileMenuOpen);}
+// ── HIDDEN ADMIN ACCESS (triple-click shop name/logo) ────────────────────────
+let logoClickCount = 0;
+let logoClickTimer = null;
+function handleLogoClick() {
+    logoClickCount++;
+    clearTimeout(logoClickTimer);
+    logoClickTimer = setTimeout(()=>{ logoClickCount = 0; }, 1200);
+    if(logoClickCount >= 3){
+        logoClickCount = 0;
+        clearTimeout(logoClickTimer);
+        navigateTo('admin');
+    } else {
+        navigateTo('home');
+    }}
 // ── ALERTS / TOASTS ───────────────────────────────────────────────────────────
 function showCustomAlert(msg,title="Notice",icon="🔔",showCancel=false) { 
     document.getElementById('custom-alert-title').innerText=title; 
@@ -1273,9 +1277,4 @@ async function bootstrapApp() {
     updateShopBrandingDOM(); updateLanguageDOM(); syncNavVisibility(); 
     console.log("[App] bootstrapApp() → DONE. Products:", state.products.length, "Gallery:", state.gallery.length, "Enquiries:", state.enquiries.length, "Settings:", state.settings.shopName);}
 if(window.__firestoreReady){ bootstrapApp(); }else { window.addEventListener('firebase-ready', bootstrapApp, {once:true}); }
-</script></body></html>'''
-with open('/home/claude/sri_balaji_electrical_shop.html', 'w', encoding='utf-8') as f: 
-    f.write(html)
-print("Done. Lines:", html.count('\n'))
-PYEOF
-python3 /home/claude/build_html.py
+</script></body></html>
